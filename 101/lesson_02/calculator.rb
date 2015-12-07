@@ -69,6 +69,11 @@ def perform_operations(numbers, operators)
   result.round(2)
 end
 
+def get_series
+  series = gets.chomp
+  series = '0' if series.empty?
+end
+
 loop do
   system 'clear'
   msg('Welcome to the calculator APP', :blue)
@@ -78,7 +83,7 @@ loop do
   msg('Enter the series of numbers')
   msg('ex: 5 + 2 * 3 - 5 (enter press)')
   msg('=> ', :blue, false)
-  number_series = gets.chomp
+  number_series = get_series
   msg(number_series, :green)
   numbers, operators = parse_series(number_series)
   unless numbers = convert_to_numbers(numbers)
