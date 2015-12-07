@@ -34,7 +34,7 @@ end
 def parse_series(number_series)
   numbers = []
   operators = []
-  number_series.gsub!(%r{[\s,]}, '')
+  number_series.tr!(' ,', '')
   until number_series.empty?
     operator_index = find_operator_index(number_series)
     if operator_index
@@ -45,7 +45,7 @@ def parse_series(number_series)
     end
     operators << number_series.slice!(0) unless number_series.empty?
   end
-  return numbers, operators
+  [numbers, operators]
 end
 
 def convert_to_numbers(numbers)
@@ -71,7 +71,12 @@ end
 
 def series_input
   series = gets.chomp
-  series = series.empty? ? '0' : series
+  series.empty? ? '0' : series
+end
+
+def perform_another?
+  msg('Peform another operation (y/n)? ', :default, false)
+  gets.chomp
 end
 
 loop do
@@ -93,7 +98,5 @@ loop do
   end
   result = perform_operations(numbers, operators)
   msg("result = #{result}", :green)
-  msg('Peform another operation (y/n)? ', :default, false)
-  perform_another = gets.chomp
-  break unless perform_another.downcase == 'y'
+  break unless perform_another? == 'y'
 end
