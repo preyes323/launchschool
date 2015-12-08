@@ -3,7 +3,11 @@
 # loan_caluclator.rb
 #
 # Given the value for loan amount, APR, and loan duration the app will
-# produce a table that presents the payment plan to the loaner
+# produce a table that presents the payment schedule to the loaner
+#
+# Payment schedule is presented differently depending on screen size
+# Narrow screen (<80 columns): Linear format
+# Wide screen (>=80 columns): Tabular format
 # -----------------------------------
 
 require 'colorize'
@@ -145,4 +149,3 @@ begin
                               duration: loan_duration_months)
   display_schedule(payments)
 end
-
