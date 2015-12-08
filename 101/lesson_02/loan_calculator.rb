@@ -25,11 +25,15 @@ def numeric?(number)
   !!Float(number) rescue false
 end
 
+def valid_input?(input)
+  numeric?(input) && Float(input) > 0
+end
+
 def loan_amount_input
   loop do
     msg('Input loan amount: ', new_line: false)
     amount = gets.chomp
-    if numeric?(amount)
+    if valid_input?(amount)
       return Float(amount) if amount.length <= 15
       msg('Can not compute for loan amount with digits > 15', color: :red)
     end
@@ -40,7 +44,7 @@ def monthly_percentage_rate_input
   loop do
     msg('Input annual percentage rate: ', new_line: false)
     apr = gets.chomp
-    return (Float(apr) / 100 / 12).round(4) if numeric?(apr)
+    return (Float(apr) / 100 / 12).round(4) if valid_input?(apr)
   end
 end
 
@@ -48,7 +52,7 @@ def loan_duration_months_input
   loop do
     msg('Input loan duration (in years): ', new_line: false)
     duration = gets.chomp
-    return Integer(duration) * 12 if numeric?(duration)
+    return Integer(duration) * 12 if valid_input?(duration)
   end
 end
 
