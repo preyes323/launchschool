@@ -52,6 +52,7 @@ def print_player_area(player_move)
   move = CHOICES[player_move] || ''
   msg(" #{' ' * 18}|#{' ' * 18} ")
   msg(" #{move.center(18, ' ')}|")
+  msg(" #{' ' * 18}|#{' ' * 18} ")
 end
 
 def player_move_input
@@ -68,6 +69,7 @@ def display_game_board(name, scores, player_move: nil, computer_move: nil)
   print_game_header(name, scores)
   print_player_area(player_move)
   #print_computer_area(computer_move)
+  msg('')
 end
 
 loop do
