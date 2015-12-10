@@ -14,7 +14,6 @@
 # --------------------------------------
 
 require 'colorize'
-require 'pry'
 
 CHOICES = { r: '[r]ock', p: '[p]aper', s: '[s]cissors',
             l: '[l]izard', k: 'spoc[k]' }
@@ -28,7 +27,7 @@ def msg(msg, color: :default, new_line: true)
 end
 
 def display_welcome_message
-  message = %Q(Welcome to the RPSSL game!
+  message = %(Welcome to the RPSSL game!
 This is not your ordinary rock, paper, & scissors game.
 PLAY at your own risk!)
   msg(message, color: :light_blue)
@@ -40,7 +39,7 @@ def player_name
 end
 
 def print_game_header(name, scores)
-  header = %Q(+#{'-' * 37}+
+  header = %(+#{'-' * 37}+
 +#{' ' * 18}|#{' ' * 18}+
 +#{(name + ': ' + scores[0]).center(18, ' ')}|#{('Computer: ' + scores[1]).center(18, ' ')}+
 +#{' ' * 18}|#{' ' * 18}+
@@ -195,15 +194,19 @@ system 'clear'
 
 loop do
   display_game_board(name, scores.map(&:to_s))
+
   move = player_move_input
   comp_moves = computer_move_randomizer
   winner = game_winner(move, comp_moves[-1])
+
   old_scores = scores.dup
   update_scores!(scores, winner)
+
   display_game_board(name, scores.map(&:to_s),
                      old_scores: old_scores.map(&:to_s),
                      player_move: move,
                      computer_move: comp_moves)
   display_winning_message(move, comp_moves[-1])
+
   break unless play_again?
 end
