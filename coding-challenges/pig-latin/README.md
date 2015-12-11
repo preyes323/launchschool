@@ -3,4 +3,5 @@ Pig Latin is a made-up children's language that's intended to be confusing. It o
 
 * Rule 1: If a word begins with a vowel sound, add an "ay" sound to the end of the word.
 * Rule 2: If a word begins with a consonant sound, move it to the end of the word, and then add an "ay" sound to the end of the word.
+
 There are a few more rules for edge cases, and there are regional variants too.
