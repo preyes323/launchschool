@@ -9,6 +9,7 @@ GEM
       method_source (~> 0.8.1)
       slop (~> 3.4)
     slop (3.6.0)
+    yaml (4.2.2)
 
 PLATFORMS
   ruby
@@ -16,6 +17,7 @@ PLATFORMS
 DEPENDENCIES
   colorize
   pry
+  yaml
 
 BUNDLED WITH
    1.10.6

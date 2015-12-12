@@ -65,12 +65,12 @@ end
 def display_intro_sequence
   system 'clear'
   display_welcome_message
-  sleep 2
+  sleep 5
   system 'clear'
   display_instructions
 end
 
 begin
   display_intro_sequence
-  players = input_player_count
+  #players = input_player_count
 end
