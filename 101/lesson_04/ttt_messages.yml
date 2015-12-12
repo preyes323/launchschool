@@ -1,0 +1,32 @@
+# messages for the introduction sequence of the TIC-TAC-TOE game
+
+welcome: >-
+  This is an extended version of the Tic Tac Toe Game.
+It allows for a bigger size board and additional players.
+There can be a total of 4 players. The board size scales
+with the number of players. This can be a mix of either
+person player or computer player. At minimum there should always
+be 2 players.
+
+ENJOY
+
+instructions: >-
+  INSTRUCTIONS
+1. Choose the number of players from MIN 2 to MAX 4 by entering
+a string of four characters. Each character represents either of the ff:
+(H) Human Player
+(C) Computer Player
+(-) No Player
+
+Example: 2 players - 1 human and 1 computer
+         HC--
+
+         3 players - 1 human and 2 computer
+         HCC-
+
+         4 players - all computers
+         CCCC
+
+2. Human player characters will be asked to input their name
+3. Assigned player number will be displayed with their corresponding marker.
+4. PLAY =p

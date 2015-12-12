@@ -3,7 +3,7 @@ Style/BlockComments:
   StyleGuide: 'https://github.com/bbatsov/ruby-style-guide#no-block-comments'
   Enabled: false
 
-Style/GuardClaus:
+Style/GuardClause:
   Description: 'Check for conditionals that can be replaced with guard clauses'
   StyleGuide: 'https://github.com/bbatsov/ruby-style-guide#no-nested-conditionals'
   Enabled: false
@@ -21,7 +21,7 @@ Style/NumericLiterals:
   Enabled: false
   MinDigits: 5
 
-Style/SinglieBlockParams:
+Style/SingleLineBlockParams:
   Description: 'Enforces the names of some block params.'
   StyleGuide: 'https://github.com/bbatsov/ruby-style-guide#reduce-blocks'
   Enabled: false
