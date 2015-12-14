@@ -36,3 +36,10 @@ instructions: >-
   3. Assigned player number will be displayed with their corresponding marker.
 
   4. PLAY =p
+
+player_query: >-
+  Please enter the type and number of players that will participate in the
+  TIC-TAC-TOE game by filling up this player input string ' ---- '.
+
+  example: 2 players (1 human and 1 computer)
+           HC--

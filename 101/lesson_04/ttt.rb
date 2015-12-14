@@ -70,7 +70,19 @@ def display_intro_sequence
   display_instructions
 end
 
+def input_player_count
+  loop do
+    msg(MESSAGES['player_query'], color: :blue)
+    msg('=> ', color: :blue, new_line: false)
+    player_input_string = gets.chomp
+    return player_input_string if player_input_string.chars.all? do |char|
+      ['-','H','C'].include? char.upcase
+    end
+  end
+end
+
 begin
   display_intro_sequence
-  #players = input_player_count
+  players = input_player_count
+  p players
 end
