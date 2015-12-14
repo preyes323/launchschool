@@ -3,7 +3,7 @@
 welcome: >-
   This is an extended version of the Tic Tac Toe Game. It allows for a bigger
   size board and additional players. There can be a total of 4 players.
-  The board size scales with the number of players. This can be a mix of eithe
+  The board size scales with the number of players. This can be a mix of either
   person player or computer player. At minimum there should always be
   2 players.
 

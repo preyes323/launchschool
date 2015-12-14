@@ -23,8 +23,8 @@
 # 1. Intro Sequence / Done
 #    1. Welcome Message / Done
 #    2.  Instructions / Done
-# 2. Number of Players
-# 3. Player types
+# 2. Number of Players / Done
+# 3. Player Markers
 # 4. Board Setup
 # 5. Game Loop - player moves, board update, winner selection
 # 6. Score update
@@ -38,10 +38,12 @@ require 'pry'
 require 'yaml'
 
 MESSAGES = YAML.load_file('ttt_messages.yml')
-MARKERS = { p1: { marker: '★', color: :blue },
-            p2: { marker: '♥', color: :red },
-            p3: { marker: '♣', color: :green },
-            p4: { marker: '☀', color: :yellow } }
+MARKERS = { m1: { marker: '★', color: :blue },
+            m2: { marker: '♥', color: :red },
+            m3: { marker: '♣', color: :green },
+            m4: { marker: '☀', color: :yellow } }
+COMPUTER_NAMES = ['AI_R2D2', 'AI_C3P0', 'AI_Watson', 'AI_Jarvis']
+
 
 def msg(msg, color: :default, new_line: true)
   if new_line
@@ -70,19 +72,57 @@ def display_intro_sequence
   display_instructions
 end
 
-def input_player_count
+def input_player_count_types
   loop do
+    system 'clear'
     msg(MESSAGES['player_query'], color: :blue)
     msg('=> ', color: :blue, new_line: false)
-    player_input_string = gets.chomp
-    return player_input_string if player_input_string.chars.all? do |char|
-      ['-','H','C'].include? char.upcase
+    player_input_string = gets.chomp.upcase.chars
+    next if player_input_string.length < 4
+    if player_input_string.all? { |char| ['-', 'H', 'C'].include? char }
+      return player_input_string.keep_if { |char| ['H', 'C'].include? char }
     end
   end
 end
 
+def assign_player_markers(player_count)
+  MARKERS.keys.slice(0, player_count)
+end
+
+def ask_human_name
+  system 'clear'
+  msg('Name please', color: :blue)
+  msg('=> ', color: :blue, new_line: false)
+  name = gets.chomp
+  name.empty? ? 'NO_NAME' : name
+end
+
+def input_player_names(types)
+  names = []
+  types.length.times do |idx|
+    case types[idx]
+    when 'H' then names << ask_human_name
+    when 'C' then names << COMPUTER_NAMES[idx]
+    end
+  end
+  names
+end
+
+def build_players(types, markers, names)
+  results = {}
+  types.length.times do |idx|
+    results[idx] = { type: types[idx],
+                     marker: MARKERS[markers[idx]],
+                     name: names[idx] }
+  end
+  results
+end
+
 begin
   display_intro_sequence
-  players = input_player_count
-  p players
+  player_types_and_count = input_player_count_types
+  player_names = input_player_names(player_types_and_count)
+  marker_keys = assign_player_markers(player_types_and_count.length)
+  players = build_players(player_types_and_count, marker_keys, player_names)
+
 end
