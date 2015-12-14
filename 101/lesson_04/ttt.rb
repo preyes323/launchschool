@@ -24,7 +24,7 @@
 #    1. Welcome Message / Done
 #    2.  Instructions / Done
 # 2. Number of Players / Done
-# 3. Player Markers
+# 3. Player Markers /  Done
 # 4. Board Setup
 # 5. Game Loop - player moves, board update, winner selection
 # 6. Score update
@@ -118,11 +118,25 @@ def build_players(types, markers, names)
   results
 end
 
+def build_board(player_count)
+  size = 3 + (player_count - 2) * 2
+  board = {}
+  size.times do |row|
+    size.times do |col|
+      idx = col + (row * size)
+      board[idx] = { location: [row, col],
+                     marker: idx }
+    end
+  end
+  board
+end
+
 begin
   display_intro_sequence
   player_types_and_count = input_player_count_types
   player_names = input_player_names(player_types_and_count)
   marker_keys = assign_player_markers(player_types_and_count.length)
   players = build_players(player_types_and_count, marker_keys, player_names)
-
+  board = build_board(players.length)
+  p board
 end
