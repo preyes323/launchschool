@@ -80,7 +80,8 @@ def input_player_count_types
     player_input_string = gets.chomp.upcase.chars
     next if player_input_string.length != 4
     if player_input_string.all? { |char| ['-', 'H', 'C'].include? char }
-      return player_input_string.keep_if { |char| ['H', 'C'].include? char }
+      player_input_string.keep_if { |char| ['H', 'C'].include? char }
+      return player_input_string if player_input_string.length > 1
     end
   end
 end
@@ -116,6 +117,10 @@ def build_players(types, markers, names)
                      name: names[idx] }
   end
   results
+end
+
+def board_size_from_length(board)
+  (board.length**0.5).to_i
 end
 
 def build_board(player_count)
@@ -178,7 +183,7 @@ end
 
 def display_board(board)
   window_row_size, _ = $stdin.winsize
-  size = (board.length**0.5).to_i
+  size = board_size_from_length(board)
   size.times do |row|
     draw_top_bottom_cell(size)
     draw_padding(size) if window_row_size >= 35
@@ -230,10 +235,165 @@ def update_board!(idx, player, board)
   board[idx.to_i][:marker] = player[:marker]
   system 'clear'
   display_board(board)
+  msg("#{player[:name]} put marker on cell #{idx}", color: :blue)
+end
+
+def score_upper_left?(loc, mark, board)
+  score = 0
+  indeces = []
+  size = board_size_from_length(board)
+  3.times do
+    indeces <<  loc[1] + (loc[0] * size)
+    loc[0] -= 1
+    loc[1] -= 1
+    break if loc.flatten.any? { |num| num <= 0 }
+  end
+  indeces.each { |idx| score += 1 if board[idx][:marker] == mark }
+  score
+end
+
+def score_top?(loc, mark, board)
+  score = 0
+  indeces = []
+  size = board_size_from_length(board)
+  3.times do
+    indeces <<  loc[1] + (loc[0] * size)
+    loc[0] -= 1
+    break if loc.flatten.any? { |num| num <= 0 }
+  end
+  indeces.each { |idx| score += 1 if board[idx][:marker] == mark }
+  score
+end
+
+def score_upper_right?(loc, mark, board)
+  score = 0
+  indeces = []
+  size = board_size_from_length(board)
+  3.times do
+    indeces <<  loc[1] + (loc[0] * size)
+    loc[0] -= 1
+    loc[1] += 1
+    break if loc.flatten.any? { |num| num >= size || num < 0 }
+  end
+  indeces.each { |idx| score += 1 if board[idx][:marker] == mark }
+  score
+end
+
+def score_right?(loc, mark, board)
+  score = 0
+  indeces = []
+  size = board_size_from_length(board)
+  3.times do
+    indeces <<  loc[1] + (loc[0] * size)
+    loc[1] += 1
+    break if loc.flatten.any? { |num| num >= size }
+  end
+  indeces.each { |idx| score += 1 if board[idx][:marker] == mark }
+  score
+end
+
+def score_bottom_right?(loc, mark, board)
+  score = 0
+  indeces = []
+  size = board_size_from_length(board)
+  3.times do
+    indeces <<  loc[1] + (loc[0] * size)
+    loc[0] += 1
+    loc[1] += 1
+    break if loc.flatten.any? { |num| num >= size }
+  end
+  indeces.each { |idx| score += 1 if board[idx][:marker] == mark }
+  score
+end
+
+def score_bottom?(loc, mark, board)
+  score = 0
+  indeces = []
+  size = board_size_from_length(board)
+  3.times do
+    indeces <<  loc[1] + (loc[0] * size)
+    loc[0] += 1
+    break if loc.flatten.any? { |num| num >= size }
+  end
+  ''
+  indeces.each { |idx| score += 1 if board[idx][:marker] == mark }
+  score
+end
+
+def score_bottom_left?(loc, mark, board)
+  score = 0
+  indeces = []
+  size = board_size_from_length(board)
+  3.times do
+    indeces <<  loc[1] + (loc[0] * size)
+    loc[0] += 1
+    loc[1] -= 1
+    break if loc.flatten.any? { |num| num >= size || num < 0 }
+  end
+  indeces.each { |idx| score += 1 if board[idx][:marker] == mark }
+  score
+end
+
+def score_left?(loc, mark, board)
+  score = 0
+  indeces = []
+  size = board_size_from_length(board)
+  3.times do
+    indeces <<  loc[1] + (loc[0] * size)
+    loc[1] -= 1
+    break if loc.flatten.any? { |num| num < 0 }
+  end
+  indeces.each { |idx| score += 1 if board[idx][:marker] == mark }
+  score
+end
+
+def player_wins?(moves, mark, board)
+  moves.any? do |loc|
+    (score_upper_left?(loc.dup, mark, board)   == 3 ||
+     score_top?(loc.dup, mark, board)          == 3 ||
+     score_upper_right?(loc.dup, mark, board)  == 3 ||
+     score_right?(loc.dup, mark, board)        == 3 ||
+     score_bottom_right?(loc.dup, mark, board) == 3 ||
+     score_bottom?(loc.dup, mark, board)       == 3 ||
+     score_bottom_left?(loc.dup, mark, board)  == 3 ||
+     score_left?(loc.dup, mark, board)         == 3)
+  end
+end
+
+def display_scores(moves, mark, board)
+  display_board(board)
+  moves.each do |loc|
+    puts "#{loc}"
+    puts "upper_left: #{score_upper_left?(loc.dup, mark, board)}"
+    puts "top: #{score_top?(loc.dup, mark, board)}"
+    puts "upper_right: #{score_upper_right?(loc.dup, mark, board)}"
+    puts "right: #{score_right?(loc.dup, mark, board)}"
+    puts "bottom_right: #{score_bottom_right?(loc.dup, mark, board)}"
+    puts "bottom:  #{score_bottom?(loc.dup, mark, board)}"
+    puts "bottom_left:  #{score_bottom_left?(loc.dup, mark, board)}"
+    puts "left:  #{score_left?(loc.dup, mark, board)}"
+    sleep 5
+  end
 end
 
 def winner?(board, player)
-x
+  player_moves = []
+  board.values.each do |details|
+    player_moves << details[:location] if details[:marker] == player[:marker]
+  end
+  display_scores(player_moves, player[:marker], board)
+  player_wins?(player_moves, player[:marker], board)
+end
+
+def display_winning_board_and_winner(board, winner)
+  system 'clear'
+  display_board(board)
+  if winner
+    msg("#{winner[:name]} (#{MARKERS[winner[:marker]][:marker]}) won!")
+  else
+    msg('TIE GAME!')
+  end
+  msg('')
 end
 
 begin
@@ -244,16 +404,30 @@ begin
   marker_keys = assign_player_markers(player_types_and_count.length)
 
   players = build_players(player_types_and_count, marker_keys, player_names)
-  board = build_board(players.length)
 
   loop do
-    players.each do |player|
-      move = input_player_move(board, player[1])
-      update_board!(move, player[1], board)
-      sleep (2)
-      system 'clear'
-      #break if winner?(board)
+    system 'clear'
+    board = build_board(players.length)
+    winner = nil
+
+    loop do
+      players.each do |player|
+        move = input_player_move(board, player[1])
+        update_board!(move, player[1], board)
+
+        sleep 2
+        system 'clear'
+
+        winner = player[1] if winner?(board, player[1])
+        break if winner || board_empty_squares(board).empty?
+      end
+
+      if winner || board_empty_squares(board).empty?
+        display_winning_board_and_winner(board, winner)
+        break
+      end
     end
+
     break unless play_again?
   end
 end
