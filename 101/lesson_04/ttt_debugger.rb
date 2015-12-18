@@ -44,7 +44,6 @@ MARKERS = { m1: { marker: '★', color: :magenta },
             m4: { marker: '☀', color: :yellow } }
 COMPUTER_NAMES = ['AI_R2D2', 'AI_C3P0', 'AI_Watson', 'AI_Jarvis']
 
-
 def msg(msg, color: :default, new_line: true)
   if new_line
     puts msg.colorize(color)
@@ -208,22 +207,55 @@ def board_empty_squares(board)
   board.values.each do |details|
     squares << details[:marker] if details[:marker] =~ /\A[0-9]+/
   end
-  squares
+  squares.map(&:to_i)
 end
 
 def human_move(available_positions, board)
   loop do
     display_board(board)
     msg('Choose a number from the board: ', color: :blue, new_line: false)
-    move = gets.chomp
+    move = gets.chomp.to_i
     return move if available_positions.include? move
     system 'clear'
   end
 end
 
-def ai_move(available_positions, board)
+def ai_defensive_move(available_positions, board, player)
+  other_markers = MARKERS.keys.keep_if { |marker| marker != player[:marker] }
+  available_positions.each do |position|
+    orig_marker = board[position][:marker]
+    other_markers.each do |marker|
+      board[position][:marker] = marker
+      if player_wins?([board[position][:location]], marker, board)
+        board[position][:marker] = orig_marker
+        return position
+      end
+    end
+    board[position][:marker] = orig_marker
+  end
+  nil
+end
+
+def ai_offensive_move(available_positions, board, player)
+  marker = player[:marker]
+  max_score = 0
+  scores = {}
+  available_positions.each do |idx|
+    result = []
+    SCORE_METHODS.each do |method|
+      result << method.call(board[idx][:location].dup, marker, board)
+    end
+    scores[idx] = result.inject(:+)
+    max_score = result.inject(:+) if result.inject(:+) >= max_score
+  end
+  scores.keep_if { |_, value| value == max_score }.keys.sample
+end
+
+def ai_move(available_positions, board, player)
   display_board(board)
-  available_positions.sample
+  move = ai_defensive_move(available_positions, board, player)
+  move = ai_offensive_move(available_positions, board, player) unless move
+  move
 end
 
 def input_player_move(board, player)
@@ -231,13 +263,13 @@ def input_player_move(board, player)
   if player[:type] == 'H'
     human_move(available_positions, board)
   else
-    ai_move(available_positions, board)
+    ai_move(available_positions, board, player)
   end
 end
 
 def update_board!(idx, player, board)
-  board[idx.to_i][:marker] = player[:marker]
   system 'clear'
+  board[idx.to_i][:marker] = player[:marker]
   display_board(board)
   msg("#{player[:name]} put marker on cell #{idx}", color: :blue)
 end
@@ -319,7 +351,6 @@ def score_bottom?(loc, mark, board)
     loc[0] += 1
     break if loc.flatten.any? { |num| num >= size }
   end
-  ''
   indeces.each { |idx| score += 1 if board[idx][:marker] == mark }
   score
 end
@@ -439,12 +470,12 @@ def score_top_right_left?(loc, mark, board)
   score
 end
 
-SCORE_METHODS = [method(:score_upper_left?), method(:score_top?),
-  method(:score_upper_right?), method(:score_right?),
-  method(:score_bottom_right?), method(:score_bottom?),
-  method(:score_bottom_left?), method(:score_left?),
-  method(:score_top_bottom?), method(:score_left_right?),
-  method(:score_top_left_right?), method(:score_top_right_left?)]
+SCORE_METHODS = [method(:score_upper_left?),     method(:score_top?),
+                 method(:score_upper_right?),    method(:score_right?),
+                 method(:score_bottom_right?),   method(:score_bottom?),
+                 method(:score_bottom_left?),    method(:score_left?),
+                 method(:score_top_bottom?),     method(:score_left_right?),
+                 method(:score_top_left_right?), method(:score_top_right_left?)]
 
 def player_wins?(moves, mark, board)
   moves.any? do |loc|
@@ -470,7 +501,7 @@ def winner?(board, player)
   board.values.each do |details|
     player_moves << details[:location] if details[:marker] == player[:marker]
   end
-  display_scores(player_moves, player[:marker], board)
+  # display_scores(player_moves, player[:marker], board)
   player_wins?(player_moves, player[:marker], board)
 end
 
@@ -485,8 +516,16 @@ def display_winning_board_and_winner(board, winner)
   msg('')
 end
 
+def display_player_details(players)
+  players.values.each do |details|
+    msg("#{details[:name]}: ", new_line: false)
+    msg("#{MARKERS[details[:marker]][:marker]}",
+        color: MARKERS[details[:marker]][:color])
+   end
+end
+
 begin
-  #display_intro_sequence
+  display_intro_sequence
 
   player_types_and_count = input_player_count_types
   player_names = input_player_names(player_types_and_count)
@@ -500,10 +539,11 @@ begin
     winner = nil
 
     loop do
+      display_player_details(players)
       players.each do |player|
         move = input_player_move(board, player[1])
-        update_board!(move, player[1], board)
 
+        update_board!(move, player[1], board)
         sleep 2
         system 'clear'
 
