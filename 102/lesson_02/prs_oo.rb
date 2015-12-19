@@ -1,5 +1,13 @@
 class Player
-  def initialize; end
+  attr_reader :name
+
+  def initialize(name = '')
+    self.name = name
+  end
+
+  def name=(name)
+    @name = name.rstrip.empty? ? 'NO_NAME' : name
+  end
 
   def choose; end
 end
