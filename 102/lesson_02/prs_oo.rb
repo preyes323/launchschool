@@ -38,11 +38,14 @@ class Computer < Player
 end
 
 class Move
+  include Comparable
+  attr_writer :move
+
   MOVES = {r: '[R]ock', p: '[P]aper', s: '[S]cissors',
            l: '[L]izard', k: 'Spoc[k]'}
 
   def initialize(move)
-    @move = move
+    self.move = move
   end
 
   def move
@@ -53,19 +56,44 @@ class Move
     move
   end
 
-  def self.compare(other)
+  def <=>(other)
+    return 0 if move  == other.move
+    case move
+    when '[R]ock'
+      other.move == '[S]cissors' || other.move == '[L]izard' ?  1 : - 1
+    when '[P]aper'
+      other.move == 'Spoc[k]'    || other.move == '[R]ock'   ?  1 : - 1
+    when '[S]cissors'
+      other.move == '[P]aper'    || other.move == '[L]izard' ?  1 : - 1
+    when '[L]izard'
+      other.move == '[P]aper'    || other.move == 'Spoc[k]'  ?  1 : - 1
+    when 'Spoc[k]'
+      other.move == '[S]cissors' || other.move == '[R]ock'   ?  1 : - 1
+    end
+  end
 
+  def self.winning_message(move1, move2)
   end
 end
 
 class RPSGame
-  def initialize; end
+  def initialize
+    @computer = Computer.new
+    @player = player_name
+  end
 
   def play
-    display_welcome_message
+
     human.move
     computer.move
     display_winner
-    display_goodbye_message
+
+  end
+
+  private
+
+  def player_name
+    print "What is your name? "
+    gets.chomp
   end
 end
