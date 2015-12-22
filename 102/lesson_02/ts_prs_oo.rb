@@ -1,86 +1,63 @@
+require 'minitest/spec'
 require 'minitest/autorun'
 require_relative 'prs_oo'
 
-class PRSTest < Minitest::Test
-  def test_new_player
-    assert_equal 'Paolo', Player.new('Paolo').name
+describe Player do
+  NAMES = ['Hal', 'R2D2', 'Deep blue', 'C3P0']
+
+  before do
+    @human_player = Human.new
+    @computer_player = Computer.new
   end
 
-  def test_new_player_is_empty
-    assert_equal 'NO_NAME', Player.new.name
+  describe 'when asked for a human player name' do
+    it 'must be NO_NAME' do
+      @human_player.name.must_equal 'NO_NAME'
+    end
+
+    it 'must be equal to initialized name' do
+      name_provided = 'Paolo'
+      Player.new('Paolo').name.must_equal name_provided
+    end
+
+    it 'must be equal to the set name' do
+      set_name = 'Paolo'
+      @human_player.name = set_name
+      @human_player.name.must_equal set_name
+    end
   end
 
-  def test_valid_choice
-    assert_equal 'Spock', Move.new(:k)
+  describe 'when setting a computer player name' do
+    it 'must be included in NAMES choices' do
+      NAMES.must_include @computer_player.name
+    end
   end
+end
 
-  def test_invalid_choice
+describe Move do
+  describe 'when a move is initialized' do
+    it 'must return nil if an invalid move is set' do
+      Move.new('invalid move').move.must_be_nil
+    end
 
-  end
+    it 'must return valid move description for rock' do
+      Move.new(:r).move.must_equal '[R]ock'
+    end
 
-  def test_valid_player_choice
-  end
+    it 'must return valid move description for paper' do
+      Move.new(:p).move.must_equal '[P]aper'
+    end
 
-  def test_invalid_player_choice
-  end
+    it 'must return valid move description for scissors' do
+      Move.new(:s).move.must_equal '[S]cissors'
+    end
 
-  def test_compare_move_winning_rock_1
-  end
+    it 'must return valid move description for lizard' do
+      Move.new(:l).move.must_equal '[L]izard'
+    end
 
-  def test_compare_move_winning_rock_2
-  end
-
-  def test_compare_move_winning_paper_1
-  end
-
-  def test_compare_move_winning_paper_2
-  end
-
-  def test_compare_move_winning_scissors_1
-  end
-
-  def test_compare_move_winning_scissors_2
-  end
-
-  def test_compare_move_winning_spock_1
-  end
-
-  def test_compare_move_winning_spock_2
-  end
-
-  def test_compare_move_winning_lizard_1
-  end
-
-  def test_compare_move_winning_lizard_2
-  end
-
-  def test_winning_message_rock_1
-  end
-
-  def test_winning_message_rock_2
-  end
-
-  def test_winning_message_paper_1
-  end
-
-  def test_winning_message_paper_2
-  end
-
-  def test_winning_message_scissors_1
-  end
-
-  def test_winning_message_scissors_2
-  end
-
-  def test_winning_message_spock_1
-  end
-
-  def test_winning_message_spock_2
-  end
-
-  def test_winning_message_lizard_1
-  end
-
-  def test_winning_message_lizard_2
+    it 'must return valid move description for spock' do
+      Move.new(:k).move.must_equal 'Spoc[k]'
+    end
   end
 end
