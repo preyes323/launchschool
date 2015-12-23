@@ -4,6 +4,8 @@ require_relative 'prs_oo'
 
 describe Player do
   NAMES = ['Hal', 'R2D2', 'Deep blue', 'C3P0']
+  MOVES = {r: '[R]ock', p: '[P]aper', s: '[S]cissors',
+           l: '[L]izard', k: 'Spoc[k]'}
 
   before do
     @human_player = Human.new
@@ -32,32 +34,39 @@ describe Player do
       NAMES.must_include @computer_player.name
     end
   end
+
+  describe 'when computer chooses a move' do
+    it 'must select a valid move' do
+      @computer_player.choose
+      MOVES.values.must_include @computer_player.move.value
+    end
+  end
 end
 
 describe Move do
   describe 'when a move is initialized' do
     it 'must return nil if an invalid move is set' do
-      Move.new('invalid move').move.must_be_nil
+      Move.new('invalid move').value.must_be_nil
     end
 
     it 'must return valid move description for rock' do
-      Move.new(:r).move.must_equal '[R]ock'
+      Move.new(:r).value.must_equal '[R]ock'
     end
 
     it 'must return valid move description for paper' do
-      Move.new(:p).move.must_equal '[P]aper'
+      Move.new(:p).value.must_equal '[P]aper'
     end
 
     it 'must return valid move description for scissors' do
-      Move.new(:s).move.must_equal '[S]cissors'
+      Move.new(:s).value.must_equal '[S]cissors'
     end
 
     it 'must return valid move description for lizard' do
-      Move.new(:l).move.must_equal '[L]izard'
+      Move.new(:l).value.must_equal '[L]izard'
     end
 
     it 'must return valid move description for spock' do
-      Move.new(:k).move.must_equal 'Spoc[k]'
+      Move.new(:k).value.must_equal 'Spoc[k]'
     end
   end
 

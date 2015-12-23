@@ -1,5 +1,6 @@
 require 'colorize'
 require 'yaml'
+require 'pry'
 
 class Player
   attr_reader :name, :move
@@ -20,10 +21,11 @@ class Human < Player
   def choose
     loop do
       puts 'Choose a move:'
-      Move::MOVES.each { |idx, move| "#{idx.inspect}: #{move}" }
+      Move::MOVES.each { |idx, move| puts "#{idx.inspect}: #{move}" }
+      print "=> "
       choice = gets.chomp.downcase.to_sym
       @move = Move.new(choice)
-      break unless move
+      break if move.value
     end
   end
 end
@@ -36,48 +38,49 @@ class Computer < Player
   end
 
   def choose
-    @move = Move.new(MOVE.moves.values.sample)
+    @move = Move.new(Move::MOVES.keys.sample)
   end
 end
 
 class Move
+  attr_reader :choice
   include Comparable
-  attr_writer :move
 
   MESSAGES = YAML.load_file('prs_messages.yml')
   MOVES = {r: '[R]ock', p: '[P]aper', s: '[S]cissors',
            l: '[L]izard', k: 'Spoc[k]'}
 
   def initialize(move)
-    self.move = move
+    @choice = move
   end
 
-  def move
-    MOVES[@move]
+  def value
+    MOVES[@choice]
   end
 
   def to_s
-    move
+    value
   end
 
   def <=>(other)
-    return 0 if move  == other.move
-    case move
+    return 0 if value  == other.value
+
+    case value
     when '[R]ock'
-      other.move == '[S]cissors' || other.move == '[L]izard' ?  1 : - 1
+      other.value == '[S]cissors' || other.value == '[L]izard' ?  1 : - 1
     when '[P]aper'
-      other.move == 'Spoc[k]'    || other.move == '[R]ock'   ?  1 : - 1
+      other.value == 'Spoc[k]'    || other.value == '[R]ock'   ?  1 : - 1
     when '[S]cissors'
-      other.move == '[P]aper'    || other.move == '[L]izard' ?  1 : - 1
+      other.value == '[P]aper'    || other.value == '[L]izard' ?  1 : - 1
     when '[L]izard'
-      other.move == '[P]aper'    || other.move == 'Spoc[k]'  ?  1 : - 1
+      other.value == '[P]aper'    || other.value == 'Spoc[k]'  ?  1 : - 1
     when 'Spoc[k]'
-      other.move == '[S]cissors' || other.move == '[R]ock'   ?  1 : - 1
+      other.value == '[S]cissors' || other.value == '[R]ock'   ?  1 : - 1
     end
   end
 
   def self.winning_message(move1, move2)
-    key = "#{MOVES[move1]}_#{MOVES[move2]}".tr('[]', '').downcase
+    key = "#{Move.new(move1)}_#{Move.new(move2)}".tr('[]', '').downcase
     MESSAGES[key]
   end
 end
@@ -85,15 +88,14 @@ end
 class RPSGame
   def initialize
     @computer = Computer.new
-    @player = player_name
+    @human = Human.new(player_name)
   end
 
   def play
-
-    human.move
-    computer.move
-    display_winner
-
+    @human.choose
+    @computer.choose
+    winner, looser = evalute_player_moves(@human, @computer)
+    p Move.winning_message(winner.move.choice, looser.move.choice)
   end
 
   private
@@ -102,4 +104,17 @@ class RPSGame
     print "What is your name? "
     gets.chomp
   end
+
+  def evalute_player_moves(player1, player2)
+    if player1.move > player2.move
+      winner = player1
+      looser = player2
+    else
+      winner = player2
+      looser = player1
+    end
+    [winner, looser]
+  end
 end
+
+RPSGame.new.play
