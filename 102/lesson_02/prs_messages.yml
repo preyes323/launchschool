@@ -1,0 +1,19 @@
+rock_scissors: 'Rock crushes Scissors'
+
+rock_lizard: 'Rock crushes Lizard'
+
+paper_rock: 'Paper covers Rock'
+
+paper_spock: 'Paper disproves Spock'
+
+scissors_paper: 'Scissors cuts Paper'
+
+scissors_lizard: 'Scissors decapitates Lizard'
+
+lizard_spock: 'Lizard poisons Spock'
+
+lizard_paper: 'Lizard eats Paper'
+
+spock_rock: 'Spock vaporizes Rock'
+
+spock_scissors: 'Spock smashes Scissors'

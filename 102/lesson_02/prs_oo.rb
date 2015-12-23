@@ -118,3 +118,5 @@ class RPSGame
 end
 
 RPSGame.new.play
+
+puts Player.ancestors
