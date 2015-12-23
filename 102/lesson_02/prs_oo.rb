@@ -1,3 +1,6 @@
+require 'colorize'
+require 'yaml'
+
 class Player
   attr_reader :name, :move
 
@@ -41,6 +44,7 @@ class Move
   include Comparable
   attr_writer :move
 
+  MESSAGES = YAML.load_file('prs_messages.yml')
   MOVES = {r: '[R]ock', p: '[P]aper', s: '[S]cissors',
            l: '[L]izard', k: 'Spoc[k]'}
 
@@ -73,6 +77,8 @@ class Move
   end
 
   def self.winning_message(move1, move2)
+    key = "#{MOVES[move1]}_#{MOVES[move2]}".tr('[]', '').downcase
+    MESSAGES[key]
   end
 end
 
