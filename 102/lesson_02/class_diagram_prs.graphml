@@ -19,7 +19,7 @@
       <data key="d5"/>
       <data key="d6">
         <y:UMLClassNode>
-          <y:Geometry height="87.0" width="100.0" x="39.0" y="-384.0"/>
+          <y:Geometry height="87.0" width="100.0" x="0.0" y="0.0"/>
           <y:Fill color="#99CCFF" transparent="false"/>
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
           <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="13" fontStyle="bold" hasBackgroundColor="false" hasLineColor="false" height="19.310546875" modelName="custom" textColor="#000000" visible="true" width="44.94873046875" x="27.525634765625" y="3.0">Player<y:LabelModel>
@@ -32,8 +32,8 @@
           <y:UML clipContent="true" constraint="" omitDetails="false" stereotype="" use3DEffect="true">
             <y:AttributeLabel/>
             <y:MethodLabel>name(): String
-name=(): String
-move: Move</y:MethodLabel>
+move(): Move
+choose(): nil</y:MethodLabel>
           </y:UML>
         </y:UMLClassNode>
       </data>
@@ -43,7 +43,7 @@ move: Move</y:MethodLabel>
       <data key="d5"/>
       <data key="d6">
         <y:UMLClassNode>
-          <y:Geometry height="68.0" width="100.0" x="-26.0" y="-267.0"/>
+          <y:Geometry height="68.0" width="100.0" x="0.0" y="137.0"/>
           <y:Fill color="#99CCFF" transparent="false"/>
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
           <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="13" fontStyle="bold" hasBackgroundColor="false" hasLineColor="false" height="19.310546875" modelName="custom" textColor="#000000" visible="true" width="51.4677734375" x="24.26611328125" y="3.0">Human<y:LabelModel>
@@ -65,7 +65,7 @@ move: Move</y:MethodLabel>
       <data key="d5"/>
       <data key="d6">
         <y:UMLClassNode>
-          <y:Geometry height="68.0" width="100.0" x="104.0" y="-267.0"/>
+          <y:Geometry height="68.0" width="100.0" x="140.0" y="137.0"/>
           <y:Fill color="#99CCFF" transparent="false"/>
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
           <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="13" fontStyle="bold" hasBackgroundColor="false" hasLineColor="false" height="19.310546875" modelName="custom" textColor="#000000" visible="true" width="70.1171875" x="14.94140625" y="3.0">Computer<y:LabelModel>
@@ -87,7 +87,7 @@ move: Move</y:MethodLabel>
       <data key="d5"/>
       <data key="d6">
         <y:UMLClassNode>
-          <y:Geometry height="87.0" width="169.0" x="-4.5" y="-121.0"/>
+          <y:Geometry height="147.0" width="169.0" x="35.5" y="240.0"/>
           <y:Fill color="#99CCFF" transparent="false"/>
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
           <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="13" fontStyle="bold" hasBackgroundColor="false" hasLineColor="false" height="19.310546875" modelName="custom" textColor="#000000" visible="true" width="39.4326171875" x="64.78369140625" y="3.0">Move<y:LabelModel>
@@ -98,9 +98,36 @@ move: Move</y:MethodLabel>
             </y:ModelParameter>
           </y:NodeLabel>
           <y:UML clipContent="true" constraint="" omitDetails="false" stereotype="" use3DEffect="true">
-            <y:AttributeLabel/>
-            <y:MethodLabel>winning_message(): String
+            <y:AttributeLabel>MOVES: Hash
+MESSAGES: Hash</y:AttributeLabel>
+            <y:MethodLabel>&lt;=&gt;(): Boolean
+winning_message(): String
+value(): String
+to_s(): String
+choice(): Symbol
 </y:MethodLabel>
+          </y:UML>
+        </y:UMLClassNode>
+      </data>
+    </node>
+    <node id="n4">
+      <data key="d4"/>
+      <data key="d5"/>
+      <data key="d6">
+        <y:UMLClassNode>
+          <y:Geometry height="68.0" width="100.0" x="140.0" y="9.5"/>
+          <y:Fill color="#99CCFF" transparent="false"/>
+          <y:BorderStyle color="#000000" type="line" width="1.0"/>
+          <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="13" fontStyle="bold" hasBackgroundColor="false" hasLineColor="false" height="19.310546875" modelName="custom" textColor="#000000" visible="true" width="65.927734375" x="17.0361328125" y="3.0">RPSGame<y:LabelModel>
+              <y:SmartNodeLabelModel distance="4.0"/>
+            </y:LabelModel>
+            <y:ModelParameter>
+              <y:SmartNodeLabelModelParameter labelRatioX="0.0" labelRatioY="0.0" nodeRatioX="0.0" nodeRatioY="-0.03703090122767855" offsetX="0.0" offsetY="0.0" upX="0.0" upY="-1.0"/>
+            </y:ModelParameter>
+          </y:NodeLabel>
+          <y:UML clipContent="true" constraint="" omitDetails="false" stereotype="" use3DEffect="true">
+            <y:AttributeLabel/>
+            <y:MethodLabel>play()</y:MethodLabel>
           </y:UML>
         </y:UMLClassNode>
       </data>
@@ -110,10 +137,7 @@ move: Move</y:MethodLabel>
       <data key="d9"/>
       <data key="d10">
         <y:PolyLineEdge>
-          <y:Path sx="0.0" sy="-34.0" tx="-25.0" ty="43.5">
-            <y:Point x="24.0" y="-282.0"/>
-            <y:Point x="64.0" y="-282.0"/>
-          </y:Path>
+          <y:Path sx="-25.0" sy="-34.0" tx="-25.0" ty="43.5"/>
           <y:LineStyle color="#000000" type="line" width="1.0"/>
           <y:Arrows source="none" target="white_delta"/>
           <y:BendStyle smoothed="false"/>
@@ -125,9 +149,9 @@ move: Move</y:MethodLabel>
       <data key="d9"/>
       <data key="d10">
         <y:PolyLineEdge>
-          <y:Path sx="0.0" sy="-34.0" tx="25.0" ty="43.5">
-            <y:Point x="154.0" y="-282.0"/>
-            <y:Point x="114.0" y="-282.0"/>
+          <y:Path sx="-25.0" sy="-34.0" tx="25.0" ty="43.5">
+            <y:Point x="165.0" y="107.0"/>
+            <y:Point x="75.0" y="107.0"/>
           </y:Path>
           <y:LineStyle color="#000000" type="line" width="1.0"/>
           <y:Arrows source="none" target="white_delta"/>
@@ -140,7 +164,10 @@ move: Move</y:MethodLabel>
       <data key="d9"/>
       <data key="d10">
         <y:PolyLineEdge>
-          <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0"/>
+          <y:Path sx="-42.25" sy="-73.5" tx="0.0" ty="34.0">
+            <y:Point x="77.75" y="225.0"/>
+            <y:Point x="50.0" y="225.0"/>
+          </y:Path>
           <y:LineStyle color="#000000" type="line" width="1.0"/>
           <y:Arrows source="none" target="none"/>
           <y:BendStyle smoothed="false"/>
@@ -152,7 +179,37 @@ move: Move</y:MethodLabel>
       <data key="d9"/>
       <data key="d10">
         <y:PolyLineEdge>
-          <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0"/>
+          <y:Path sx="42.25" sy="-73.5" tx="0.0" ty="34.0">
+            <y:Point x="162.25" y="225.0"/>
+            <y:Point x="190.0" y="225.0"/>
+          </y:Path>
+          <y:LineStyle color="#000000" type="line" width="1.0"/>
+          <y:Arrows source="none" target="none"/>
+          <y:BendStyle smoothed="false"/>
+        </y:PolyLineEdge>
+      </data>
+    </edge>
+    <edge id="e4" source="n1" target="n4">
+      <data key="d8"/>
+      <data key="d9"/>
+      <data key="d10">
+        <y:PolyLineEdge>
+          <y:Path sx="25.0" sy="-34.0" tx="-25.0" ty="34.0">
+            <y:Point x="75.0" y="122.0"/>
+            <y:Point x="165.0" y="122.0"/>
+          </y:Path>
+          <y:LineStyle color="#000000" type="line" width="1.0"/>
+          <y:Arrows source="none" target="none"/>
+          <y:BendStyle smoothed="false"/>
+        </y:PolyLineEdge>
+      </data>
+    </edge>
+    <edge id="e5" source="n2" target="n4">
+      <data key="d8"/>
+      <data key="d9"/>
+      <data key="d10">
+        <y:PolyLineEdge>
+          <y:Path sx="25.0" sy="-34.0" tx="25.0" ty="34.0"/>
           <y:LineStyle color="#000000" type="line" width="1.0"/>
           <y:Arrows source="none" target="none"/>
           <y:BendStyle smoothed="false"/>
