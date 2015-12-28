@@ -72,28 +72,42 @@ class Ship
 end
 
 class Board
-  attr_accessor :board, :location_marks
+  attr_accessor :board, :markers
 
   def initialize(*sides)
     @board = ''
-    if sides.length == 2
-      self.location_marks = Array.new(sides[0]) { Array.new(sides[1]) }
-      build_board(sides[0], sides[1])
-    else
-      self.location_marks = Array.new(sides[0]) { Array.new(sides[0]) }
-      build_board(sides[0], sides[0])
-    end
+    @rows = sides[0]
+    @cols = sides[1] ? sides[1] : sides[0]
+    self.markers = Array.new(@rows) { Array.new(@cols) }
+    build_board(@rows, @cols)
+  end
+
+  def mark!(row, col, marker)
+    valid_row_col?(row, col) ? !!place(row - 1, col - 1, marker) : false
+  end
+
+  def update!
+    @board = ''
+    build_board(@rows, @cols)
   end
 
   def display_board
-
+    puts "#{board}"
   end
 
   def to_s
-
+    "#{board}"
   end
 
   private
+
+  def valid_row_col?(row, col)
+    row <= @rows && col <= @cols && row > 0 && col > 0
+  end
+
+  def place(row, col, marker)
+    markers[row][col].nil? ? self.markers[row][col] = marker : false
+  end
 
   def build_board(rows, cols)
     rows.times do |row|
@@ -105,7 +119,7 @@ class Board
   end
 
   def draw_marker(row, col)
-    "#{location_marks[row][col].to_s.center(3, ' ')}"
+    "#{markers[row][col].to_s.center(3, ' ')}"
   end
 
   def draw_top_row(cols)
@@ -138,7 +152,7 @@ class Board
     cols.times do |col|
       result << case col
                 when 0 then "#{row + 1} |#{draw_marker(row, col)}"
-                when cols - 1 then "|#{draw_marker(row - 1, col - 1)}|\n"
+                when cols - 1 then "|#{draw_marker(row, col)}|\n"
                 else "|#{draw_marker(row, col)}"
                 end
     end
@@ -146,3 +160,8 @@ class Board
     result
   end
 end
+
+# board = Board.new(5)
+
+# board.display_board
+# puts board

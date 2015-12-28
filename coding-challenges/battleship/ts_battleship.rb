@@ -58,7 +58,11 @@ describe Ship do
 end
 
 describe Board do
-  describe 'when create a new board' do
+  before do
+    @board = Board.new(5)
+  end
+
+  describe 'when creating a new board' do
     it 'must successfully create an empty 5x5 board' do
       board_5x5 = %(    1   2   3   4   5
   +---+---+---+---+---+
@@ -73,8 +77,7 @@ describe Board do
 5 |   |   |   |   |   |
   +---+---+---+---+---+
 ).chomp
-
-      Board.new(5).board.must_equal board_5x5
+      @board.board.must_equal board_5x5
     end
 
     it 'must successfully create an empty 5x7 board' do
@@ -93,5 +96,89 @@ describe Board do
 ).chomp
       Board.new(5, 7).board.must_equal board_5x7
     end
+  end
+
+  describe 'when updating an existing board' do
+    it 'must mark a blank board position with a marker' do
+      @board.mark!(5, 5, 'x').must_be :==, true
+    end
+
+    it 'must mark a blank board position with a marker 2' do
+      @board.mark!(3, 2, 'x').must_be :==, true
+    end
+
+    it 'must not mark a board position that does not exist' do
+      @board.mark!(6, 6, 'x').must_be :==, false
+    end
+
+    it 'must not mark a taken board position with the same marker' do
+      @board.mark!(5, 5, 'x')
+      @board.mark!(5, 5, 'x').must_be :==, false
+    end
+
+    it 'must not mark a taken board position with a different marker' do
+      @board.mark!(5, 5, 'x')
+      @board.mark!(5, 5, '/').must_be :==, false
+    end
+
+    it 'must display marked board correctly' do
+      board_5x5 = %(    1   2   3   4   5
+  +---+---+---+---+---+
+1 |   |   |   |   |   |
+  +---+---+---+---+---+
+2 |   |   |   |   |   |
+  +---+---+---+---+---+
+3 |   |   |   |   |   |
+  +---+---+---+---+---+
+4 |   |   |   |   |   |
+  +---+---+---+---+---+
+5 |   |   |   |   | x |
+  +---+---+---+---+---+
+).chomp
+      @board.mark!(5, 5, 'x')
+      @board.update!
+      @board.board.must_equal board_5x5
+    end
+
+    it 'must display marked board correctly 2' do
+      board_5x5 = %(    1   2   3   4   5
+  +---+---+---+---+---+
+1 |   |   |   |   |   |
+  +---+---+---+---+---+
+2 |   |   |   |   |   |
+  +---+---+---+---+---+
+3 |   | x |   |   |   |
+  +---+---+---+---+---+
+4 |   |   |   |   |   |
+  +---+---+---+---+---+
+5 |   |   |   |   |   |
+  +---+---+---+---+---+
+).chomp
+      @board.mark!(3, 2, 'x')
+      @board.update!
+      @board.board.must_equal board_5x5
+    end
+
+    it 'must display multiple marked board correctly' do
+      board_5x5 = %(    1   2   3   4   5
+  +---+---+---+---+---+
+1 |   |   |   |   |   |
+  +---+---+---+---+---+
+2 | / |   |   |   |   |
+  +---+---+---+---+---+
+3 |   | x |   |   | x |
+  +---+---+---+---+---+
+4 |   |   |   |   |   |
+  +---+---+---+---+---+
+5 |   |   |   |   |   |
+  +---+---+---+---+---+
+).chomp
+      @board.mark!(3, 2, 'x')
+      @board.mark!(2, 1, '/')
+      @board.mark!(3, 5, 'x')
+      @board.update!
+      @board.board.must_equal board_5x5
+    end
+
   end
 end
