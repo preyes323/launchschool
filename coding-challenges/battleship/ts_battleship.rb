@@ -183,7 +183,7 @@ describe Board do
 
   describe 'when adding a ship to the board' do
     it 'must return false when adding an invalid ship' do
-      refute @board.add_ship('jet', [1, 1], [1, 2])
+      refute @board.add_ship('jet', [3, 1], [1, 2])
     end
 
     it 'must return true when adding a valid ship' do
@@ -202,11 +202,16 @@ describe Board do
       assert @board.add_ship('battleship', [1, 4], [3, 4])
     end
 
-    it 'must be able to randomly add a ship' do
-      skip
+    it 'must return true when adding a ship not in excess of allowed type' do
+      assert @board.add_ship('destroyer', [1, 1], [1, 1])
     end
 
     it 'must return false when adding a ship in excess of allowed type' do
+      @board.add_ship('destroyer', [1, 4], [1, 4])
+      refute @board.add_ship('destroyer', [1, 4], [1, 4])
+    end
+
+    it 'must be able to randomly add a ship' do
       skip
     end
 

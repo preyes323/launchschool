@@ -31,7 +31,6 @@ class Player
 end
 
 class Human < Player
-
   def choose; end
 
   def position_ships; end
@@ -70,12 +69,14 @@ end
 
 class Board
   attr_accessor :board, :markers, :ships
-  attr_reader :ship_composition
+  attr_reader :ships_composition
 
   def initialize(*sides)
     @board = ''
     @rows = sides[0]
     @cols = sides[1] ? sides[1] : sides[0]
+    @ships_composition = CONFIG['ships_composition'].dup
+
     self.ships = []
     self.markers = Array.new(@rows) { Array.new(@cols) }
     build_board(@rows, @cols)
@@ -91,18 +92,21 @@ class Board
   end
 
   def random_add_ship
-
   end
 
   def random_add_all_ships
-
   end
 
   def add_ship(type, *coordinates)
-    (CONFIG['ships'].keys.include?(type) &&
-     valid_row_col?(coordinates[0][0], coordinates[0][1]) &&
-     valid_row_col?(coordinates[1][0], coordinates[1][1]) &&
-     valid_coordinates?(type, coordinates))
+    if CONFIG['ships'].keys.include?(type)                  &&
+       valid_row_col?(coordinates[0][0], coordinates[0][1]) &&
+       valid_row_col?(coordinates[1][0], coordinates[1][1]) &&
+       valid_coordinates?(type, coordinates)                &&
+       ship_with_board_allotment?(type)
+
+      ships_composition.delete_at(ships_composition.index(type))
+      return (ships << build_ship(type, coordinates))
+    end
   end
 
   def display_board
@@ -114,6 +118,16 @@ class Board
   end
 
   private
+
+  def build_ship(type, coordinates)
+    new_ship = Ship.new(type)
+    new_ship.coordinates = coordinates
+    new_ship
+  end
+
+  def ship_with_board_allotment?(type)
+    ships_composition.include? type
+  end
 
   def valid_coordinates?(type, coordinates)
     ship_top_left = [1, 1]
@@ -133,16 +147,17 @@ class Board
   end
 
   def place(row, col, marker)
-    self.markers[row][col] = marker if markers[row][col].nil?
+    markers[row][col] = marker if markers[row][col].nil?
   end
 
   def build_board(rows, cols)
     rows.times do |row|
-      self.board << draw_top_row(cols) if row == 0
-      self.board << draw_top_bottom_cell(cols)
-      self.board << draw_middle_cell(row, cols)
+      board << draw_top_row(cols) if row == 0
+      board << draw_top_bottom_cell(cols)
+      board << draw_middle_cell(row, cols)
     end
-    self.board << draw_top_bottom_cell(cols).chomp
+
+    board << draw_top_bottom_cell(cols).chomp
   end
 
   def draw_marker(row, col)
