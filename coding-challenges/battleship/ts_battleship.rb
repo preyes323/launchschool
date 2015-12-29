@@ -211,12 +211,17 @@ describe Board do
       refute @board.add_ship('destroyer', [1, 4], [1, 4])
     end
 
-    it 'must be able to randomly add a ship' do
-      skip
+    it 'must return true if able to randomly add a battleship' do
+      assert @board.random_add_ship('battleship')
     end
 
-    it 'must allow a ship to be placed on a valid location' do
-      skip
+    it 'must return true if able to randomly add a carrier' do
+      assert @board.random_add_ship('carrier')
+    end
+
+    it 'must return false if not able to randomly add to a full board' do
+      @board.markers = Array.new(5) { Array.new(5, 'x') }
+      refute @board.random_add_ship('destroyer')
     end
 
     it 'must not allow a ship to occupy the same space as an existing ship' do

@@ -91,7 +91,23 @@ class Board
     build_board(@rows, @cols)
   end
 
-  def random_add_ship
+  def random_add_ship(type)
+    available_coordinates = markers.map.with_index do |row, row_indx|
+                              row.map.with_index do |col, col_indx|
+                                unless markers[row_indx][col_indx]
+                                  [row_indx + 1, col_indx + 1]
+                                end
+                              end
+                            end.flatten(1)
+    available_coordinates.shuffle!.delete(nil)
+
+    available_coordinates.each do |coordinate|
+      if lengthwise?(type, coordinate) || widthwise?(type, coordinate)
+        return 'added'
+      end
+    end
+
+    false
   end
 
   def random_add_all_ships
@@ -118,6 +134,20 @@ class Board
   end
 
   private
+
+  def lengthwise?(type, coordinate)
+    length = CONFIG['ships'][type]['length'] - 1
+    width = CONFIG['ships'][type]['width'] - 1
+    add_ship(type, coordinate, [coordinate[0] + length,
+                                coordinate[1] + width])
+  end
+
+  def widthwise?(type, coordinate)
+    length = CONFIG['ships'][type]['length'] - 1
+    width = CONFIG['ships'][type]['width'] - 1
+    add_ship(type, coordinate, [coordinate[0] + width,
+                                coordinate[1] + length])
+  end
 
   def build_ship(type, coordinates)
     new_ship = Ship.new(type)
