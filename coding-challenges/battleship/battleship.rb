@@ -10,6 +10,8 @@ require 'pry'
 require 'colorize'
 require 'yaml'
 
+CONFIG = YAML.load_file('battleship_config.yml')
+
 class Player
   attr_reader :name, :move
 
@@ -48,7 +50,7 @@ class Computer < Player
 end
 
 class Ship
-  attr_accessor :hitpoints, :type
+  attr_accessor :hitpoints, :type, :coordinates
 
   def initialize(type)
     self.type = type
@@ -62,33 +64,45 @@ class Ship
   private
 
   def initialize_hitpoints(type)
-    case type
-    when 'destroyer' then 1
-    when 'cruiser' then 2
-    when 'battleship' then 3
-    else 0
-    end
+    CONFIG['ships'][type]['length'] * CONFIG['ships'][type]['width']
   end
 end
 
 class Board
-  attr_accessor :board, :markers
+  attr_accessor :board, :markers, :ships
+  attr_reader :ship_composition
 
   def initialize(*sides)
     @board = ''
     @rows = sides[0]
     @cols = sides[1] ? sides[1] : sides[0]
+    self.ships = []
     self.markers = Array.new(@rows) { Array.new(@cols) }
     build_board(@rows, @cols)
   end
 
   def mark!(row, col, marker)
-    valid_row_col?(row, col) ? !!place(row - 1, col - 1, marker) : false
+    place(row - 1, col - 1, marker) if valid_row_col?(row, col)
   end
 
   def update!
     @board = ''
     build_board(@rows, @cols)
+  end
+
+  def random_add_ship
+
+  end
+
+  def random_add_all_ships
+
+  end
+
+  def add_ship(type, *coordinates)
+    (CONFIG['ships'].keys.include?(type) &&
+     valid_row_col?(coordinates[0][0], coordinates[0][1]) &&
+     valid_row_col?(coordinates[1][0], coordinates[1][1]) &&
+     valid_coordinates?(type, coordinates))
   end
 
   def display_board
@@ -101,12 +115,25 @@ class Board
 
   private
 
+  def valid_coordinates?(type, coordinates)
+    ship_top_left = [1, 1]
+    ship_bottom_right = [CONFIG['ships'][type]['length'],
+                         CONFIG['ships'][type]['width']]
+    board_top_left = coordinates[0]
+    board_bottom_right = coordinates[1]
+
+    (((board_bottom_right[0] - ship_bottom_right[0]) -
+      (board_top_left[0]     - ship_top_left[0])).abs ==
+     ((board_bottom_right[1] - ship_bottom_right[1]) -
+      (board_top_left[1]     - ship_top_left[1])).abs)
+  end
+
   def valid_row_col?(row, col)
     row <= @rows && col <= @cols && row > 0 && col > 0
   end
 
   def place(row, col, marker)
-    markers[row][col].nil? ? self.markers[row][col] = marker : false
+    self.markers[row][col] = marker if markers[row][col].nil?
   end
 
   def build_board(rows, cols)
@@ -160,8 +187,3 @@ class Board
     result
   end
 end
-
-# board = Board.new(5)
-
-# board.display_board
-# puts board

@@ -100,25 +100,25 @@ describe Board do
 
   describe 'when updating an existing board' do
     it 'must mark a blank board position with a marker' do
-      @board.mark!(5, 5, 'x').must_be :==, true
+      assert @board.mark!(5, 5, 'x')
     end
 
     it 'must mark a blank board position with a marker 2' do
-      @board.mark!(3, 2, 'x').must_be :==, true
+      assert @board.mark!(3, 2, 'x')
     end
 
     it 'must not mark a board position that does not exist' do
-      @board.mark!(6, 6, 'x').must_be :==, false
+      refute @board.mark!(6, 6, 'x')
     end
 
     it 'must not mark a taken board position with the same marker' do
       @board.mark!(5, 5, 'x')
-      @board.mark!(5, 5, 'x').must_be :==, false
+      refute @board.mark!(5, 5, 'x')
     end
 
     it 'must not mark a taken board position with a different marker' do
       @board.mark!(5, 5, 'x')
-      @board.mark!(5, 5, '/').must_be :==, false
+      refute @board.mark!(5, 5, '/')
     end
 
     it 'must display marked board correctly' do
@@ -179,6 +179,43 @@ describe Board do
       @board.update!
       @board.board.must_equal board_5x5
     end
+  end
 
+  describe 'when adding a ship to the board' do
+    it 'must return false when adding an invalid ship' do
+      refute @board.add_ship('jet', [1, 1], [1, 2])
+    end
+
+    it 'must return true when adding a valid ship' do
+      assert @board.add_ship('destroyer', [1, 1], [1, 1])
+    end
+
+    it 'must not allow a ship to be placed on an invalid location' do
+      refute @board.add_ship('destroyer', [5, 6], [1, 2])
+    end
+
+    it 'must return false if ship dimension does not match coordinates' do
+      refute @board.add_ship('battleship', [1, 4], [2, 4])
+    end
+
+    it 'must return true if ship dimension matches coordinates' do
+      assert @board.add_ship('battleship', [1, 4], [3, 4])
+    end
+
+    it 'must be able to randomly add a ship' do
+      skip
+    end
+
+    it 'must return false when adding a ship in excess of allowed type' do
+      skip
+    end
+
+    it 'must allow a ship to be placed on a valid location' do
+      skip
+    end
+
+    it 'must not allow a ship to occupy the same space as an existing ship' do
+      skip
+    end
   end
 end
