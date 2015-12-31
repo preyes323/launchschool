@@ -47,6 +47,10 @@ describe Ship do
     it 'must have 3 hitpoints if battleship' do
       Ship.new('battleship').hitpoints.must_equal 3
     end
+
+    it 'must have 8 hitpoints if carrier' do
+      Ship.new('carrier').hitpoints.must_equal 8
+    end
   end
 
   describe 'when printing out display of Ship details (to_s)' do
@@ -261,6 +265,102 @@ describe Board do
 ).chomp
 
       @board.display_last_added_ship.must_equal board_5x5
+    end
+  end
+
+  describe 'when checking to see if a ship on the board is hit' do
+    it 'must return true if a ship on the board is hit' do
+      @board.add_ship('carrier', [2, 2], [3, 5])
+      assert @board.ship_hit?([2, 4])
+    end
+
+    it 'must return false if a ship on the board is not hit' do
+      @board.add_ship('carrier', [2, 2], [3, 5])
+      refute @board.ship_hit?([1, 1])
+    end
+  end
+
+  describe 'when checking status of ships' do
+    it 'must return true when ships sunk1' do
+      @board.add_ship('cruiser', [2, 2], [2, 3])
+      @board.ship_hit?([2, 2])
+      @board.ship_hit?([2, 3])
+      assert @board.all_ships_sunk?
+    end
+
+    it 'must return true when ships sunk2' do
+      @board.add_ship('cruiser', [2, 2], [2, 3])
+      @board.ship_hit?([2, 2])
+      @board.ship_hit?([2, 3])
+      @board.add_ship('destroyer', [4, 4], [4, 4])
+      @board.ship_hit?([4, 4])
+      assert @board.all_ships_sunk?
+    end
+
+    it 'must return false when not all ships sunk' do
+      @board.add_ship('cruiser', [2, 2], [2, 3])
+      @board.ship_hit?([2, 2])
+      @board.ship_hit?([2, 3])
+      @board.add_ship('destroyer', [4, 4], [4, 4])
+      refute @board.all_ships_sunk?
+    end
+
+    it 'must return false when not all ships sunk2' do
+      @board.add_ship('cruiser', [2, 2], [2, 3])
+      @board.ship_hit?([2, 2])
+      refute @board.all_ships_sunk?
+    end
+  end
+
+  describe 'when displaying status of board after a move' do
+    it 'must present player with matching board status for hit' do
+      @board.add_ship('cruiser', [2, 2], [2, 3])
+      @board.ship_hit?([2, 2])
+      @board.mark!(2, 2, 'x')
+      @board.ship_hit?([2, 3])
+      @board.mark!(2, 3, 'x')
+      @board.update!
+
+      board_5x5 = %(    1   2   3   4   5
+  +---+---+---+---+---+
+1 |   |   |   |   |   |
+  +---+---+---+---+---+
+2 |   | x | x |   |   |
+  +---+---+---+---+---+
+3 |   |   |   |   |   |
+  +---+---+---+---+---+
+4 |   |   |   |   |   |
+  +---+---+---+---+---+
+5 |   |   |   |   |   |
+  +---+---+---+---+---+
+).chomp
+
+      @board.board.must_equal board_5x5
+    end
+
+    it 'must present player with matching board status for miss' do
+      @board.add_ship('cruiser', [2, 2], [2, 3])
+      @board.ship_hit?([2, 2])
+      @board.mark!(2, 2, 'x')
+      @board.ship_hit?([2, 4])
+      @board.mark!(2, 4, '/')
+      @board.update!
+
+      board_5x5 = %(    1   2   3   4   5
+  +---+---+---+---+---+
+1 |   |   |   |   |   |
+  +---+---+---+---+---+
+2 |   | x |   | / |   |
+  +---+---+---+---+---+
+3 |   |   |   |   |   |
+  +---+---+---+---+---+
+4 |   |   |   |   |   |
+  +---+---+---+---+---+
+5 |   |   |   |   |   |
+  +---+---+---+---+---+
+).chomp
+
+      @board.board.must_equal board_5x5
     end
   end
 end

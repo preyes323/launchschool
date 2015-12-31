@@ -18,9 +18,7 @@ ships:
 num_ships: 3
 
 ships_composition:
-  - carrier
   - cruiser
-  - battleship
   - battleship
   - destroyer
 

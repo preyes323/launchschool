@@ -13,39 +13,86 @@ require 'yaml'
 CONFIG = YAML.load_file('battleship_config.yml')
 
 class Player
-  attr_reader :name, :board
+  attr_reader :name
+  attr_accessor :board
 
-  def initialize(name = '')
+  def initialize(name = '', size = 5)
     self.name = name
+    self.board = Board.new(5)
   end
 
   def name=(name)
     @name = name.rstrip.empty? ? 'NO_NAME' : name
   end
 
-  def choose; end
-
-  def ships; end
-
-  def position_ships; end
+  def random_position_all_ships
+    board.random_add_all_ships
+  end
 end
 
 class Human < Player
-  def choose; end
+  def attack_coordinate!(opponent_board)
+    loop do
+      puts 'Choose a coordinate on the opponents board to attack:'
+      move = gets.chopm.split(',').map(&:to_i)
 
-  def position_ships; end
+      if opponent_board.available_moves.include? move
+        marker = opponent_board.ship_hit?(move) ? 'x' : '/'
+        opponent_board.mark!(move[0], move[1], marker)
+        opponent_board.update!
+        break
+      end
+    end
+  end
+
+  def add_ships
+    CONFIG['num_ships'].times do
+      loop do
+        puts "#{board}"
+        puts ''
+        puts 'Available ships to add'
+        puts '----------------------'
+        board.ships_composition.each { |ship| puts ship }
+        puts '----------------------'
+        print '=> '
+        ship_type = gets.chomp.downcase
+
+        top_left = input_coordinates('top left')
+        bottom_right = input_coordinates('bottom right')
+
+        if board.add_ship(ship_type, top_left, bottom_right)
+          board.display_last_added_ship
+          break
+        end
+      end
+    end
+  end
+
+  private
+
+  def input_coordinates(location)
+    loop do
+      print "Enter #{location} coordinates: "
+      coordinates = gets.chomp
+      return coordinates.split(',').map(&:to_i) if coordinates =~ /\d+,\s*\d+/
+    end
+  end
 end
 
 class Computer < Player
   NAMES = ['Hal', 'R2D2', 'Deep blue', 'C3P0']
 
   def initialize
-    @name = NAMES.sample
+    super
+    self.name = NAMES.sample
   end
 
-  def choose; end
-
-  def position_ships; end
+  def attack_coordinate!(opponent_board)
+    move = opponent_board.available_moves.sample
+    marker = opponent_board.ship_hit?(move) ? 'x' : '/'
+    opponent_board.mark!(move[0], move[1], marker)
+    opponent_board.update!
+  end
 end
 
 class Ship
@@ -60,6 +107,9 @@ class Ship
     "#{type}: #{hitpoints}"
   end
 
+  def sunk?
+    hitpoints == 0
+  end
   private
 
   def initialize_hitpoints(type)
@@ -82,6 +132,22 @@ class Board
 
   def available_moves
     retrieve_coordinates_for(nil)
+  end
+
+  def ship_hit?(coordinates)
+    ships.each do |ship|
+      ship_coords = enumerate_coordinates(ship.coordinates[0],
+                                          ship.coordinates[1])
+      if ship_coords.include?(coordinates)
+        ship.hitpoints -= 1
+        return true
+      end
+    end
+    false
+  end
+
+  def all_ships_sunk?
+    ships.all? { |ship| ship.sunk? }
   end
 
   def mark!(row, col, marker)
@@ -335,3 +401,41 @@ class Board
     result
   end
 end
+
+class BattleshipGame
+  attr_accessor :human, :computer
+
+  def initialize
+    self.human = Human.new('Paolo')
+    self.computer = Computer.new
+  end
+
+  def play
+    system 'clear'
+    human_player_add_ships
+
+    human.board.display_board
+
+    puts ''
+    puts ''
+    computer.board.display_board
+    computer.random_position_all_ships
+    binding.pry
+  end
+
+  private
+
+  def human_player_add_ships
+    choice = ''
+
+    loop do
+      puts "Randomly add all ships? (y/n)"
+      choice = gets.chomp.downcase
+      break if %w(y n).include? choice
+    end
+
+    choice == 'y' ? human.random_position_all_ships : human.add_ships
+  end
+end
+
+BattleshipGame.new.play
