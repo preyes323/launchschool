@@ -13,7 +13,7 @@ require 'yaml'
 CONFIG = YAML.load_file('battleship_config.yml')
 
 class Player
-  attr_reader :name, :move
+  attr_reader :name, :board
 
   def initialize(name = '')
     self.name = name
@@ -80,6 +80,10 @@ class Board
     build_board(@rows, @cols)
   end
 
+  def available_moves
+    retrieve_coordinates_for(nil)
+  end
+
   def mark!(row, col, marker)
     place(row - 1, col - 1, marker) if valid_row_col?(row, col)
   end
@@ -115,13 +119,7 @@ class Board
                        random_add_ship(ships_composition.sample)
                      end
 
-        if ship_added
-          ship_coords = enumerate_coordinates(ships.last.coordinates[0],
-                                              ships.last.coordinates[1])
-          mark_coords(ship_coords)
-        else
-          break
-        end
+        ship_added ? mark_last_added_ship : break
       end
 
       if ships.length == CONFIG['num_ships']
@@ -149,6 +147,12 @@ class Board
     end
   end
 
+  def display_last_added_ship
+    mark_last_added_ship
+    update!
+    to_s
+  end
+
   def display_board
     puts "#{board}"
   end
@@ -158,6 +162,12 @@ class Board
   end
 
   private
+
+  def mark_last_added_ship
+    ship_coords = enumerate_coordinates(ships.last.coordinates[0],
+                                              ships.last.coordinates[1])
+    mark_coords(ship_coords)
+  end
 
   def initialize_board_and_ships
     initialize_board

@@ -242,5 +242,25 @@ describe Board do
     it 'must allow all ships to be added randomly' do
       assert @board.random_add_all_ships
     end
+
+    it 'must display the added ship' do
+      @board.add_ship('carrier', [2, 2], [3, 5])
+
+      board_5x5 = %(    1   2   3   4   5
+  +---+---+---+---+---+
+1 |   |   |   |   |   |
+  +---+---+---+---+---+
+2 |   | x | x | x | x |
+  +---+---+---+---+---+
+3 |   | x | x | x | x |
+  +---+---+---+---+---+
+4 |   |   |   |   |   |
+  +---+---+---+---+---+
+5 |   |   |   |   |   |
+  +---+---+---+---+---+
+).chomp
+
+      @board.display_last_added_ship.must_equal board_5x5
+    end
   end
 end
