@@ -15,10 +15,13 @@ ships:
     length: 2
     width: 4
 
-max_ships: 3
+num_ships: 3
 
 ships_composition:
-  - destroyer
+  - carrier
   - cruiser
   - battleship
-  - carrier
+  - battleship
+  - destroyer
+
+max_random_tries: 5000

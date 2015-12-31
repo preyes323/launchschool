@@ -75,10 +75,8 @@ class Board
     @board = ''
     @rows = sides[0]
     @cols = sides[1] ? sides[1] : sides[0]
-    @ships_composition = CONFIG['ships_composition'].dup
 
-    self.ships = []
-    self.markers = Array.new(@rows) { Array.new(@cols) }
+    initialize_board_and_ships
     build_board(@rows, @cols)
   end
 
@@ -92,14 +90,8 @@ class Board
   end
 
   def random_add_ship(type)
-    available_coordinates = markers.map.with_index do |row, row_indx|
-                              row.map.with_index do |col, col_indx|
-                                unless markers[row_indx][col_indx]
-                                  [row_indx + 1, col_indx + 1]
-                                end
-                              end
-                            end.flatten(1)
-    available_coordinates.shuffle!.delete(nil)
+    available_coordinates = retrieve_coordinates_for(nil)
+    available_coordinates.shuffle!
 
     available_coordinates.each do |coordinate|
       if lengthwise?(type, coordinate) || widthwise?(type, coordinate)
@@ -111,6 +103,38 @@ class Board
   end
 
   def random_add_all_ships
+    attempts = 0
+    loop do
+      attempts += 1
+      initialize_board_and_ships
+
+      CONFIG['num_ships'].times do |ship_num|
+        ship_added = if CONFIG['ships_composition'].first == 'any'
+                       random_add_ship(CONFIG['ships'].keys.sample)
+                     else
+                       random_add_ship(ships_composition.sample)
+                     end
+
+        if ship_added
+          ship_coords = enumerate_coordinates(ships.last.coordinates[0],
+                                              ships.last.coordinates[1])
+          mark_coords(ship_coords)
+        else
+          break
+        end
+      end
+
+      if ships.length == CONFIG['num_ships']
+        initialize_board
+        return "#{attempts}"
+      end
+
+      if attempts >= CONFIG['max_random_tries']
+        puts "Ships seem impossible to add. Please check they fit the board"
+        break
+      end
+
+    end
   end
 
   def add_ship(type, *coordinates)
@@ -118,9 +142,9 @@ class Board
        valid_row_col?(coordinates[0][0], coordinates[0][1]) &&
        valid_row_col?(coordinates[1][0], coordinates[1][1]) &&
        valid_coordinates?(type, coordinates)                &&
+       space_empty?(coordinates)                            &&
        ship_with_board_allotment?(type)
 
-      ships_composition.delete_at(ships_composition.index(type))
       return (ships << build_ship(type, coordinates))
     end
   end
@@ -134,6 +158,66 @@ class Board
   end
 
   private
+
+  def initialize_board_and_ships
+    initialize_board
+    @ships_composition = CONFIG['ships_composition'].dup
+    self.ships = []
+  end
+
+  def initialize_board
+    self.markers = Array.new(@rows) { Array.new(@cols) }
+  end
+
+  def retrieve_coordinates_for(marker)
+    coords = markers.map.with_index do |row, row_indx|
+               row.map.with_index do |col, col_indx|
+                 if markers[row_indx][col_indx] == marker
+                   [row_indx + 1, col_indx + 1]
+                 end
+               end
+             end.flatten(1)
+
+    coords.delete(nil)
+    coords
+  end
+
+  def space_empty?(coordinates)
+    return 'empty' if ships.empty?
+
+    new_ship_coords = enumerate_coordinates(coordinates[0], coordinates[1])
+
+    new_ship_coords.each do |coord|
+      ships.each do |ship|
+        top_left = ship.coordinates[0]
+        bottom_right = ship.coordinates[1]
+
+        if coord_inside?(coord, top_left, bottom_right)
+          return false
+        end
+
+      end
+    end
+
+    'empty'
+  end
+
+  def enumerate_coordinates(top_left, bottom_right)
+    coordinates = []
+    top_left[0].upto(bottom_right[0]) do |row|
+      top_left[1].upto(bottom_right[1]) do |col|
+        coordinates << [row, col]
+      end
+    end
+    coordinates
+  end
+
+  def coord_inside?(test_coord, existing_top_left, existing_bottom_right)
+    test_coord[0] >= existing_top_left[0]     &&
+    test_coord[1] >= existing_top_left[1]     &&
+    test_coord[0] <= existing_bottom_right[0] &&
+    test_coord[1] <= existing_bottom_right[1]
+  end
 
   def lengthwise?(type, coordinate)
     length = CONFIG['ships'][type]['length'] - 1
@@ -156,7 +240,10 @@ class Board
   end
 
   def ship_with_board_allotment?(type)
-    ships_composition.include? type
+    return true if ships_composition.include? 'any'
+    if ships_composition.include? type
+      ships_composition.delete_at(ships_composition.index(type))
+    end
   end
 
   def valid_coordinates?(type, coordinates)
@@ -174,6 +261,12 @@ class Board
 
   def valid_row_col?(row, col)
     row <= @rows && col <= @cols && row > 0 && col > 0
+  end
+
+  def mark_coords(coords)
+    coords.each do |coord|
+      place(coord[0] - 1, coord[1] - 1, 'x')
+    end
   end
 
   def place(row, col, marker)

@@ -224,8 +224,23 @@ describe Board do
       refute @board.random_add_ship('destroyer')
     end
 
-    it 'must not allow a ship to occupy the same space as an existing ship' do
-      skip
+    it 'must allow adding ship that does not occupy same space as existing' do
+      @board.add_ship('battleship', [2, 2], [2, 4])
+      assert @board.add_ship('battleship', [3, 2], [3, 4])
+    end
+
+    it 'must not allow a ship to occupy the same space as an existing ship1' do
+      @board.add_ship('battleship', [2, 2], [2, 4])
+      refute @board.add_ship('destroyer', [2, 3], [2, 3])
+    end
+
+    it 'must not allow a ship to occupy the same space as an existing ship2' do
+      @board.add_ship('battleship', [2, 2], [2, 4])
+      refute @board.add_ship('battleship', [1, 3], [3, 3])
+    end
+
+    it 'must allow all ships to be added randomly' do
+      assert @board.random_add_all_ships
     end
   end
 end
