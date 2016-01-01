@@ -16,6 +16,7 @@ You'll also notice that there is an option for a *custom* battlefield. For this 
 * Set the ship composition
 
 
+Bugs? Contact me through <vpaoloreyes@gmail.com>
 
 ##### For the TA's and other intereseted testers
 I've added a *test configuration file* [ts_battlehsip_config.yml]. This is the configuration file that I used to run the test suite that I made. Please **NOTE** that in order for the ALL the tests to pass the `battleship.rb` file has to be modified a bit. I've added some `colorize` effect to the displays during the game play and this does not work yet with the current test suite that I made. So if you want to try out the test suite please remove all the `colorize` that is present in my code (sorry for this hassle).
