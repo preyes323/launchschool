@@ -9,8 +9,8 @@
 require 'pry'
 require 'colorize'
 require 'yaml'
+require 'io/console'
 
-CONFIG = YAML.load_file('battleship_config.yml')
 
 class Player
   attr_reader :name
@@ -18,7 +18,7 @@ class Player
 
   def initialize(name = '', size = 5)
     self.name = name
-    self.board = Board.new(5)
+    self.board = Board.new(size)
   end
 
   def name=(name)
@@ -28,31 +28,41 @@ class Player
   def random_position_all_ships
     board.random_add_all_ships
   end
+
+  def lives
+    result = 0
+    board.ships.each { |ship| result += ship.hitpoints }
+    result
+  end
 end
 
 class Human < Player
   def attack_coordinate!(opponent_board)
     loop do
-      puts 'Choose a coordinate on the opponents board to attack:'
-      move = gets.chopm.split(',').map(&:to_i)
-
+      move = input_coordinates('the')
+      puts '(valid coordinate input: 1,2 or 1, 2)'
       if opponent_board.available_moves.include? move
         marker = opponent_board.ship_hit?(move) ? 'x' : '/'
         opponent_board.mark!(move[0], move[1], marker)
         opponent_board.update!
-        break
+        return move
       end
     end
   end
 
   def add_ships
-    CONFIG['num_ships'].times do
+    BattleshipGame.config['num_ships'].times do
       loop do
+        system 'clear'
         puts "#{board}"
         puts ''
         puts 'Available ships to add'
         puts '----------------------'
-        board.ships_composition.each { |ship| puts ship }
+        board.ships_composition.each do |ship|
+          print "#{ship} (dimension: "
+          print "#{BattleshipGame.config['ships'][ship]['length']} x "
+          puts "#{BattleshipGame.config['ships'][ship]['width']})"
+        end
         puts '----------------------'
         print '=> '
         ship_type = gets.chomp.downcase
@@ -82,9 +92,9 @@ end
 class Computer < Player
   NAMES = ['Hal', 'R2D2', 'Deep blue', 'C3P0']
 
-  def initialize
-    super
-    self.name = NAMES.sample
+  def initialize(size = 5)
+    name = NAMES.sample
+    super(name, size)
   end
 
   def attack_coordinate!(opponent_board)
@@ -92,6 +102,7 @@ class Computer < Player
     marker = opponent_board.ship_hit?(move) ? 'x' : '/'
     opponent_board.mark!(move[0], move[1], marker)
     opponent_board.update!
+    move
   end
 end
 
@@ -113,7 +124,7 @@ class Ship
   private
 
   def initialize_hitpoints(type)
-    CONFIG['ships'][type]['length'] * CONFIG['ships'][type]['width']
+    BattleshipGame.config['ships'][type]['length'] * BattleshipGame.config['ships'][type]['width']
   end
 end
 
@@ -128,6 +139,16 @@ class Board
 
     initialize_board_and_ships
     build_board(@rows, @cols)
+  end
+
+  def initialize_board_and_ships
+    initialize_board
+    @ships_composition = BattleshipGame.config['ships_composition'].dup
+    self.ships = []
+  end
+
+  def initialize_board
+    self.markers = Array.new(@rows) { Array.new(@cols) }
   end
 
   def available_moves
@@ -178,9 +199,9 @@ class Board
       attempts += 1
       initialize_board_and_ships
 
-      CONFIG['num_ships'].times do |ship_num|
-        ship_added = if CONFIG['ships_composition'].first == 'any'
-                       random_add_ship(CONFIG['ships'].keys.sample)
+      BattleshipGame.config['num_ships'].times do |ship_num|
+        ship_added = if BattleshipGame.config['ships_composition'].first == 'any'
+                       random_add_ship(BattleshipGame.config['ships'].keys.sample)
                      else
                        random_add_ship(ships_composition.sample)
                      end
@@ -188,12 +209,12 @@ class Board
         ship_added ? mark_last_added_ship : break
       end
 
-      if ships.length == CONFIG['num_ships']
+      if ships.length == BattleshipGame.config['num_ships']
         initialize_board
         return "#{attempts}"
       end
 
-      if attempts >= CONFIG['max_random_tries']
+      if attempts >= BattleshipGame.config['max_random_tries']
         puts "Ships seem impossible to add. Please check they fit the board"
         break
       end
@@ -202,7 +223,7 @@ class Board
   end
 
   def add_ship(type, *coordinates)
-    if CONFIG['ships'].keys.include?(type)                  &&
+    if BattleshipGame.config['ships'].keys.include?(type)                  &&
        valid_row_col?(coordinates[0][0], coordinates[0][1]) &&
        valid_row_col?(coordinates[1][0], coordinates[1][1]) &&
        valid_coordinates?(type, coordinates)                &&
@@ -233,16 +254,6 @@ class Board
     ship_coords = enumerate_coordinates(ships.last.coordinates[0],
                                               ships.last.coordinates[1])
     mark_coords(ship_coords)
-  end
-
-  def initialize_board_and_ships
-    initialize_board
-    @ships_composition = CONFIG['ships_composition'].dup
-    self.ships = []
-  end
-
-  def initialize_board
-    self.markers = Array.new(@rows) { Array.new(@cols) }
   end
 
   def retrieve_coordinates_for(marker)
@@ -296,15 +307,15 @@ class Board
   end
 
   def lengthwise?(type, coordinate)
-    length = CONFIG['ships'][type]['length'] - 1
-    width = CONFIG['ships'][type]['width'] - 1
+    length = BattleshipGame.config['ships'][type]['length'] - 1
+    width = BattleshipGame.config['ships'][type]['width'] - 1
     add_ship(type, coordinate, [coordinate[0] + length,
                                 coordinate[1] + width])
   end
 
   def widthwise?(type, coordinate)
-    length = CONFIG['ships'][type]['length'] - 1
-    width = CONFIG['ships'][type]['width'] - 1
+    length = BattleshipGame.config['ships'][type]['length'] - 1
+    width = BattleshipGame.config['ships'][type]['width'] - 1
     add_ship(type, coordinate, [coordinate[0] + width,
                                 coordinate[1] + length])
   end
@@ -324,8 +335,8 @@ class Board
 
   def valid_coordinates?(type, coordinates)
     ship_top_left = [1, 1]
-    ship_bottom_right = [CONFIG['ships'][type]['length'],
-                         CONFIG['ships'][type]['width']]
+    ship_bottom_right = [BattleshipGame.config['ships'][type]['length'],
+                         BattleshipGame.config['ships'][type]['width']]
     board_top_left = coordinates[0]
     board_bottom_right = coordinates[1]
 
@@ -360,7 +371,14 @@ class Board
   end
 
   def draw_marker(row, col)
-    "#{markers[row][col].to_s.center(3, ' ')}"
+    case markers[row][col]
+    when 'x'
+      "#{markers[row][col].to_s.center(3, ' ')}".colorize(:red)
+    when '/'
+      "#{markers[row][col].to_s.center(3, ' ')}".colorize(:light_blue)
+    else
+      "#{markers[row][col].to_s.center(3, ' ')}"
+    end
   end
 
   def draw_top_row(cols)
@@ -403,38 +421,166 @@ class Board
 end
 
 class BattleshipGame
-  attr_accessor :human, :computer
+  @@config = YAML.load_file('ts_battleship_config.yml')
+
+  attr_accessor :human, :computer, :current_player
+
+  def self.update_config(filename)
+    @@config = YAML.load_file(filename)
+  end
+
+  def self.config
+    @@config
+  end
 
   def initialize
-    self.human = Human.new('Paolo')
-    self.computer = Computer.new
+    welcome_routine
+
+    system 'clear'
+    puts 'What is your name commander?: '
+    player_name = gets.chomp
+
+    battlefield = decide_battlefield
+    self.human = Human.new(player_name, battlefield)
+    self.computer = Computer.new(battlefield)
   end
 
   def play
     system 'clear'
     human_player_add_ships
-
-    human.board.display_board
-
-    puts ''
-    puts ''
-    computer.board.display_board
     computer.random_position_all_ships
-    binding.pry
+    self.current_player = assign_random_player
+
+    loop do
+      display_boards
+
+      puts ''
+      puts "#{current_player.name}'s turn to attack"
+      p current_player.attack_coordinate!(next_player.board)
+      delay_screen_update if current_player == computer
+
+
+      break if next_player.board.all_ships_sunk?
+      self.current_player = next_player
+    end
+
+    display_boards
+    puts "#{current_player.name} won!"
+    sleep 5
   end
 
   private
+
+  def welcome_routine
+    system 'clear'
+    puts BattleshipGame.config['welcome_message']
+    puts ''
+    puts 'Press enter to continue'
+    gets.chomp
+  end
+
+  def decide_battlefield
+    loop do
+      rows, _ = $stdin.winsize
+      puts 'Choose your battlefield'
+      puts '-----------------------'
+      puts '[s]kirmish'
+      puts '[b]attle zone'
+      puts '[w]ar zone'
+      puts '[c]ustom'
+      puts '-----------------------'
+      print '=> '
+
+      ans = gets.chomp
+
+      case ans
+      when 's' then BattleshipGame.update_config('battleship_config.yml')
+
+      when 'b'
+        if rows < 48
+          msg = %(Sorry commander, but the current landscape cannot fit the
+battlefield that you selected. Please make sure that landscape is at least 48
+rows tall.
+
+Please choose a smaller battlefield or choose a bigger landscape)
+          puts msg
+          ans = ''
+          sleep 5
+        else
+          BattleshipGame.update_config('battlezone_config.yml')
+        end
+
+      when 'w'
+        if rows < 57
+          msg = %(Sorry commander, but the current landscape cannot fit the
+battlefield that you selected. Please make sure that landscape is at least 57
+rows tall.
+
+Please choose a smaller battlefield or choose a bigger landscape)
+          puts msg
+          ans = ''
+          sleep 5
+        else
+          BattleshipGame.update_config('warzone_config.yml')
+        end
+
+      when 'c'
+        puts "Warning this will load the custom file 'custom_config.yml'"
+        puts 'If file is not found, it will default to skirmish mode'
+        sleep 5
+
+        begin
+          BattleshipGame.update_config('custom_config.yml')
+        rescue
+          system 'clear'
+          puts 'Defaulting to skirmish mode'
+          sleep 3
+          BattleshipGame.update_config('battleship_config.yml')
+        end
+      end
+
+      return BattleshipGame.config['dimension'] if %w(s b w c).include? ans
+    end
+  end
+
+  def display_boards
+    system 'clear'
+    puts "#{human.name}'s board".colorize(:light_blue)
+    puts "Hitpoints: #{human.lives}".colorize(:green)
+    puts '---'
+    human.board.display_board
+
+    puts ''
+    puts "#{computer.name}'s board".colorize(:light_blue)
+    puts "Hitpoints: #{computer.lives}".colorize(:green)
+    puts '---'
+    computer.board.display_board
+  end
+
+  def assign_random_player
+    %w(h c).sample == 'h' ? human : computer
+  end
+
+  def next_player
+    current_player.class == Human ? computer : human
+  end
+
+  def delay_screen_update
+    sleep 3
+  end
 
   def human_player_add_ships
     choice = ''
 
     loop do
-      puts "Randomly add all ships? (y/n)"
+      puts "Let the strategist position the ships? (y/n)"
       choice = gets.chomp.downcase
       break if %w(y n).include? choice
     end
 
     choice == 'y' ? human.random_position_all_ships : human.add_ships
+    human.board.initialize_board
+    human.board.update!
   end
 end
 

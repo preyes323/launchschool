@@ -41,7 +41,9 @@ num_ships: 3
 dimension: 5
 
 ships_composition:
+  - carrier
   - cruiser
+  - battleship
   - battleship
   - destroyer
 
