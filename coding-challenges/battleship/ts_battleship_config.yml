@@ -18,6 +18,18 @@ welcome_message: >-
 
   That is all for now commander! Good luck!
 
+landscape_error: >-
+  Sorry commander, but the current landscape cannot fit the battlefield that you selected. Please make sure that landscape is at least the ff:
+
+
+  * 34 rows for skirmish
+
+  * 48 rows for battlezone
+
+  * 57 rows for warzone.
+
+
+  Adjust the landscape size or choose a smaller battlefield.
 
 ships:
   destroyer:

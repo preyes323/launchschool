@@ -492,66 +492,53 @@ class BattleshipGame
       print '=> '
 
       ans = gets.chomp
+      ans = load_battlefield(ans, rows)
+      sleep 5 unless ans
 
-      case ans
-      when 's'
-        if rows < 34
-          msg = %(Sorry commander, but the current landscape cannot fit the
-battlefield that you selected. Please make sure that landscape is at least 34
-rows tall.
+      return BattleshipGame.config['dimension'] if ans
+    end
+  end
 
-Please make the landscape be at least 34 rows tall.)
-          puts msg
-          ans = ''
-          sleep 5
-        else
-          BattleshipGame.update_config('battleship_config.yml')
-        end
+  def load_battlefield(ans, rows)
+    load_resp = case ans
+                when 's'
+                  if rows >= 34
+                    BattleshipGame.update_config('battleship_config.yml')
+                  end
+                when 'b'
+                  if rows >= 48
+                    BattleshipGame.update_config('battlezone_config.yml')
+                  end
+                when 'w'
+                  if rows >= 57
+                    BattleshipGame.update_config('warzone_config.yml')
+                  end
+                when 'c' then load_custom_battlefield(rows)
+                end
 
-      when 'b'
-        if rows < 48
-          msg = %(Sorry commander, but the current landscape cannot fit the
-battlefield that you selected. Please make sure that landscape is at least 48
-rows tall.
+    return load_resp if load_resp
 
-Please choose a smaller battlefield or choose a bigger landscape)
-          puts msg
-          ans = ''
-          sleep 5
-        else
-          BattleshipGame.update_config('battlezone_config.yml')
-        end
+    puts BattleshipGame.config['landscape_error']
+  end
 
-      when 'w'
-        if rows < 57
-          msg = %(Sorry commander, but the current landscape cannot fit the
-battlefield that you selected. Please make sure that landscape is at least 57
-rows tall.
+  def load_custom_battlefield(rows)
+    system 'clear'
+    puts "Warning this will load the custom file 'custom_config.yml'"
+    puts 'If file is not found, it will default to skirmish mode'
+    sleep 3
 
-Please choose a smaller battlefield or choose a bigger landscape)
-          puts msg
-          ans = ''
-          sleep 5
-        else
-          BattleshipGame.update_config('warzone_config.yml')
-        end
-
-      when 'c'
-        puts "Warning this will load the custom file 'custom_config.yml'"
-        puts 'If file is not found, it will default to skirmish mode'
-        sleep 5
-
-        begin
-          BattleshipGame.update_config('custom_config.yml')
-        rescue
-          system 'clear'
-          puts 'Defaulting to skirmish mode'
-          sleep 3
-          BattleshipGame.update_config('battleship_config.yml')
-        end
+    begin
+      BattleshipGame.update_config('custom_config.yml')
+    rescue
+      system 'clear'
+      puts 'Trying to default to skirmish mode..'
+      sleep 3
+      if rows >= 34
+        BattleshipGame.update_config('battleship_config.yml')
+      else
+        puts '... Failed to load.'
+        puts ''
       end
-
-      return BattleshipGame.config['dimension'] if %w(s b w c).include? ans
     end
   end
 
