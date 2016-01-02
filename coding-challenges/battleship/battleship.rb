@@ -494,7 +494,19 @@ class BattleshipGame
       ans = gets.chomp
 
       case ans
-      when 's' then BattleshipGame.update_config('battleship_config.yml')
+      when 's'
+        if rows < 34
+          msg = %(Sorry commander, but the current landscape cannot fit the
+battlefield that you selected. Please make sure that landscape is at least 34
+rows tall.
+
+Please make the landscape be at least 34 rows tall.)
+          puts msg
+          ans = ''
+          sleep 5
+        else
+          BattleshipGame.update_config('battleship_config.yml')
+        end
 
       when 'b'
         if rows < 48
