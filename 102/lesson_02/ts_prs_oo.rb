@@ -40,6 +40,9 @@ describe Player do
       @computer_player.choose
       MOVES.values.must_include @computer_player.move.value
     end
+
+    it 'must adjust its move based on human player moves' do
+    end
   end
 end
 
@@ -156,9 +159,36 @@ describe Move do
 end
 
 describe Statisticable do
+  before do
+    @human = Human.new
+    @computer = Computer.new
+  end
+
   describe 'when a move is made' do
+    it 'must increment the move a human player made' do
+      @human
+    end
+
+    it 'must increment the move a computer player made' do
+    end
   end
 
   describe 'when a player wins' do
+    it 'must record the win' do
+    end
+
+    it 'must match the win to the move' do
+    end
+
+    it 'must match the win to the move to the winning player' do
+    end
+  end
+
+  desrcribe 'when a report is requested' do
+    it 'must suggest a ratio of moves for winning' do
+    end
+
+    it 'must display history of moves' do
+    end
   end
 end

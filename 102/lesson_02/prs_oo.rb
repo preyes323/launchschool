@@ -42,6 +42,10 @@ class Computer < Player
   end
 end
 
+module Statisticable
+
+end
+
 class Move
   attr_reader :choice
   include Comparable
@@ -116,5 +120,7 @@ class RPSGame
     [winner, looser]
   end
 end
+
+
 
 # RPSGame.new.play
