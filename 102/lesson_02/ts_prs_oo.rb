@@ -154,3 +154,11 @@ describe Move do
     end
   end
 end
+
+describe Statisticable do
+  describe 'when a move is made' do
+  end
+
+  describe 'when a player wins' do
+  end
+end

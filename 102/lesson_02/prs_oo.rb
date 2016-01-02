@@ -117,4 +117,4 @@ class RPSGame
   end
 end
 
-RPSGame.new.play
+# RPSGame.new.play

@@ -53,7 +53,7 @@ class Human < Player
   def add_ships
     BattleshipGame.config['num_ships'].times do
       loop do
-        system 'clear'
+        system 'clear' or system 'cls'
         puts "#{board}"
         puts ''
         puts 'Available ships to add'
@@ -436,7 +436,7 @@ class BattleshipGame
   def initialize
     welcome_routine
 
-    system 'clear'
+    system 'clear' or system 'cls'
     puts 'What is your name commander?: '
     player_name = gets.chomp
 
@@ -446,7 +446,7 @@ class BattleshipGame
   end
 
   def play
-    system 'clear'
+    system 'clear' or system 'cls'
     human_player_add_ships
     computer.random_position_all_ships
     self.current_player = assign_random_player
@@ -472,7 +472,7 @@ class BattleshipGame
   private
 
   def welcome_routine
-    system 'clear'
+    system 'clear' or system 'cls'
     puts BattleshipGame.config['welcome_message']
     puts ''
     puts 'Press enter to continue'
@@ -522,7 +522,7 @@ class BattleshipGame
   end
 
   def load_custom_battlefield(rows)
-    system 'clear'
+    system 'clear' or system 'cls'
     puts "Warning this will load the custom file 'custom_config.yml'"
     puts 'If file is not found, it will default to skirmish mode'
     sleep 3
@@ -530,7 +530,7 @@ class BattleshipGame
     begin
       BattleshipGame.update_config('custom_config.yml')
     rescue
-      system 'clear'
+      system 'clear' or system 'cls'
       puts 'Trying to default to skirmish mode..'
       sleep 3
       if rows >= 34
@@ -543,7 +543,7 @@ class BattleshipGame
   end
 
   def display_boards
-    system 'clear'
+    system 'clear' or system 'cls'
     puts "#{human.name}'s board".colorize(:light_blue)
     puts "Hitpoints: #{human.lives}".colorize(:green)
     puts '---'
