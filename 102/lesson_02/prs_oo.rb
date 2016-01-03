@@ -43,6 +43,20 @@ class Computer < Player
 end
 
 module Statisticable
+  attr_accessor :data, :players
+
+
+end
+
+class DummyStatistics
+  include Statisticable
+
+  def initialize
+    @human = Human.new
+    @computer = Computer.new
+    self.players = [@human, @computer]
+    self.data = {}
+  end
 
 end
 
@@ -84,25 +98,61 @@ class Move
   end
 
   def self.winning_message(move1, move2)
-    key = "#{Move.new(move1)}_#{Move.new(move2)}".tr('[]', '').downcase
+    key = if move1 == move2
+            'tie'
+          else
+            "#{Move.new(move1)}_#{Move.new(move2)}".tr('[]', '').downcase
+          end
     MESSAGES[key]
   end
 end
 
 class RPSGame
+  attr_accessor :players
+
   def initialize
     @computer = Computer.new
     @human = Human.new(player_name)
+    self.players = set_player_order(@human, @computer)
   end
 
   def play
-    @human.choose
-    @computer.choose
-    winner, looser = evalute_player_moves(@human, @computer)
-    p Move.winning_message(winner.move.choice, looser.move.choice)
+    loop do
+      system 'clear' or system 'cls'
+      display_game_board(self.players[0], self.players[1])
+
+      players.each { |player| player.choose }
+      winner, looser = evalute_player_moves(@human, @computer)
+
+      system 'clear' or system 'cls'
+      display_game_board(self.players[0], self.players[1])
+      p Move.winning_message(winner.move.choice, looser.move.choice)
+
+      break unless play_again?
+    end
   end
 
   private
+
+  def display_game_board(player1, player2)
+    board = %Q(+---------------+---------------+
+|#{player1.name.center(15, ' ')}|#{player2.name.center(15, ' ')}|
++---------------+---------------+
+|               |               |
+|#{player1.move.to_s.center(15, ' ')}|#{player2.move.to_s.center(15, ' ')}|
+|               |               |
++---------------+---------------+)
+    puts board
+  end
+
+  def play_again?
+    print "Do you want to have another go against #{@computer.name} (y/n)? "
+    gets.chomp.downcase == 'y'
+  end
+
+  def set_player_order(*players)
+    players.shuffle!
+  end
 
   def player_name
     print "What is your name? "
@@ -121,6 +171,4 @@ class RPSGame
   end
 end
 
-
-
-# RPSGame.new.play
+RPSGame.new.play

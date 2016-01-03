@@ -166,7 +166,6 @@ describe Statisticable do
 
   describe 'when a move is made' do
     it 'must increment the move a human player made' do
-      @human
     end
 
     it 'must increment the move a computer player made' do
@@ -184,7 +183,7 @@ describe Statisticable do
     end
   end
 
-  desrcribe 'when a report is requested' do
+  describe 'when a report is requested' do
     it 'must suggest a ratio of moves for winning' do
     end
 

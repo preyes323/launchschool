@@ -1,0 +1,17 @@
+GEM
+  remote: https://rubygems.org/
+  specs:
+    colorize (0.7.7)
+    minitest (5.8.3)
+    yaml (4.2.2)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  colorize
+  minitest
+  yaml
+
+BUNDLED WITH
+   1.10.6
