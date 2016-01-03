@@ -39,13 +39,16 @@ end
 class Human < Player
   def attack_coordinate!(opponent_board)
     loop do
-      move = input_coordinates('the')
       puts '(valid coordinate input: 1,2 or 1, 2)'
+      move = input_coordinates('the')
       if opponent_board.available_moves.include? move
         marker = opponent_board.ship_hit?(move) ? 'x' : '/'
         opponent_board.mark!(move[0], move[1], marker)
         opponent_board.update!
         return move
+      else
+        puts 'Not a valid coordinate, please try again.'
+        sleep 1
       end
     end
   end
@@ -437,7 +440,7 @@ class BattleshipGame
     welcome_routine
 
     system 'clear' or system 'cls'
-    puts 'What is your name commander?: '
+    puts 'What is your name commander? '
     player_name = gets.chomp
 
     battlefield = decide_battlefield
