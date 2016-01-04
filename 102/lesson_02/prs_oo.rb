@@ -66,46 +66,64 @@ class Weapon
   attr_reader :beats, :loses_to
 
   def self.options
-    ObjectSpace.each_object(Class).select { |klass| klass < self }
+    descendants.each
+  end
+
+  def self.display_options
+    self.options
+        .sort_by { |opt| opt.name }
+        .map.with_index { |opt, idx| "#{idx + 1}: #{opt}" }
+        .join("\n")
+  end
+
+  def name
+    "#{self.class}"
   end
 
   def to_s
-    self.class
+    name
   end
+
+  private
+
+  def self.descendants
+    ObjectSpace.each_object(Class).select { |klass| klass < self }
+  end
+
 end
 
 class Rock < Weapon
   def initialize
-    @beats = [Scissors.new, Lizard.new]
-    @loses_to = [Spock.new, Paper.new]
+    @beats = %w(Scissors Lizard)
+    @loses_to = %w(Spock Paper)
   end
 end
 
 class Paper < Weapon
   def initialize
-    @beats = [Rock.new, Spock.new]
-    @loses_to = [Lizard.new, Scissors.new]
+    @beats = %w(Rock Spock)
+    @loses_to = %w(Lizard Scissors)
   end
 end
 
 class Scissors < Weapon
   def initialize
-    @beats = [Paper.new, Lizard.new]
-    @loses_to = [Rock.new, Spock.new]
+    @beats = %w(Paper Lizard)
+    @loses_to = %w(Rock Spock)
   end
 end
 
 class Spock < Weapon
   def initialize
-    @beats = [Rock.new, Scissors.new]
-    @loses_to = [Paper.new, Lizard.new]
+    @beats = %w(Rock Scissors)
+    @loses_to = %w(Paper Lizard)
   end
 end
 
 class Lizard < Weapon
   def initialize
-    @beats = [Spock.new, Paper.new]
-    @loses_to = [Scissors.new, Rock.new]
+    @beats = %w(Spock Paper)
+    @loses_to = %w(Scissors Rock)
   end
 end
 
@@ -229,4 +247,4 @@ end
 
 #RPSGame.new.play
 
-puts Weapon.options
+#puts Weapon.options

@@ -158,72 +158,119 @@ describe Move do
   end
 end
 
+describe Weapon do
+  describe 'when getting options' do
+    it 'must have options' do
+      assert Weapon.options
+    end
+
+    it 'must display options for weapons in the following manner' do
+      options = %(1: Lizard
+2: Paper
+3: Rock
+4: Scissors
+5: Spock)
+      Weapon.display_options.must_equal options
+    end
+  end
+end
+
 describe Paper do
+  before do
+    @paper = Paper.new
+  end
+
   describe 'when an instance is created' do
+    it 'must know its name' do
+      @paper.name.must_equal 'Paper'
+    end
+
     it 'must know what it beats' do
-      paper = Paper.new
-      paper.beats.must_equal %w(Rock Spock)
+      @paper.beats.must_equal %w(Rock Spock)
     end
 
     it 'must know what it loses to' do
-      paper = Paper.new
-      paper.loses_to.must_equal %w(Lizard Scissors)
+      @paper.loses_to.must_equal %w(Lizard Scissors)
     end
   end
 end
 
 describe Rock do
+  before do
+    @rock = Rock.new
+  end
+
   describe 'when an instance is created' do
+    it 'must know its name' do
+      @rock.name.must_equal 'Rock'
+    end
+
     it 'must know what it beats' do
-      rock = Rock.new
-      rock.beats.must_equal %w(Scissors Lizard)
+      @rock.beats.must_equal %w(Scissors Lizard)
     end
 
     it 'must know what it loses to' do
-      rock = Rock.new
-      rock.loses_to.must_equal %w(Spock Paper)
+      @rock.loses_to.must_equal %w(Spock Paper)
     end
   end
 end
 
 describe Scissors do
+  before do
+    @scissors = Scissors.new
+  end
+
   describe 'when an instance is created' do
+    it 'must know its name' do
+      @scissors.name.must_equal 'Scissors'
+    end
+
     it 'must know what it beats' do
-      scissors = Scissors.new
-      scissors.beats.must_equal %w(Paper Lizard)
+      @scissors.beats.must_equal %w(Paper Lizard)
     end
 
     it 'must know what it loses to' do
-      scissors = Scissors.new
-      scissors.loses_to.must_equal %(Rock Spock)
+      @scissors.loses_to.must_equal %w(Rock Spock)
     end
   end
 end
 
 describe Spock do
+  before do
+    @spock = Spock.new
+  end
+
   describe 'when an instance is created' do
+    it 'must know its name' do
+      @spock.name.must_equal 'Spock'
+    end
+
     it 'must know what it beats' do
-      spock = Spock.new
-      spock.beats.must_equal %w(Rock Scissors)
+      @spock.beats.must_equal %w(Rock Scissors)
     end
 
     it 'must know what it loses to' do
-      spock = Spock.new
-      spock.loses_to.must_equal %w(Paper Lizard)
+      @spock.loses_to.must_equal %w(Paper Lizard)
     end
   end
 end
 
 describe Lizard do
+  before do
+    @lizard = Lizard.new
+  end
+
   describe 'when an instance is created' do
+    it 'must know its name' do
+      @lizard.name.must_equal 'Lizard'
+    end
+
     it 'must know what it beats' do
-      lizard = Lizard.new
-      lizard.beats.must_equal %w(Spock Paper)
+      @lizard.beats.must_equal %w(Spock Paper)
     end
 
     it 'must know what it loses to' do
-      lizard = Lizard.new
-      lizard.loses_to.must_equal %w(Scissors Rock)
+      @lizard.loses_to.must_equal %w(Scissors Rock)
     end
   end
 end
