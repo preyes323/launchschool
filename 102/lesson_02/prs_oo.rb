@@ -62,6 +62,53 @@ class DummyStatistics
 
 end
 
+class Weapon
+  attr_reader :beats, :loses_to
+
+  def self.options
+    ObjectSpace.each_object(Class).select { |klass| klass < self }
+  end
+
+  def to_s
+    self.class
+  end
+end
+
+class Rock < Weapon
+  def initialize
+    @beats = [Scissors.new, Lizard.new]
+    @loses_to = [Spock.new, Paper.new]
+  end
+end
+
+class Paper < Weapon
+  def initialize
+    @beats = [Rock.new, Spock.new]
+    @loses_to = [Lizard.new, Scissors.new]
+  end
+end
+
+class Scissors < Weapon
+  def initialize
+    @beats = [Paper.new, Lizard.new]
+    @loses_to = [Rock.new, Spock.new]
+  end
+end
+
+class Spock < Weapon
+  def initialize
+    @beats = [Rock.new, Scissors.new]
+    @loses_to = [Paper.new, Lizard.new]
+  end
+end
+
+class Lizard < Weapon
+  def initialize
+    @beats = [Spock.new, Paper.new]
+    @loses_to = [Scissors.new, Rock.new]
+  end
+end
+
 class Move
   attr_reader :choice
   include Comparable
@@ -181,3 +228,5 @@ class RPSGame
 end
 
 #RPSGame.new.play
+
+puts Weapon.options

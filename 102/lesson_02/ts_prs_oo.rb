@@ -158,6 +158,76 @@ describe Move do
   end
 end
 
+describe Paper do
+  describe 'when an instance is created' do
+    it 'must know what it beats' do
+      paper = Paper.new
+      paper.beats.must_equal %w(Rock Spock)
+    end
+
+    it 'must know what it loses to' do
+      paper = Paper.new
+      paper.loses_to.must_equal %w(Lizard Scissors)
+    end
+  end
+end
+
+describe Rock do
+  describe 'when an instance is created' do
+    it 'must know what it beats' do
+      rock = Rock.new
+      rock.beats.must_equal %w(Scissors Lizard)
+    end
+
+    it 'must know what it loses to' do
+      rock = Rock.new
+      rock.loses_to.must_equal %w(Spock Paper)
+    end
+  end
+end
+
+describe Scissors do
+  describe 'when an instance is created' do
+    it 'must know what it beats' do
+      scissors = Scissors.new
+      scissors.beats.must_equal %w(Paper Lizard)
+    end
+
+    it 'must know what it loses to' do
+      scissors = Scissors.new
+      scissors.loses_to.must_equal %(Rock Spock)
+    end
+  end
+end
+
+describe Spock do
+  describe 'when an instance is created' do
+    it 'must know what it beats' do
+      spock = Spock.new
+      spock.beats.must_equal %w(Rock Scissors)
+    end
+
+    it 'must know what it loses to' do
+      spock = Spock.new
+      spock.loses_to.must_equal %w(Paper Lizard)
+    end
+  end
+end
+
+describe Lizard do
+  describe 'when an instance is created' do
+    it 'must know what it beats' do
+      lizard = Lizard.new
+      lizard.beats.must_equal %w(Spock Paper)
+    end
+
+    it 'must know what it loses to' do
+      lizard = Lizard.new
+      lizard.loses_to.must_equal %w(Scissors Rock)
+    end
+  end
+end
+
 describe Statisticable do
   before do
     @human = Human.new
