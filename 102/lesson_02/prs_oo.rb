@@ -2,6 +2,8 @@ require 'colorize'
 require 'yaml'
 require 'pry'
 
+MESSAGES = YAML.load_file('prs_messages.yml')
+
 class Player
   attr_reader :name, :move
 
@@ -64,7 +66,6 @@ class Move
   attr_reader :choice
   include Comparable
 
-  MESSAGES = YAML.load_file('prs_messages.yml')
   MOVES = {r: '[R]ock', p: '[P]aper', s: '[S]cissors',
            l: '[L]izard', k: 'Spoc[k]'}
 
@@ -110,7 +111,8 @@ end
 class RPSGame
   attr_accessor :players
 
-  def initialize
+  def initialize(points = 5)
+    display_welcome_screen
     @computer = Computer.new
     @human = Human.new(player_name)
     self.players = set_player_order(@human, @computer)
@@ -134,14 +136,21 @@ class RPSGame
 
   private
 
+  def display_welcome_screen
+    system 'clear' or system 'cls'
+    puts MESSAGES['welcome']
+    puts ''
+    sleep 5
+  end
+
   def display_game_board(player1, player2)
-    board = %Q(+---------------+---------------+
-|#{player1.name.center(15, ' ')}|#{player2.name.center(15, ' ')}|
-+---------------+---------------+
-|               |               |
-|#{player1.move.to_s.center(15, ' ')}|#{player2.move.to_s.center(15, ' ')}|
-|               |               |
-+---------------+---------------+)
+    board = %Q(+------------------+------------------+
+|#{player1.name.center(18, ' ')}|#{player2.name.center(18, ' ')}|
++------------------+------------------+
+|                  |                  |
+|#{player1.move.to_s.center(18, ' ')}|#{player2.move.to_s.center(18, ' ')}|
+|                  |                  |
++------------------+------------------+)
     puts board
   end
 
@@ -171,4 +180,4 @@ class RPSGame
   end
 end
 
-RPSGame.new.play
+#RPSGame.new.play
