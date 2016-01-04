@@ -19,7 +19,6 @@ class Player
 end
 
 class Human < Player
-
   def choose
     loop do
       puts 'Choose a move:'
@@ -46,8 +45,6 @@ end
 
 module Statisticable
   attr_accessor :data, :players
-
-
 end
 
 class DummyStatistics
@@ -59,21 +56,19 @@ class DummyStatistics
     self.players = [@human, @computer]
     self.data = {}
   end
-
 end
 
 class Weapon
   attr_reader :beats, :loses_to
 
   def self.options
-    descendants.each
+    ObjectSpace.each_object(Class).select { |klass| klass < self }.each
   end
 
   def self.display_options
-    self.options
-        .sort_by { |opt| opt.name }
-        .map.with_index { |opt, idx| "#{idx + 1}: #{opt}" }
-        .join("\n")
+    options.sort_by(&:name)
+      .map.with_index { |opt, idx| "#{idx + 1}: #{opt}" }
+      .join("\n")
   end
 
   def name
@@ -83,13 +78,6 @@ class Weapon
   def to_s
     name
   end
-
-  private
-
-  def self.descendants
-    ObjectSpace.each_object(Class).select { |klass| klass < self }
-  end
-
 end
 
 class Rock < Weapon
@@ -131,8 +119,8 @@ class Move
   attr_reader :choice
   include Comparable
 
-  MOVES = {r: '[R]ock', p: '[P]aper', s: '[S]cissors',
-           l: '[L]izard', k: 'Spoc[k]'}
+  MOVES = { r: '[R]ock', p: '[P]aper', s: '[S]cissors',
+            l: '[L]izard', k: 'Spoc[k]' }
 
   def initialize(move)
     @choice = move
@@ -147,7 +135,7 @@ class Move
   end
 
   def <=>(other)
-    return 0 if value  == other.value
+    return 0 if value == other.value
 
     case value
     when '[R]ock'
@@ -176,23 +164,23 @@ end
 class RPSGame
   attr_accessor :players
 
-  def initialize(points = 5)
+  def initialize
     display_welcome_screen
     @computer = Computer.new
     @human = Human.new(player_name)
-    self.players = set_player_order(@human, @computer)
+    self.players = player_order(@human, @computer)
   end
 
   def play
     loop do
-      system 'clear' or system 'cls'
-      display_game_board(self.players[0], self.players[1])
+      system 'clear' || system('cls')
+      display_game_board(players[0], players[1])
 
-      players.each { |player| player.choose }
+      players.each(&:choose)
       winner, looser = evalute_player_moves(@human, @computer)
 
-      system 'clear' or system 'cls'
-      display_game_board(self.players[0], self.players[1])
+      system 'clear' || system('cls')
+      display_game_board(players[0], players[1])
       p Move.winning_message(winner.move.choice, looser.move.choice)
 
       break unless play_again?
@@ -202,14 +190,14 @@ class RPSGame
   private
 
   def display_welcome_screen
-    system 'clear' or system 'cls'
+    system 'clear' || system('cls')
     puts MESSAGES['welcome']
     puts ''
     sleep 5
   end
 
   def display_game_board(player1, player2)
-    board = %Q(+------------------+------------------+
+    board = %(+------------------+------------------+
 |#{player1.name.center(18, ' ')}|#{player2.name.center(18, ' ')}|
 +------------------+------------------+
 |                  |                  |
@@ -224,7 +212,7 @@ class RPSGame
     gets.chomp.downcase == 'y'
   end
 
-  def set_player_order(*players)
+  def player_order(*players)
     players.shuffle!
   end
 
@@ -245,6 +233,6 @@ class RPSGame
   end
 end
 
-#RPSGame.new.play
+RPSGame.new.play
 
-#puts Weapon.options
+# puts Weapon.options
