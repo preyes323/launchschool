@@ -22,11 +22,11 @@ class Human < Player
   def choose
     loop do
       puts 'Choose a move:'
-      Move::MOVES.each { |idx, move| puts "#{idx.inspect}: #{move}" }
+      puts Weapon.display_options
       print "=> "
-      choice = gets.chomp.downcase.to_sym
-      @move = Move.new(choice)
-      break if move.value
+      choice = gets.chomp.to_i - 1
+      @move = Move.new(Weapon.options[choice].to_s)
+      break if Weapon.options[choice]
     end
   end
 end
@@ -39,7 +39,7 @@ class Computer < Player
   end
 
   def choose
-    @move = Move.new(Move::MOVES.keys.sample)
+    @move = Move.new(Weapon.options.sample.to_s)
   end
 end
 
@@ -62,13 +62,13 @@ class Weapon
   attr_reader :beats, :loses_to
 
   def self.options
-    ObjectSpace.each_object(Class).select { |klass| klass < self }.each
+    ObjectSpace.each_object(Class)
+      .select { |klass| klass < self }
+      .each.sort_by(&:name)
   end
 
   def self.display_options
-    options.sort_by(&:name)
-      .map.with_index { |opt, idx| "#{idx + 1}: #{opt}" }
-      .join("\n")
+    options.map.with_index { |opt, idx| "#{idx + 1}: #{opt}" }.join("\n")
   end
 
   def name
@@ -116,46 +116,32 @@ class Lizard < Weapon
 end
 
 class Move
-  attr_reader :choice
   include Comparable
-
-  MOVES = { r: '[R]ock', p: '[P]aper', s: '[S]cissors',
-            l: '[L]izard', k: 'Spoc[k]' }
+  attr_reader :choice
 
   def initialize(move)
-    @choice = move
+    @choice = Weapon.options[Weapon.options.map(&:to_s).index(move)].new
   end
 
   def value
-    MOVES[@choice]
+    choice.class
   end
 
   def to_s
-    value
+    choice.name
   end
 
   def <=>(other)
     return 0 if value == other.value
 
-    case value
-    when '[R]ock'
-      other.value == '[S]cissors' || other.value == '[L]izard' ?  1 : - 1
-    when '[P]aper'
-      other.value == 'Spoc[k]'    || other.value == '[R]ock'   ?  1 : - 1
-    when '[S]cissors'
-      other.value == '[P]aper'    || other.value == '[L]izard' ?  1 : - 1
-    when '[L]izard'
-      other.value == '[P]aper'    || other.value == 'Spoc[k]'  ?  1 : - 1
-    when 'Spoc[k]'
-      other.value == '[S]cissors' || other.value == '[R]ock'   ?  1 : - 1
-    end
+    choice.beats.include?(other.to_s) ? 1 : -1
   end
 
   def self.winning_message(move1, move2)
     key = if move1 == move2
             'tie'
           else
-            "#{Move.new(move1)}_#{Move.new(move2)}".tr('[]', '').downcase
+            "#{Move.new(move1)}_#{Move.new(move2)}".downcase
           end
     MESSAGES[key]
   end
@@ -181,7 +167,7 @@ class RPSGame
 
       system 'clear' || system('cls')
       display_game_board(players[0], players[1])
-      p Move.winning_message(winner.move.choice, looser.move.choice)
+      p Move.winning_message(winner.move.to_s, looser.move.to_s)
 
       break unless play_again?
     end
@@ -233,6 +219,6 @@ class RPSGame
   end
 end
 
-RPSGame.new.play
+# RPSGame.new.play
 
 # puts Weapon.options

@@ -4,8 +4,6 @@ require_relative 'prs_oo'
 
 describe Player do
   NAMES = ['Hal', 'R2D2', 'Deep blue', 'C3P0']
-  MOVES = {r: '[R]ock', p: '[P]aper', s: '[S]cissors',
-           l: '[L]izard', k: 'Spoc[k]'}
 
   before do
     @human_player = Human.new
@@ -38,7 +36,7 @@ describe Player do
   describe 'when computer chooses a move' do
     it 'must select a valid move' do
       @computer_player.choose
-      MOVES.values.must_include @computer_player.move.value
+      Weapon.options.must_include @computer_player.move.value
     end
 
     it 'must adjust its move based on human player moves' do
@@ -48,112 +46,112 @@ end
 
 describe Move do
   describe 'when a move is initialized' do
-    it 'must return nil if an invalid move is set' do
-      Move.new('invalid move').value.must_be_nil
+    it 'must return correct weapon class for rock' do
+      Move.new('Rock').value.must_equal Rock
     end
 
-    it 'must return valid move description for rock' do
-      Move.new(:r).value.must_equal '[R]ock'
+    it 'must return correct weapon class for paper' do
+      Move.new('Paper').value.must_equal Paper
     end
 
-    it 'must return valid move description for paper' do
-      Move.new(:p).value.must_equal '[P]aper'
+    it 'must return correct weapon class for scissors' do
+      Move.new('Scissors').value.must_equal Scissors
     end
 
-    it 'must return valid move description for scissors' do
-      Move.new(:s).value.must_equal '[S]cissors'
+    it 'must return correct weapon class for lizard' do
+      Move.new('Lizard').value.must_equal Lizard
     end
 
-    it 'must return valid move description for lizard' do
-      Move.new(:l).value.must_equal '[L]izard'
-    end
-
-    it 'must return valid move description for spock' do
-      Move.new(:k).value.must_equal 'Spoc[k]'
+    it 'must return correct weapon class for spock' do
+      Move.new('Spock').value.must_equal Spock
     end
   end
 
   describe 'when a move is compared' do
+    it 'must detect if moves are the same' do
+      Move.new('Rock').must_be :==, Move.new('Rock')
+    end
+
     it 'must return Rock > Scissors' do
-      Move.new(:r).must_be :>, Move.new(:s)
+      Move.new('Rock').must_be :>, Move.new('Scissors')
     end
 
     it 'must return Rock > Lizard' do
-      Move.new(:r).must_be :>, Move.new(:l)
+      Move.new('Rock').must_be :>, Move.new('Lizard')
     end
 
     it 'must return Paper > Rock' do
-      Move.new(:p).must_be :>, Move.new(:r)
+      Move.new('Paper').must_be :>, Move.new('Rock')
     end
 
     it 'must return Paper > Spock' do
-      Move.new(:p).must_be :>, Move.new(:k)
+      Move.new('Paper').must_be :>, Move.new('Spock')
     end
 
     it 'must return Scissors > Paper' do
-      Move.new(:s).must_be :>, Move.new(:p)
+      Move.new('Scissors').must_be :>, Move.new('Paper')
     end
 
     it 'must return Scissors > Lizard' do
-      Move.new(:s).must_be :>, Move.new(:l)
+      Move.new('Scissors').must_be :>, Move.new('Lizard')
     end
 
     it 'must return Lizard > Spock' do
-      Move.new(:l).must_be :>, Move.new(:k)
+      Move.new('Lizard').must_be :>, Move.new('Spock')
     end
 
     it 'must return Lizard > Paper' do
-      Move.new(:l).must_be :>, Move.new(:p)
+      Move.new('Lizard').must_be :>, Move.new('Paper')
     end
 
     it 'must return Spock > Scissors' do
-      Move.new(:k).must_be :>, Move.new(:s)
+      Move.new('Spock').must_be :>, Move.new('Scissors')
     end
 
     it 'must return Spock > Rock' do
-      Move.new(:k).must_be :>, Move.new(:r)
+      Move.new('Spock').must_be :>, Move.new('Rock')
     end
   end
 
   describe 'when message for comparison is asked' do
     it 'must display correct message when Rock and Scissors' do
-      Move.winning_message(:r, :s).must_equal 'Rock crushes Scissors'
+      Move.winning_message('Rock', 'Scissors').must_equal 'Rock crushes Scissors'
     end
 
     it 'must display correct message when Rock and Lizard' do
-      Move.winning_message(:r, :l).must_equal 'Rock crushes Lizard'
+      Move.winning_message('Rock', 'Lizard').must_equal 'Rock crushes Lizard'
     end
 
     it 'must display correct message when Paper and Rock' do
-      Move.winning_message(:p, :r).must_equal 'Paper covers Rock'
+      Move.winning_message('Paper', 'Rock').must_equal 'Paper covers Rock'
     end
 
     it 'must display correct message when Paper and Spock' do
-      Move.winning_message(:p, :k).must_equal 'Paper disproves Spock'
+      Move.winning_message('Paper', 'Spock').must_equal 'Paper disproves Spock'
     end
 
     it 'must display correct message when Scissors and Paper' do
-      Move.winning_message(:s, :p).must_equal 'Scissors cuts Paper'
+      Move.winning_message('Scissors', 'Paper').must_equal 'Scissors cuts Paper'
     end
 
     it 'must display correct message when Scissors and Lizard' do
-      Move.winning_message(:s, :l).must_equal 'Scissors decapitates Lizard'
+      Move.winning_message('Scissors', 'Lizard').must_equal 'Scissors decapitates Lizard'
     end
 
     it 'must display correct message when Lizard and Spock' do
-      Move.winning_message(:l, :k).must_equal 'Lizard poisons Spock'
+      Move.winning_message('Lizard', 'Spock').must_equal 'Lizard poisons Spock'
     end
 
     it 'must display correct message when Lizard and Paper' do
-      Move.winning_message(:l, :p).must_equal 'Lizard eats Paper'
+      Move.winning_message('Lizard', 'Paper').must_equal 'Lizard eats Paper'
     end
 
     it 'must display correct message when Spock and Scissors' do
-      Move.winning_message(:k, :r).must_equal 'Spock vaporizes Rock'
+      Move.winning_message('Spock', 'Rock').must_equal 'Spock vaporizes Rock'
     end
 
     it 'must display correct message when Spock and Rock' do
-      Move.winning_message(:k, :s).must_equal 'Spock smashes Scissors'
+      Move.winning_message('Spock', 'Scissors').must_equal 'Spock smashes Scissors'
     end
   end
 end
