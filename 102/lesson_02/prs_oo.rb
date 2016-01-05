@@ -43,21 +43,6 @@ class Computer < Player
   end
 end
 
-module Statisticable
-  attr_accessor :data, :players
-end
-
-class DummyStatistics
-  include Statisticable
-
-  def initialize
-    @human = Human.new
-    @computer = Computer.new
-    self.players = [@human, @computer]
-    self.data = {}
-  end
-end
-
 class Weapon
   attr_reader :beats, :loses_to
 
@@ -120,7 +105,7 @@ class Move
   attr_reader :choice
 
   def initialize(move)
-    @choice = Weapon.options[Weapon.options.map(&:to_s).index(move)].new
+    @choice = eval "#{move}.new"
   end
 
   def value
@@ -147,6 +132,18 @@ class Move
   end
 end
 
+module Statisticable
+  attr_accessor :data, :scores
+
+
+end
+
+class RPSGameDummy
+  include Statisticable
+  attr_accessor :players
+
+end
+
 class RPSGame
   attr_accessor :players
 
@@ -159,13 +156,11 @@ class RPSGame
 
   def play
     loop do
-      system 'clear' || system('cls')
       display_game_board(players[0], players[1])
 
       players.each(&:choose)
       winner, looser = evalute_player_moves(@human, @computer)
 
-      system 'clear' || system('cls')
       display_game_board(players[0], players[1])
       p Move.winning_message(winner.move.to_s, looser.move.to_s)
 
@@ -183,6 +178,7 @@ class RPSGame
   end
 
   def display_game_board(player1, player2)
+    system 'clear' || system('cls')
     board = %(+------------------+------------------+
 |#{player1.name.center(18, ' ')}|#{player2.name.center(18, ' ')}|
 +------------------+------------------+

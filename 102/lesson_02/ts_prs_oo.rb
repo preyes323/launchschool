@@ -277,10 +277,12 @@ describe Statisticable do
   before do
     @human = Human.new
     @computer = Computer.new
+    @rpsgame = RPSGameDummy.new
   end
 
   describe 'when a move is made' do
     it 'must increment the move a human player made' do
+
     end
 
     it 'must increment the move a computer player made' do
@@ -289,6 +291,7 @@ describe Statisticable do
 
   describe 'when a player wins' do
     it 'must record the win' do
+
     end
 
     it 'must match the win to the move' do
@@ -299,10 +302,21 @@ describe Statisticable do
   end
 
   describe 'when a report is requested' do
-    it 'must suggest a ratio of moves for winning' do
+    it 'must give correct ratio given opposing player move history' do
+      ratio = { 'Spock' => 0.3, 'Rock' => 0.3, 'Lizard' => 0.1,
+                'Scissors' => 0.15, 'Paper' => 0.15 }
+      move_history = %w(Spock Rock Rock Lizard Lizard Scissors Scissors
+                        Scissors Scissors Paper)
+      # Statisticable.weapons_ratio
     end
 
     it 'must display history of moves' do
+    end
+
+    it 'must display scores' do
+    end
+
+    it 'must display history of results with moves' do
     end
   end
 end
