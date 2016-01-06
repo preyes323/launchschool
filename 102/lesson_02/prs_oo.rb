@@ -133,18 +133,68 @@ class Move
 end
 
 module Statisticable
-  attr_accessor :data, :scores
+  attr_accessor :data, :scores, :win_history
 
+  def record_move(player, move)
+    self.data[player.class.to_s.to_sym] ||= []
+    self.data[player.class.to_s.to_sym] << move.to_s
+  end
 
+  def record_win(winner)
+    self.scores[winner.class.to_s.to_sym] ||= 0
+    self.scores[winner.class.to_s.to_sym] += 1
+  end
+
+  def move_result(winning_move)
+    self.win_history << winning_move.to_s
+  end
+
+  def self.weapons_ratio(move_history)
+    ratio = compute_ratio(allocate_moves(weapons_choices(move_history)))
+  end
+
+  def self.weapons_choices(move_history)
+    move_history.map { |move| eval "#{move}.new.loses_to" }.flatten.sort
+  end
+
+  def self.allocate_moves(moves)
+    result = {}
+    Weapon.options.each do |weapon|
+      result[weapon.name] = moves.select { |move| move == weapon.name }
+    end
+    result
+  end
+
+  def self.compute_ratio(choices)
+    total = choices.values.flatten.count
+    choices.each { |weapon, use| choices[weapon] = use.count * 1.0 / total }
+    choices
+  end
+
+  def self.display_move_history(move_history)
+    allocate_moves(move_history).to_a.map do |move|
+      "#{move[0].center(10, ' ')}| #{display_move_count(move[1])}"
+    end.join("\n")
+  end
+
+  def self.display_move_count(moves)
+    moves.map { |move| '*' }.join
+  end
 end
 
 class RPSGameDummy
   include Statisticable
   attr_accessor :players
 
+  def initialize
+    self.scores = {}
+    self.data = {}
+    self.win_history = []
+  end
 end
 
 class RPSGame
+  include Statisticable
   attr_accessor :players
 
   def initialize

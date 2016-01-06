@@ -278,45 +278,119 @@ describe Statisticable do
     @human = Human.new
     @computer = Computer.new
     @rpsgame = RPSGameDummy.new
+    @move_rock = Move.new('Rock')
+    @move_paper = Move.new('Paper')
+    @move_scissors = Move.new('Scissors')
   end
 
   describe 'when a move is made' do
-    it 'must increment the move a human player made' do
-
+    it 'must record the move a player made' do
+      @rpsgame.record_move(@human, @move_rock)
+      sample_data = { Human: ['Rock'] }
+      @rpsgame.data.must_equal sample_data
     end
 
-    it 'must increment the move a computer player made' do
+    it 'must increment the move a player made' do
+      @rpsgame.record_move(@human, @move_rock)
+      @rpsgame.record_move(@human, @move_paper)
+      @rpsgame.record_move(@human, @move_rock)
+      sample_data = { Human: ['Rock', 'Paper', 'Rock'] }
+      @rpsgame.data.must_equal sample_data
+    end
+
+    it 'must record the move two players made' do
+      @rpsgame.record_move(@human, @move_rock)
+      @rpsgame.record_move(@computer, @move_paper)
+      sample_data = { Human: ['Rock'], Computer: ['Paper'] }
+      @rpsgame.data.must_equal sample_data
+    end
+
+    it 'must increment the move two players made' do
+      @rpsgame.record_move(@human, @move_rock)
+      @rpsgame.record_move(@human, @move_paper)
+      @rpsgame.record_move(@human, @move_rock)
+      @rpsgame.record_move(@computer, @move_paper)
+      @rpsgame.record_move(@computer, @move_scissors)
+      sample_data = { Human: ['Rock', 'Paper', 'Rock'],
+                      Computer: ['Paper', 'Scissors'] }
+      @rpsgame.data.must_equal sample_data
     end
   end
 
   describe 'when a player wins' do
     it 'must record the win' do
-
+      @rpsgame.record_win(@human)
+      scores_data = { Human: 1 }
+      @rpsgame.scores.must_equal scores_data
     end
 
-    it 'must match the win to the move' do
+    it 'must increment the win' do
+      @rpsgame.record_win(@human)
+      @rpsgame.record_win(@human)
+      scores_data = { Human: 2 }
+      @rpsgame.scores.must_equal scores_data
     end
 
-    it 'must match the win to the move to the winning player' do
+    it 'must record the win another ' do
+      @rpsgame.record_win(@human)
+      @rpsgame.record_win(@computer)
+      scores_data = { Human: 1, Computer: 1 }
+      @rpsgame.scores.must_equal scores_data
+    end
+
+    it 'must increment the win' do
+      @rpsgame.record_win(@human)
+      @rpsgame.record_win(@human)
+      @rpsgame.record_win(@computer)
+      @rpsgame.record_win(@computer)
+      scores_data = { Human: 2, Computer: 2 }
+      @rpsgame.scores.must_equal scores_data
     end
   end
 
   describe 'when a report is requested' do
-    it 'must give correct ratio given opposing player move history' do
-      ratio = { 'Spock' => 0.3, 'Rock' => 0.3, 'Lizard' => 0.1,
-                'Scissors' => 0.15, 'Paper' => 0.15 }
+    it 'must match the win to the move' do
+      @rpsgame.move_result(@move_rock)
+      @rpsgame.move_result(@move_rock)
+      @rpsgame.move_result(@move_paper)
+      @rpsgame.move_result(@move_scissors)
+      sample_move_win_history = %w(Rock Rock Paper Scissors)
+      @rpsgame.win_history.must_equal sample_move_win_history
+    end
+
+    it 'must give weapon choices given opposing player move history' do
       move_history = %w(Spock Rock Rock Lizard Lizard Scissors Scissors
                         Scissors Scissors Paper)
-      # Statisticable.weapons_ratio
+      choices = %w(Lizard Lizard Paper Paper Paper Rock Rock Rock Rock Rock
+                   Rock Scissors Scissors Scissors Spock Spock Spock Spock
+                   Spock Spock)
+      Statisticable.weapons_choices(move_history).must_equal choices
+    end
+
+    it 'must give correct ratio given opposing player move history1' do
+      ratio = { 'Lizard' => 0.5, 'Paper' => 0.5, 'Rock' => 0.0,
+                'Scissors' => 0.0, 'Spock' => 0.0 }
+      move_history = %w(Spock)
+      Statisticable.weapons_ratio(move_history).must_equal ratio
+    end
+
+    it 'must give correct ratio given opposing player move history2' do
+      ratio = { 'Lizard' => 0.1, 'Paper' => 0.15, 'Rock' => 0.3,
+                'Scissors' => 0.15, 'Spock' => 0.3 }
+      move_history = %w(Spock Rock Rock Lizard Lizard Scissors Scissors
+                        Scissors Scissors Paper)
+      Statisticable.weapons_ratio(move_history).must_equal ratio
     end
 
     it 'must display history of moves' do
-    end
-
-    it 'must display scores' do
-    end
-
-    it 'must display history of results with moves' do
+      move_history = %w(Spock Rock Rock Lizard Lizard Scissors Scissors
+                        Scissors Scissors Paper)
+      history = %(  Lizard  | **
+  Paper   | *
+   Rock   | **
+ Scissors | ****
+  Spock   | *)
+      Statisticable.display_move_history(move_history).must_equal history
     end
   end
 end
