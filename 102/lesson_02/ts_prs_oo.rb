@@ -350,10 +350,10 @@ describe Statisticable do
 
   describe 'when a report is requested' do
     it 'must match the win to the move' do
-      @rpsgame.move_result(@move_rock)
-      @rpsgame.move_result(@move_rock)
-      @rpsgame.move_result(@move_paper)
-      @rpsgame.move_result(@move_scissors)
+      @rpsgame.record_move_result(@move_rock)
+      @rpsgame.record_move_result(@move_rock)
+      @rpsgame.record_move_result(@move_paper)
+      @rpsgame.record_move_result(@move_scissors)
       sample_move_win_history = %w(Rock Rock Paper Scissors)
       @rpsgame.win_history.must_equal sample_move_win_history
     end
@@ -364,6 +364,12 @@ describe Statisticable do
       choices = %w(Lizard Lizard Paper Paper Paper Rock Rock Rock Rock Rock
                    Rock Scissors Scissors Scissors Spock Spock Spock Spock
                    Spock Spock)
+      Statisticable.weapons_choices(move_history).must_equal choices
+    end
+
+    it 'must return nil if move history is nil' do
+      move_history = nil
+      choices = nil
       Statisticable.weapons_choices(move_history).must_equal choices
     end
 
@@ -391,6 +397,24 @@ describe Statisticable do
  Scissors | ****
   Spock   | *)
       Statisticable.display_move_history(move_history).must_equal history
+    end
+  end
+end
+
+describe StringTools do
+  describe 'when passed multiline strings' do
+    it 'must concatenate with appropriate space allocation' do
+      history = %(  Lizard  | **
+  Paper   | *
+   Rock   | **
+ Scissors | ****
+  Spock   | *)
+      result = %(  Lizard  | **         Lizard  | **
+  Paper   | *          Paper   | *
+   Rock   | **          Rock   | **
+ Scissors | ****      Scissors | ****
+  Spock   | *          Spock   | *)
+      StringTools::multiline_concatenate(21, history, history).must_equal result
     end
   end
 end
