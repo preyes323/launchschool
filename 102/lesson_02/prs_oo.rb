@@ -235,17 +235,6 @@ module Statisticable
   end
 end
 
-class RPSGameDummy
-  include Statisticable
-  attr_accessor :players
-
-  def initialize
-    self.scores = {}
-    self.data = {}
-    self.win_history = []
-  end
-end
-
 class RPSGame
   include Statisticable
   attr_accessor :players
