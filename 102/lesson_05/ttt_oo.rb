@@ -32,6 +32,7 @@ class Markers
   end
 
   def each(&block)
+    return collection.each unless block
     collection.each { |item| block.call(item) }
   end
 
@@ -67,6 +68,28 @@ class Markers
   def owner_exists?(marker)
     owners.include? marker.owner
   end
+
+  def to_s
+    collection.map do |marker|
+      [marker.owner, marker.symbol]
+    end
+  end
 end
 
-class Square; end
+class Square
+  attr_reader :mark, :location
+
+  def initialize(mark, location)
+    unless valid_location?(location)
+      fail ArgumentError, 'Square location must be an array of two numbers'
+    end
+    @mark = mark
+    @location = location
+  end
+
+  private
+
+  def valid_location?(location)
+    location.class == Array && location.length == 2
+  end
+end

@@ -19,10 +19,10 @@
       <data key="d5"/>
       <data key="d6">
         <y:UMLClassNode>
-          <y:Geometry height="159.01727642276427" width="136.8689024390244" x="371.50404084397985" y="442.7379815137438"/>
+          <y:Geometry height="147.73272357723573" width="158.37255129694154" x="366.1284068912118" y="458.63313008130086"/>
           <y:Fill color="#FFCC00" transparent="false"/>
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
-          <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="13" fontStyle="bold" hasBackgroundColor="false" hasLineColor="false" height="19.310546875" modelName="custom" textColor="#000000" visible="true" width="49.74755859375" x="43.5606719226372" y="3.0">Square<y:LabelModel>
+          <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="13" fontStyle="bold" hasBackgroundColor="false" hasLineColor="false" height="19.310546875" modelName="custom" textColor="#000000" visible="true" width="49.74755859375" x="54.31249635159577" y="3.0">Square<y:LabelModel>
               <y:SmartNodeLabelModel distance="4.0"/>
             </y:LabelModel>
             <y:ModelParameter>
@@ -33,11 +33,11 @@
             <y:AttributeLabel>mark
 neighborhoods
 location</y:AttributeLabel>
-            <y:MethodLabel>neighboorhood_full?
-marker
-mark=
+            <y:MethodLabel>neighborhood_full_of?
+neighborhood_count_of?
+mark
 location
-location=
+
 </y:MethodLabel>
           </y:UML>
         </y:UMLClassNode>
@@ -48,7 +48,7 @@ location=
       <data key="d5"/>
       <data key="d6">
         <y:UMLClassNode>
-          <y:Geometry height="136.4481707317073" width="111.4420731707317" x="350.0003919860627" y="266.28997289972915"/>
+          <y:Geometry height="136.4481707317073" width="111.4420731707317" x="350.0003919860627" y="272.18495934959356"/>
           <y:Fill color="#FFCC00" transparent="false"/>
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
           <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="13" fontStyle="bold" hasBackgroundColor="false" hasLineColor="false" height="19.310546875" modelName="custom" textColor="#000000" visible="true" width="42.6572265625" x="34.39242330411585" y="3.0">Board<y:LabelModel>
@@ -60,8 +60,8 @@ location=
           </y:NodeLabel>
           <y:UML clipContent="true" constraint="" omitDetails="false" stereotype="" use3DEffect="true">
             <y:AttributeLabel>squares</y:AttributeLabel>
-            <y:MethodLabel>squares[]
-squares=[]
+            <y:MethodLabel>squares
+squares=
 marked_square?
 empty_squares?
 winning_square?</y:MethodLabel>
@@ -74,7 +74,7 @@ winning_square?</y:MethodLabel>
       <data key="d5"/>
       <data key="d6">
         <y:UMLClassNode>
-          <y:Geometry height="107.03116531165324" width="100.0" x="70.0" y="280.99847560975616"/>
+          <y:Geometry height="107.03116531165324" width="100.0" x="70.0" y="286.8934620596207"/>
           <y:Fill color="#FFCC00" transparent="false"/>
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
           <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="13" fontStyle="bold" hasBackgroundColor="false" hasLineColor="false" height="19.310546875" modelName="custom" textColor="#000000" visible="true" width="44.94873046875" x="27.525634765625" y="3.0">Player<y:LabelModel>
@@ -98,7 +98,7 @@ to_s</y:MethodLabel>
       <data key="d5"/>
       <data key="d6">
         <y:UMLClassNode>
-          <y:Geometry height="56.82215447154465" width="100.0" x="0.0" y="493.83554248935366"/>
+          <y:Geometry height="56.82215447154465" width="100.0" x="0.0" y="504.0884146341464"/>
           <y:Fill color="#FFCC00" transparent="false"/>
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
           <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="13" fontStyle="bold" hasBackgroundColor="false" hasLineColor="false" height="19.310546875" modelName="custom" textColor="#000000" visible="true" width="51.4677734375" x="24.26611328125" y="3.0">Human<y:LabelModel>
@@ -120,7 +120,7 @@ to_s</y:MethodLabel>
       <data key="d5"/>
       <data key="d6">
         <y:UMLClassNode>
-          <y:Geometry height="64.1189024390244" width="100.0" x="140.0" y="490.1871685056137"/>
+          <y:Geometry height="64.1189024390244" width="100.0" x="140.0" y="500.44004065040656"/>
           <y:Fill color="#FFCC00" transparent="false"/>
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
           <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="13" fontStyle="bold" hasBackgroundColor="false" hasLineColor="false" height="19.310546875" modelName="custom" textColor="#000000" visible="true" width="70.1171875" x="14.94140625" y="3.0">Computer<y:LabelModel>
@@ -174,7 +174,7 @@ board_won?</y:MethodLabel>
       <data key="d5"/>
       <data key="d6">
         <y:UMLClassNode>
-          <y:Geometry height="56.82215447154465" width="156.1310975609756" x="728.7808797909407" y="306.10298102981045"/>
+          <y:Geometry height="147.73272357723573" width="156.1310975609756" x="744.9090543941154" y="266.54268292682934"/>
           <y:Fill color="#FFCC00" transparent="false"/>
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
           <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="13" fontStyle="bold" hasBackgroundColor="false" hasLineColor="false" height="19.310546875" modelName="custom" textColor="#000000" visible="true" width="99.5322265625" x="28.299435499237802" y="3.0">Neighborhood<y:LabelModel>
@@ -186,8 +186,12 @@ board_won?</y:MethodLabel>
           </y:NodeLabel>
           <y:UML clipContent="true" constraint="" omitDetails="false" stereotype="" use3DEffect="true">
             <y:AttributeLabel>NEIGHBORHOOD_DEPTH
-</y:AttributeLabel>
-            <y:MethodLabel/>
+top_right
+bottom_left</y:AttributeLabel>
+            <y:MethodLabel>top_right=
+top_right
+bottom_left=
+bottom_left</y:MethodLabel>
           </y:UML>
         </y:UMLClassNode>
       </data>
@@ -197,7 +201,7 @@ board_won?</y:MethodLabel>
       <data key="d5"/>
       <data key="d6">
         <y:UMLClassNode>
-          <y:Geometry height="136.44817073170725" width="124.6844512195122" x="909.1887267711963" y="454.0225343592723"/>
+          <y:Geometry height="136.44817073170725" width="124.6844512195122" x="925.3169013743709" y="464.27540650406513"/>
           <y:Fill color="#FFCC00" transparent="false"/>
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
           <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="13" fontStyle="bold" hasBackgroundColor="false" hasLineColor="false" height="19.310546875" modelName="custom" textColor="#000000" visible="true" width="74.2431640625" x="25.2206435785061" y="3.0">Horizontal<y:LabelModel>
@@ -210,10 +214,10 @@ board_won?</y:MethodLabel>
           <y:UML clipContent="true" constraint="" omitDetails="false" stereotype="" use3DEffect="true">
             <y:AttributeLabel>left_locations
 right_locations</y:AttributeLabel>
-            <y:MethodLabel>left_locations=[]
-left_locations[]
-right_locations=[]
-right_locations[]</y:MethodLabel>
+            <y:MethodLabel>left_locations=
+left_locations
+right_locations=
+right_locations</y:MethodLabel>
           </y:UML>
         </y:UMLClassNode>
       </data>
@@ -223,7 +227,7 @@ right_locations[]</y:MethodLabel>
       <data key="d5"/>
       <data key="d6">
         <y:UMLClassNode>
-          <y:Geometry height="136.44817073170725" width="124.6844512195122" x="744.5042029616725" y="454.0225343592723"/>
+          <y:Geometry height="136.44817073170725" width="124.6844512195122" x="760.632377564847" y="464.27540650406513"/>
           <y:Fill color="#FFCC00" transparent="false"/>
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
           <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="13" fontStyle="bold" hasBackgroundColor="false" hasLineColor="false" height="19.310546875" modelName="custom" textColor="#000000" visible="true" width="54.8955078125" x="34.8944717035061" y="3.0">Vertical<y:LabelModel>
@@ -236,10 +240,10 @@ right_locations[]</y:MethodLabel>
           <y:UML clipContent="true" constraint="" omitDetails="false" stereotype="" use3DEffect="true">
             <y:AttributeLabel>top_locations
 bottom_locations</y:AttributeLabel>
-            <y:MethodLabel>top_locations=[]
-top_locations[]
-bottom_locations=[]
-bottom_locations[]
+            <y:MethodLabel>top_locations=
+top_locations
+bottom_locations=
+bottom_locations
 </y:MethodLabel>
           </y:UML>
         </y:UMLClassNode>
@@ -250,7 +254,7 @@ bottom_locations[]
       <data key="d5"/>
       <data key="d6">
         <y:UMLClassNode>
-          <y:Geometry height="136.44817073170725" width="148.68597560975604" x="1073.8732820363919" y="454.0225343592723"/>
+          <y:Geometry height="136.44817073170725" width="148.68597560975604" x="1090.0014566395664" y="464.27540650406513"/>
           <y:Fill color="#FFCC00" transparent="false"/>
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
           <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="13" fontStyle="bold" hasBackgroundColor="false" hasLineColor="false" height="19.310546875" modelName="custom" textColor="#000000" visible="true" width="60.58935546875" x="44.04831007050302" y="3.0">LeftDiag<y:LabelModel>
@@ -263,10 +267,10 @@ bottom_locations[]
           <y:UML clipContent="true" constraint="" omitDetails="false" stereotype="" use3DEffect="true">
             <y:AttributeLabel>upper_left_locations
 lower_right_locations		</y:AttributeLabel>
-            <y:MethodLabel>upper_left_locations=[]
-upper_left_locations[]
-lower_right_locations=[]
-lower_right_locations[]</y:MethodLabel>
+            <y:MethodLabel>upper_left_locations=
+upper_left_locations
+lower_right_locations=
+lower_right_locations</y:MethodLabel>
           </y:UML>
         </y:UMLClassNode>
       </data>
@@ -276,7 +280,7 @@ lower_right_locations[]</y:MethodLabel>
       <data key="d5"/>
       <data key="d6">
         <y:UMLClassNode>
-          <y:Geometry height="136.44817073170725" width="156.1310975609756" x="548.3729432830042" y="454.0225343592723"/>
+          <y:Geometry height="136.44817073170725" width="156.1310975609756" x="564.5011178861789" y="464.27540650406513"/>
           <y:Fill color="#FFCC00" transparent="false"/>
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
           <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="13" fontStyle="bold" hasBackgroundColor="false" hasLineColor="false" height="19.310546875" modelName="custom" textColor="#000000" visible="true" width="70.3330078125" x="42.8990448742378" y="3.0">RightDiag<y:LabelModel>
@@ -289,10 +293,10 @@ lower_right_locations[]</y:MethodLabel>
           <y:UML clipContent="true" constraint="" omitDetails="false" stereotype="" use3DEffect="true">
             <y:AttributeLabel>upper_right_locations
 lower_left_locations</y:AttributeLabel>
-            <y:MethodLabel>upper_right_locations=[]
-upper_right_locations[]
-lower_left_locations=[]
-lower_left_locations[]</y:MethodLabel>
+            <y:MethodLabel>upper_right_locations=
+upper_right_locations
+lower_left_locations=
+lower_left_locations</y:MethodLabel>
           </y:UML>
         </y:UMLClassNode>
       </data>
@@ -327,7 +331,7 @@ to_s</y:MethodLabel>
       <data key="d5"/>
       <data key="d6">
         <y:UMLClassNode>
-          <y:Geometry height="159.01727642276424" width="99.99999999999989" x="210.00000000000006" y="255.00542005420067"/>
+          <y:Geometry height="170.80724932249328" width="99.99999999999989" x="210.00000000000006" y="255.0054200542006"/>
           <y:Fill color="#FFCC00" transparent="false"/>
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
           <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="13" fontStyle="bold" hasBackgroundColor="false" hasLineColor="false" height="19.310546875" modelName="custom" textColor="#000000" visible="true" width="58.45654296875" x="20.771728515624943" y="3.0">Markers<y:LabelModel>
@@ -339,12 +343,15 @@ to_s</y:MethodLabel>
           </y:NodeLabel>
           <y:UML clipContent="true" constraint="" omitDetails="false" stereotype="" use3DEffect="true">
             <y:AttributeLabel>collection
-game_name</y:AttributeLabel>
+</y:AttributeLabel>
             <y:MethodLabel>&lt;&lt;
 =[]
 []
 symbol_exists?
-owner_exists?</y:MethodLabel>
+owner_exists?
+owners
+symbols
+each</y:MethodLabel>
           </y:UML>
         </y:UMLClassNode>
       </data>
@@ -355,8 +362,8 @@ owner_exists?</y:MethodLabel>
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="-28.411077235772325" tx="-25.0" ty="53.51558265582662">
-            <y:Point x="50.0" y="478.83554248935366"/>
-            <y:Point x="95.0" y="478.83554248935366"/>
+            <y:Point x="50.0" y="489.0884146341464"/>
+            <y:Point x="95.0" y="489.0884146341464"/>
           </y:Path>
           <y:LineStyle color="#000000" type="line" width="1.0"/>
           <y:Arrows source="none" target="white_delta"/>
@@ -370,8 +377,8 @@ owner_exists?</y:MethodLabel>
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="-32.0594512195122" tx="25.0" ty="53.51558265582662">
-            <y:Point x="190.0" y="475.1871685056137"/>
-            <y:Point x="145.0" y="475.1871685056137"/>
+            <y:Point x="190.0" y="485.44004065040656"/>
+            <y:Point x="145.0" y="485.44004065040656"/>
           </y:Path>
           <y:LineStyle color="#000000" type="line" width="1.0"/>
           <y:Arrows source="none" target="white_delta"/>
@@ -384,7 +391,7 @@ owner_exists?</y:MethodLabel>
       <data key="d9"/>
       <data key="d10">
         <y:PolyLineEdge>
-          <y:Path sx="-34.2172256097561" sy="-79.50863821138213" tx="0.0" ty="68.22408536585365"/>
+          <y:Path sx="-39.593137824235384" sy="-73.86636178861787" tx="0.0" ty="68.22408536585365"/>
           <y:LineStyle color="#000000" type="line" width="1.0"/>
           <y:Arrows source="none" target="none"/>
           <y:BendStyle smoothed="false"/>
@@ -408,9 +415,9 @@ owner_exists?</y:MethodLabel>
       <data key="d9"/>
       <data key="d10">
         <y:PolyLineEdge>
-          <y:Path sx="0.0" sy="-68.22408536585363" tx="31.226219512195115" ty="28.411077235772325">
-            <y:Point x="971.5309523809524" y="439.0225343592723"/>
-            <y:Point x="838.0726480836237" y="439.0225343592723"/>
+          <y:Path sx="0.0" sy="-68.22408536585363" tx="31.226219512195115" ty="73.86636178861787">
+            <y:Point x="987.6591269841269" y="449.27540650406513"/>
+            <y:Point x="854.2008226867983" y="449.27540650406513"/>
           </y:Path>
           <y:LineStyle color="#000000" type="line" width="1.0"/>
           <y:Arrows source="none" target="white_delta"/>
@@ -423,7 +430,7 @@ owner_exists?</y:MethodLabel>
       <data key="d9"/>
       <data key="d10">
         <y:PolyLineEdge>
-          <y:Path sx="0.0" sy="-68.22408536585363" tx="0.0" ty="28.411077235772325"/>
+          <y:Path sx="0.0" sy="-68.22408536585363" tx="0.0" ty="73.86636178861787"/>
           <y:LineStyle color="#000000" type="line" width="1.0"/>
           <y:Arrows source="none" target="white_delta"/>
           <y:BendStyle smoothed="false"/>
@@ -435,9 +442,9 @@ owner_exists?</y:MethodLabel>
       <data key="d9"/>
       <data key="d10">
         <y:PolyLineEdge>
-          <y:Path sx="0.0" sy="-68.22408536585363" tx="62.45243902439023" ty="28.411077235772325">
-            <y:Point x="1148.2162698412699" y="424.0225343592723"/>
-            <y:Point x="869.2988675958188" y="424.0225343592723"/>
+          <y:Path sx="0.0" sy="-68.22408536585363" tx="62.45243902439023" ty="73.86636178861787">
+            <y:Point x="1164.3444444444444" y="434.27540650406513"/>
+            <y:Point x="885.4270421989934" y="434.27540650406513"/>
           </y:Path>
           <y:LineStyle color="#000000" type="line" width="1.0"/>
           <y:Arrows source="none" target="white_delta"/>
@@ -450,9 +457,9 @@ owner_exists?</y:MethodLabel>
       <data key="d9"/>
       <data key="d10">
         <y:PolyLineEdge>
-          <y:Path sx="0.0" sy="-68.22408536585363" tx="-31.226219512195115" ty="28.411077235772325">
-            <y:Point x="626.438492063492" y="439.0225343592723"/>
-            <y:Point x="775.6202090592334" y="439.0225343592723"/>
+          <y:Path sx="0.0" sy="-68.22408536585363" tx="-31.226219512195115" ty="73.86636178861787">
+            <y:Point x="642.5666666666667" y="449.27540650406513"/>
+            <y:Point x="791.7483836624081" y="449.27540650406513"/>
           </y:Path>
           <y:LineStyle color="#000000" type="line" width="1.0"/>
           <y:Arrows source="none" target="white_delta"/>
@@ -465,9 +472,9 @@ owner_exists?</y:MethodLabel>
       <data key="d9"/>
       <data key="d10">
         <y:PolyLineEdge>
-          <y:Path sx="34.2172256097561" sy="-79.50863821138213" tx="-62.452439024390245" ty="28.411077235772325">
-            <y:Point x="474.15571767324815" y="424.0225343592723"/>
-            <y:Point x="744.3939895470382" y="424.0225343592723"/>
+          <y:Path sx="39.593137824235384" sy="-73.86636178861787" tx="-62.452439024390245" ty="73.86636178861787">
+            <y:Point x="484.90782036391795" y="434.27540650406513"/>
+            <y:Point x="760.5221641502129" y="434.27540650406513"/>
           </y:Path>
           <y:LineStyle color="#000000" type="dashed" width="1.0"/>
           <y:Arrows source="none" target="white_delta"/>
@@ -492,7 +499,7 @@ owner_exists?</y:MethodLabel>
       <data key="d9"/>
       <data key="d10">
         <y:PolyLineEdge>
-          <y:Path sx="-24.99999999999997" sy="-79.50863821138212" tx="25.0" ty="61.09485094850953">
+          <y:Path sx="-24.99999999999997" sy="-85.40362466124664" tx="25.0" ty="61.09485094850953">
             <y:Point x="235.0" y="240.0054200542006"/>
             <y:Point x="170.0" y="240.0054200542006"/>
           </y:Path>
@@ -507,7 +514,7 @@ owner_exists?</y:MethodLabel>
       <data key="d9"/>
       <data key="d10">
         <y:PolyLineEdge>
-          <y:Path sx="24.99999999999997" sy="-79.50863821138212" tx="-25.0" ty="110.00271002710032">
+          <y:Path sx="24.99999999999997" sy="-85.40362466124664" tx="-25.0" ty="110.00271002710032">
             <y:Point x="285.0" y="240.0054200542006"/>
             <y:Point x="355.7214285714286" y="240.0054200542006"/>
           </y:Path>
