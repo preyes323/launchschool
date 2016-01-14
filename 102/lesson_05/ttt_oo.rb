@@ -76,15 +76,54 @@ class Markers
   end
 end
 
+module Neighborhood
+  @@top_left_limit = nil
+  @@bottom_right_limit = nil
+
+  def update_top_left_bottom_right(location)
+    Neighborhood.top_left_limit ||= location
+    Neighborhood.bottom_right_limit ||= location
+
+    if location[0] <= Neighborhood.top_left_limit[0] &&
+        location[1] <= Neighborhood.top_left_limit[1]
+      Neighborhood.top_left_limit = location
+    end
+
+    if location[0] >= Neighborhood.bottom_right_limit[0] &&
+       location[1] >= Neighborhood.bottom_right_limit[1]
+      Neighborhood.bottom_right_limit = location
+    end
+  end
+
+  def self.top_left_limit
+    @@top_left_limit
+  end
+
+  def self.top_left_limit=(location)
+    @@top_left_limit = location
+  end
+
+  def self.bottom_right_limit
+    @@bottom_right_limit
+  end
+
+  def self.bottom_right_limit=(location)
+    @@bottom_right_limit = location
+  end
+end
+
 class Square
+  include Neighborhood
   attr_reader :mark, :location
 
   def initialize(mark, location)
     unless valid_location?(location)
       fail ArgumentError, 'Square location must be an array of two numbers'
     end
+
     @mark = mark
     @location = location
+    self.update_top_left_bottom_right(@location)
   end
 
   private

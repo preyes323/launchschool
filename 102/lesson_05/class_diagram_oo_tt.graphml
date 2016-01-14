@@ -188,10 +188,10 @@ board_won?</y:MethodLabel>
             <y:AttributeLabel>NEIGHBORHOOD_DEPTH
 top_right
 bottom_left</y:AttributeLabel>
-            <y:MethodLabel>top_right=
-top_right
-bottom_left=
-bottom_left</y:MethodLabel>
+            <y:MethodLabel>top_left=
+top_left
+bottom_right=
+bottom_right</y:MethodLabel>
           </y:UML>
         </y:UMLClassNode>
       </data>

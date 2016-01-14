@@ -154,6 +154,8 @@ end
 
 describe Square do
   before do
+    Neighborhood.bottom_right_limit = nil
+    Neighborhood.top_left_limit = nil
     @square = Square.new('x', [1, 1])
   end
 
@@ -179,51 +181,51 @@ describe Square do
     end
   end
 
-  describe '#top_left' do
-    it 'must detect the current top_left coordinate allowed' do
-      Square.top_left.must_equal [1, 1]
+  describe '#top_left_limit' do
+    it 'must detect the current top_left_limit coordinate allowed' do
+      Neighborhood.top_left_limit.must_equal [1, 1]
     end
 
-    it 'must detect the current top_left coordinate allowed2' do
+    it 'must detect the current top_left_limit coordinate allowed2' do
       sq1 = Square.new('x', [1, 0])
-      Square.top_left.must_equal [1, 0]
+      Neighborhood.top_left_limit.must_equal [1, 0]
     end
 
-    it 'must detect the current top_left coordinate allowed3' do
+    it 'must detect the current top_left_limit coordinate allowed3' do
       sq1 = Square.new('x', [1, 0])
       sq2 = Square.new('x', [2, 1])
-      Square.top_left.must_equal [1, 0]
+      Neighborhood.top_left_limit.must_equal [1, 0]
     end
 
-    it 'must detect the current top_left coordinate allowed4' do
+    it 'must detect the current top_left_limit coordinate allowed4' do
       sq1 = Square.new('x', [1, 0])
       sq2 = Square.new('x', [2, 1])
       sq3 = Square.new('x', [0, 0])
-      Square.top_left.must_equal [0, 0]
+      Neighborhood.top_left_limit.must_equal [0, 0]
     end
   end
 
-  describe '#bottom_right' do
-    it 'must detect the current bottom_right coordinate allowed' do
-      Square.bottom_right.must_equal [1, 1]
+  describe '#bottom_right_limit' do
+    it 'must detect the current bottom_right_limit coordinate allowed' do
+      Neighborhood.bottom_right_limit.must_equal [1, 1]
     end
 
-    it 'must detect the current bottom_right coordinate allowed2' do
+    it 'must detect the current bottom_right_limit coordinate allowed2' do
       sq1 = Square.new('x', [1, 0])
-      Square.bottom_right.must_equal [1, 1]
+      Neighborhood.bottom_right_limit.must_equal [1, 1]
     end
 
-    it 'must detect the current bottom_right coordinate allowed3' do
+    it 'must detect the current bottom_right_limit coordinate allowed3' do
       sq1 = Square.new('x', [1, 0])
       sq2 = Square.new('x', [2, 1])
-      Square.bottom_right.must_equal [2, 1]
+      Neighborhood.bottom_right_limit.must_equal [2, 1]
     end
 
-    it 'must detect the current bottom_right coordinate allowed4' do
+    it 'must detect the current bottom_right_limit coordinate allowed4' do
       sq1 = Square.new('x', [1, 0])
       sq2 = Square.new('x', [2, 1])
       sq3 = Square.new('x', [0, 0])
-      Square.bottom_right.must_equal [2, 1]
+      Neighborhood.bottom_right_limit.must_equal [2, 1]
     end
   end
 end
