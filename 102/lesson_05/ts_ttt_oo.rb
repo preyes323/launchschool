@@ -181,6 +181,105 @@ describe Square do
     end
   end
 
+  describe '#to_s' do
+    it 'must return the marker symbol' do
+      @square.to_s.must_equal 'x'
+    end
+  end
+end
+
+describe Board do
+  before do
+    @board = Board.new
+    @square = Square.new('', [1, 1])
+  end
+
+  describe '#<<' do
+    it 'must add a square to the board' do
+      @board << @square
+      @board.count.must_equal 1
+    end
+  end
+
+  describe '#[]' do
+    it 'must return the square given the index' do
+      @board << @square
+      @board[-1].must_equal @square
+    end
+  end
+
+  describe '#[]=' do
+    it 'must assign the square to the index provided' do
+      @board[0] = @square
+      @board[0].must_equal @square
+    end
+  end
+
+  describe '#square_at' do
+    it 'must return the square at a given location' do
+      @board << @square
+      @board.square_at([1, 1]).must_equal @square
+    end
+  end
+
+  describe '#update_square_at' do
+    it 'must the marker of the square at a given location' do
+      @board << @square
+      @board.update_square_at([1, 1], 'y')
+      @board.square_at([1, 1]).mark.must_equal 'y'
+    end
+  end
+
+  describe '#new' do
+    it 'must create a new empty board' do
+      assert @board.empty?
+    end
+
+    it 'must create a new empty board with custom dimension' do
+      board = Board.new(3)
+      board.count.must_equal 9
+    end
+  end
+
+  describe '#draw_board' do
+    it 'must return the string representation of a board with empty sqaures' do
+      board_output = %(    0   1   2
+  +---+---+---+
+0 |   |   |   |
+  +---+---+---+
+1 |   |   |   |
+  +---+---+---+
+2 |   |   |   |
+  +---+---+---+).chomp
+      board = Board.new(3)
+      board.draw_board.must_equal board_output
+    end
+
+    it 'must return the string representation of a board with non-empty sq' do
+      board_output = %(    0   1   2
+  +---+---+---+
+0 |   |   |   |
+  +---+---+---+
+1 |   | x |   |
+  +---+---+---+
+2 |   |   | o |
+  +---+---+---+).chomp
+      board = Board.new(3)
+      board.update_square_at([1, 1], 'x')
+      board.update_square_at([2, 2], 'o')
+      board.draw_board.must_equal board_output
+    end
+  end
+end
+
+
+describe Neighborhood do
+  before do
+    Neighborhood.bottom_right_limit = nil
+    Neighborhood.top_left_limit = nil
+    @square = Square.new('x', [1, 1])
+  end
+
   describe '#top_left_limit' do
     it 'must detect the current top_left_limit coordinate allowed' do
       Neighborhood.top_left_limit.must_equal [1, 1]
@@ -230,8 +329,15 @@ describe Square do
   end
 end
 
-describe Neighborhood do
+describe Neighborhood::Vertical do
   before do
-    @square = Square.new('x', [1, 1])
+    @board = Board.new(3)
+    @board.update_square_at([1, 1], 'x')
+  end
+
+  describe '#score' do
+    it "must return correct score given neighborhood squares 'marker'" do
+      Neighborhood::Vertical.score_for('x', [1, 1], @board).must_equal 1
+    end
   end
 end

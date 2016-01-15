@@ -25,10 +25,10 @@ end
 
 class Markers
   include Enumerable
-  attr_reader :collection
+  attr_accessor :collection
 
   def initialize
-    @collection = []
+    self.collection = []
   end
 
   def each(&block)
@@ -77,6 +77,7 @@ class Markers
 end
 
 module Neighborhood
+  NEIGHBORHOOD_DEPTH = 1
   @@top_left_limit = nil
   @@bottom_right_limit = nil
 
@@ -110,11 +111,148 @@ module Neighborhood
   def self.bottom_right_limit=(location)
     @@bottom_right_limit = location
   end
+
+  def self.current(mark, location, board)
+    board.square_at(location).mark == mark ? 1 : 0
+  end
+
+  class Vertical
+    def self.score_for(mark, location, board)
+      (top(mark, location, board) +
+       bottom(mark, location, board) +
+       Neighborhood.current(mark, location, board))
+    end
+
+    def self.top(mark, location, board)
+      score = 0
+      Neighborhood::NEIGHBORHOOD_DEPTH.times do |offset|
+        new_location = [location[0] - (offset + 1), location[1]]
+        break if new_location[0] < Neighborhood.top_left_limit[0]
+        score += 1 if board.square_at(new_location) == mark
+      end
+      score
+    end
+
+    def self.bottom(mark, location, board)
+      score = 0
+      Neighborhood::NEIGHBORHOOD_DEPTH.times do |offset|
+        new_location = [location[0] + (offset + 1), location[1]]
+        break if new_location[0] > Neighborhood.bottom_right_limit[0]
+        score += 1 if board.square_at(new_location) == mark
+      end
+      score
+    end
+  end
+
+  class Horizontal; end
+end
+
+class Board
+  include Enumerable
+  attr_accessor :squares
+
+  def initialize(*size)
+    self.squares = []
+    build_board(size[0]) if size[0]
+  end
+
+  def each(&block)
+    return squares.each unless block
+    squares.each { |item| block.call(item) }
+  end
+
+  def <<(square)
+    squares.push square
+  end
+
+  def [](idx)
+    squares[idx]
+  end
+
+  def []=(idx, obj)
+    squares[idx] = obj
+  end
+
+  def update_square_at(location, marker)
+    square_at(location).mark = marker
+  end
+
+  def empty?
+    squares.empty?
+  end
+
+  def square_at(location)
+    squares.select { |square| square.location == location }[0]
+  end
+
+  def draw_board
+    board = ''
+    size = (squares.count**(0.5)).to_i
+
+    size.times do |row|
+      board << draw_top_row(size) if row == 0
+      board << draw_top_bottom_cell(size)
+      board << draw_middle_cell(row, size)
+    end
+
+    board << draw_top_bottom_cell(size).chomp
+  end
+
+  private
+
+  def draw_marker(row, col)
+    "#{square_at([row, col]).mark.center(3, ' ')}"
+  end
+
+  def draw_top_row(cols)
+    result = ''
+
+    cols.times do |col|
+      result << (col == 0 ? "    #{col}" : "   #{col}")
+    end
+
+    result << "\n"
+  end
+
+  def draw_top_bottom_cell(cols)
+    result = ''
+
+    cols.times do |col|
+      result << case col
+                when 0 then '  +---'
+                when cols - 1 then "+---+\n"
+                else '+---'
+                end
+    end
+
+    result
+  end
+
+  def draw_middle_cell(row, cols)
+    result = ''
+
+    cols.times do |col|
+      result << case col
+                when 0 then "#{row} |#{draw_marker(row, col)}"
+                when cols - 1 then "|#{draw_marker(row, col)}|\n"
+                else "|#{draw_marker(row, col)}"
+                end
+    end
+
+    result
+  end
+
+  def build_board(size)
+    size.times do |row|
+      size.times { |col| self.squares << Square.new('', [row, col]) }
+    end
+  end
 end
 
 class Square
   include Neighborhood
-  attr_reader :mark, :location
+  attr_reader :location
+  attr_accessor :mark
 
   def initialize(mark, location)
     unless valid_location?(location)
@@ -124,6 +262,10 @@ class Square
     @mark = mark
     @location = location
     self.update_top_left_bottom_right(@location)
+  end
+
+  def to_s
+    mark
   end
 
   private
