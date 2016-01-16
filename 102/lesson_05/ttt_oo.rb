@@ -173,6 +173,70 @@ module Neighborhood
       score
     end
   end
+
+  class RightDiag
+    def self.score_for(mark, location, board)
+      return 0 unless board.square_at(location)
+      (upper_left(mark, location, board) +
+       lower_right(mark, location, board) +
+       Neighborhood.current(mark, location, board))
+    end
+
+    def self.upper_left(mark, location, board)
+      score = 0
+      Neighborhood::NEIGHBORHOOD_DEPTH.times do |offset|
+        new_location = [location[0] - (offset + 1),
+                        location[1] - (offset + 1)]
+        break if new_location[1] < Neighborhood.top_left_limit[1]
+        score += 1 if board.square_at(new_location).mark == mark
+      end
+      score
+    end
+
+    def self.lower_right(mark, location, board)
+      score = 0
+      Neighborhood::NEIGHBORHOOD_DEPTH.times do |offset|
+        new_location = [location[0] + (offset + 1),
+                        location[1] + (offset + 1)]
+        break if new_location[1] > Neighborhood.bottom_right_limit[1]
+        score += 1 if board.square_at(new_location).mark == mark
+      end
+      score
+    end
+  end
+
+  class LeftDiag
+    def self.score_for(mark, location, board)
+      return 0 unless board.square_at(location)
+      (upper_right(mark, location, board) +
+       lower_left(mark, location, board) +
+       Neighborhood.current(mark, location, board))
+    end
+
+    def self.upper_right(mark, location, board)
+      score = 0
+      Neighborhood::NEIGHBORHOOD_DEPTH.times do |offset|
+        new_location = [location[0] - (offset + 1),
+                        location[1] + (offset + 1)]
+        break if new_location[1] > Neighborhood.bottom_right_limit[1] ||
+                 new_location[0] < Neighborhood.top_left_limit[0]
+        score += 1 if board.square_at(new_location).mark == mark
+      end
+      score
+    end
+
+    def self.lower_left(mark, location, board)
+      score = 0
+      Neighborhood::NEIGHBORHOOD_DEPTH.times do |offset|
+        new_location = [location[0] + (offset + 1),
+                        location[1] - (offset + 1)]
+        break if new_location[1] < Neighborhood.top_left_limit[1] ||
+                 new_location[0] > Neighborhood.bottom_right_limit[0]
+        score += 1 if board.square_at(new_location).mark == mark
+      end
+      score
+    end
+  end
 end
 
 class Board
