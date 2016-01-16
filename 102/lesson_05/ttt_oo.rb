@@ -118,6 +118,7 @@ module Neighborhood
 
   class Vertical
     def self.score_for(mark, location, board)
+      return 0 unless board.square_at(location)
       (top(mark, location, board) +
        bottom(mark, location, board) +
        Neighborhood.current(mark, location, board))
@@ -128,7 +129,7 @@ module Neighborhood
       Neighborhood::NEIGHBORHOOD_DEPTH.times do |offset|
         new_location = [location[0] - (offset + 1), location[1]]
         break if new_location[0] < Neighborhood.top_left_limit[0]
-        score += 1 if board.square_at(new_location) == mark
+        score += 1 if board.square_at(new_location).mark == mark
       end
       score
     end
@@ -138,13 +139,40 @@ module Neighborhood
       Neighborhood::NEIGHBORHOOD_DEPTH.times do |offset|
         new_location = [location[0] + (offset + 1), location[1]]
         break if new_location[0] > Neighborhood.bottom_right_limit[0]
-        score += 1 if board.square_at(new_location) == mark
+        score += 1 if board.square_at(new_location).mark == mark
       end
       score
     end
   end
 
-  class Horizontal; end
+  class Horizontal
+    def self.score_for(mark, location, board)
+      return 0 unless board.square_at(location)
+      (left(mark, location, board) +
+       right(mark, location, board) +
+       Neighborhood.current(mark, location, board))
+    end
+
+    def self.left(mark, location, board)
+      score = 0
+      Neighborhood::NEIGHBORHOOD_DEPTH.times do |offset|
+        new_location = [location[0], location[1] - (offset + 1)]
+        break if new_location[1] < Neighborhood.top_left_limit[1]
+        score += 1 if board.square_at(new_location).mark == mark
+      end
+      score
+    end
+
+    def self.right(mark, location, board)
+      score = 0
+      Neighborhood::NEIGHBORHOOD_DEPTH.times do |offset|
+        new_location = [location[0], location[1] + (offset + 1)]
+        break if new_location[1] > Neighborhood.bottom_right_limit[1]
+        score += 1 if board.square_at(new_location).mark == mark
+      end
+      score
+    end
+  end
 end
 
 class Board
@@ -174,7 +202,7 @@ class Board
   end
 
   def update_square_at(location, marker)
-    square_at(location).mark = marker
+    square_at(location).mark = marker if square_at(location)
   end
 
   def empty?

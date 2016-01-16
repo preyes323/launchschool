@@ -220,13 +220,23 @@ describe Board do
       @board << @square
       @board.square_at([1, 1]).must_equal @square
     end
+
+    it 'must return nil if there is no square at the given location' do
+      @board << @square
+      @board.square_at([2, 7]).must_be_nil
+    end
   end
 
   describe '#update_square_at' do
-    it 'must the marker of the square at a given location' do
+    it 'must update the marker of the square at a given location' do
       @board << @square
       @board.update_square_at([1, 1], 'y')
       @board.square_at([1, 1]).mark.must_equal 'y'
+    end
+
+    it 'must return nil if square to update does not exist' do
+      @board << @square
+      @board.update_square_at([2, 7], 'y').must_be_nil
     end
   end
 
@@ -339,5 +349,123 @@ describe Neighborhood::Vertical do
     it "must return correct score given neighborhood squares 'marker'" do
       Neighborhood::Vertical.score_for('x', [1, 1], @board).must_equal 1
     end
+
+    it "must return correct score given neighborhood squares 'marker'_2" do
+      @board.update_square_at([1, 1], 'y')
+      Neighborhood::Vertical.score_for('x', [1, 1], @board).must_equal 0
+    end
+
+    it "must return correct score given neighborhood squares 'marker'_3" do
+      @board.update_square_at([0, 1], 'x')
+      Neighborhood::Vertical.score_for('x', [1, 1], @board).must_equal 2
+    end
+
+    it "must return correct score given neighborhood squares 'marker'_4" do
+      @board.update_square_at([0, 1], 'x')
+      @board.update_square_at([0, 2], 'x')
+      @board.update_square_at([2, 1], 'x')
+      Neighborhood::Vertical.score_for('x', [1, 1], @board).must_equal 3
+    end
+
+    it "must return correct score given neighborhood squares @corner" do
+      @board.update_square_at([0, 0], 'x')
+      @board.update_square_at([1, 0], 'x')
+      @board.update_square_at([2, 0], 'x')
+      Neighborhood::Vertical.score_for('x', [0, 0], @board).must_equal 2
+    end
+
+    it 'must return 0 if the square location does not exist' do
+      Neighborhood::Vertical.score_for('x', [-1, 0], @board).must_equal 0
+    end
   end
 end
+
+describe Neighborhood::Horizontal do
+  before do
+    @board = Board.new(3)
+    @board.update_square_at([1, 1], 'x')
+  end
+
+  describe '#score' do
+    it "must return correct score given neighborhood squares 'marker'" do
+      Neighborhood::Horizontal.score_for('x', [1, 1], @board).must_equal 1
+    end
+
+    it "must return correct score given neighborhood squares 'marker'_2" do
+      @board.update_square_at([1, 1], 'y')
+      Neighborhood::Horizontal.score_for('x', [1, 1], @board).must_equal 0
+    end
+
+    it "must return correct score given neighborhood squares 'marker'_3" do
+      @board.update_square_at([1, 2], 'x')
+      Neighborhood::Horizontal.score_for('x', [1, 1], @board).must_equal 2
+    end
+
+    it "must return correct score given neighborhood squares 'marker'_4" do
+      @board.update_square_at([1, 2], 'x')
+      @board.update_square_at([0, 2], 'x')
+      @board.update_square_at([1, 0], 'x')
+      Neighborhood::Horizontal.score_for('x', [1, 1], @board).must_equal 3
+    end
+  end
+end
+
+# describe Neighborhood::RightDiag do
+#   before do
+#     @board = Board.new(3)
+#     @board.update_square_at([1, 1], 'x')
+#   end
+
+#   describe '#score' do
+#     it "must return correct score given neighborhood squares 'marker'" do
+#       Neighborhood::RightDiag.score_for('x', [1, 1], @board).must_equal 1
+#     end
+
+#     it "must return correct score given neighborhood squares 'marker'_2" do
+#       @board.update_square_at([1, 1], 'y')
+#       Neighborhood::RightDiag.score_for('x', [1, 1], @board).must_equal 0
+#     end
+
+#     it "must return correct score given neighborhood squares 'marker'_3" do
+#       @board.update_square_at([0, 1], 'x')
+#       Neighborhood::RightDiag.score_for('x', [1, 1], @board).must_equal 2
+#     end
+
+#     it "must return correct score given neighborhood squares 'marker'_4" do
+#       @board.update_square_at([0, 1], 'x')
+#       @board.update_square_at([0, 2], 'x')
+#       @board.update_square_at([2, 1], 'x')
+#       Neighborhood::RightDiag.score_for('x', [1, 1], @board).must_equal 3
+#     end
+#   end
+# end
+
+# describe Neighborhood::LeftDiag do
+#   before do
+#     @board = Board.new(3)
+#     @board.update_square_at([1, 1], 'x')
+#   end
+
+#   describe '#score' do
+#     it "must return correct score given neighborhood squares 'marker'" do
+#       Neighborhood::LeftDiag.score_for('x', [1, 1], @board).must_equal 1
+#     end
+
+#     it "must return correct score given neighborhood squares 'marker'_2" do
+#       @board.update_square_at([1, 1], 'y')
+#       Neighborhood::LeftDiag.score_for('x', [1, 1], @board).must_equal 0
+#     end
+
+#     it "must return correct score given neighborhood squares 'marker'_3" do
+#       @board.update_square_at([0, 1], 'x')
+#       Neighborhood::LeftDiag.score_for('x', [1, 1], @board).must_equal 2
+#     end
+
+#     it "must return correct score given neighborhood squares 'marker'_4" do
+#       @board.update_square_at([0, 1], 'x')
+#       @board.update_square_at([0, 2], 'x')
+#       @board.update_square_at([2, 1], 'x')
+#       Neighborhood::LeftDiag.score_for('x', [1, 1], @board).must_equal 3
+#     end
+#   end
+# end
