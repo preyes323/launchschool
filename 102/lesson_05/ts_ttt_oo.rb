@@ -191,63 +191,32 @@ end
 describe Board do
   before do
     @board = Board.new
-    @square = Square.new('', [1, 1])
-  end
-
-  describe '#<<' do
-    it 'must add a square to the board' do
-      @board << @square
-      @board.count.must_equal 1
-    end
-  end
-
-  describe '#[]' do
-    it 'must return the square given the index' do
-      @board << @square
-      @board[-1].must_equal @square
-    end
-  end
-
-  describe '#[]=' do
-    it 'must assign the square to the index provided' do
-      @board[0] = @square
-      @board[0].must_equal @square
-    end
   end
 
   describe '#square_at' do
     it 'must return the square at a given location' do
-      @board << @square
-      @board.square_at([1, 1]).must_equal @square
+      @board.square_at([1, 1]).must_be_instance_of Square
     end
 
     it 'must return nil if there is no square at the given location' do
-      @board << @square
       @board.square_at([2, 7]).must_be_nil
     end
   end
 
   describe '#update_square_at' do
     it 'must update the marker of the square at a given location' do
-      @board << @square
       @board.update_square_at([1, 1], 'y')
       @board.square_at([1, 1]).mark.must_equal 'y'
     end
 
     it 'must return nil if square to update does not exist' do
-      @board << @square
       @board.update_square_at([2, 7], 'y').must_be_nil
     end
   end
 
   describe '#new' do
-    it 'must create a new empty board' do
-      assert @board.empty?
-    end
-
-    it 'must create a new empty board with custom dimension' do
-      board = Board.new(3)
-      board.count.must_equal 9
+    it 'must create a new empty board for the default game (3x3)' do
+      @board.squares.count.must_equal 9
     end
   end
 
@@ -261,8 +230,7 @@ describe Board do
   +---+---+---+
 2 |   |   |   |
   +---+---+---+).chomp
-      board = Board.new(3)
-      board.draw_board.must_equal board_output
+      @board.draw_board.must_equal board_output
     end
 
     it 'must return the string representation of a board with non-empty sq' do
@@ -274,10 +242,9 @@ describe Board do
   +---+---+---+
 2 |   |   | o |
   +---+---+---+).chomp
-      board = Board.new(3)
-      board.update_square_at([1, 1], 'x')
-      board.update_square_at([2, 2], 'o')
-      board.draw_board.must_equal board_output
+      @board.update_square_at([1, 1], 'x')
+      @board.update_square_at([2, 2], 'o')
+      @board.draw_board.must_equal board_output
     end
   end
 end
@@ -341,7 +308,7 @@ end
 
 describe Neighborhood::Vertical do
   before do
-    @board = Board.new(3)
+    @board = Board.new
     @board.update_square_at([1, 1], 'x')
   end
 
@@ -377,12 +344,38 @@ describe Neighborhood::Vertical do
     it 'must return 0 if the square location does not exist' do
       Neighborhood::Vertical.score_for('x', [-1, 0], @board).must_equal 0
     end
+
+    it 'must return correct score with bigger board' do
+      board = Board.new('expert')
+      board.update_square_at([0, 0], 'x')
+      board.update_square_at([1, 0], 'x')
+      board.update_square_at([2, 0], 'x')
+      Neighborhood::Vertical.score_for('x', [0, 0], board).must_equal 3
+    end
+
+    it 'must return correct score with bigger board_2' do
+      board = Board.new('expert')
+      board.update_square_at([0, 0], 'x')
+      board.update_square_at([1, 0], 'x')
+      board.update_square_at([2, 0], 'x')
+      Neighborhood::Vertical.score_for('x', [2, 0], board).must_equal 3
+    end
+
+    it 'must return correct score with bigger board_2' do
+      board = Board.new('expert')
+      board.update_square_at([0, 0], 'x')
+      board.update_square_at([1, 0], 'x')
+      board.update_square_at([2, 0], 'x')
+      board.update_square_at([3, 0], 'y')
+      board.update_square_at([4, 0], 'x')
+      Neighborhood::Vertical.score_for('x', [2, 0], board).must_equal 4
+    end
   end
 end
 
 describe Neighborhood::Horizontal do
   before do
-    @board = Board.new(3)
+    @board = Board.new
     @board.update_square_at([1, 1], 'x')
   end
 
@@ -412,7 +405,7 @@ end
 
 describe Neighborhood::RightDiag do
   before do
-    @board = Board.new(3)
+    @board = Board.new
     @board.update_square_at([1, 1], 'x')
   end
 
@@ -447,7 +440,7 @@ end
 
 describe Neighborhood::LeftDiag do
   before do
-    @board = Board.new(3)
+    @board = Board.new
     @board.update_square_at([1, 1], 'x')
   end
 
@@ -477,5 +470,52 @@ describe Neighborhood::LeftDiag do
       @board.update_square_at([2, 0], 'x')
       Neighborhood::LeftDiag.score_for('x', [2, 0], @board).must_equal 2
     end
+  end
+end
+
+describe Player do
+  before do
+    @player = Player.new
+  end
+
+  describe '#new' do
+    it 'must default to name = NO_NAME if non provided' do
+      @player.name.must_equal 'NO_NAME'
+    end
+
+    it 'must create a player with the name provided' do
+      player = Player.new('Paolo')
+      player.name.must_equal 'Paolo'
+    end
+  end
+end
+
+describe Human do
+  before do
+    @human = Human.new
+  end
+
+  describe '#valid_move?' do
+    it 'must return true if the human player input a valid move' do
+      assert @human.valid_move?(%w(1 1))
+    end
+
+    it 'must return false if the human player input an invalid move' do
+      refute  @human.valid_move?(%w(a 1))
+    end
+
+    it 'must return false if the human player input an invalid move_2' do
+      refute @human.valid_move?('x')
+    end
+
+    it 'must return false if the human player input an invalid move_2' do
+      refute @human.valid_move?(%w(1))
+    end
+  end
+
+  describe '#move' do
+  end
+
+  describe '#choose_marker' do
   end
 end

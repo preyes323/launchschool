@@ -1,13 +1,14 @@
 require 'yaml'
 require 'pry'
 
+CONFIG = YAML.load_file('ttt_config.yml')
+
 class Marker
-  ALLOWED_LENGTH = 1
   attr_reader :symbol, :owner
 
   def initialize(symbol, owner)
-    if symbol.length > ALLOWED_LENGTH
-      fail ArgumentError, 'Symbol exceeds allowed length'
+    if symbol.length > CONFIG['allowed_marker_length']
+      raise ArgumentError, 'Symbol exceeds allowed length'
     end
 
     @symbol = symbol
@@ -38,14 +39,14 @@ class Markers
 
   def <<(marker)
     if symbol_exists?(marker) || owner_exists?(marker)
-      fail ArgumentError, 'Symbol and owner must be unique'
+      raise ArgumentError, 'Symbol and owner must be unique'
     end
 
     collection.push marker
   end
 
   def []=(idx, obj)
-    fail ArgumentError, 'Symbol is in use' if symbol_exists?(obj)
+    raise ArgumentError, 'Symbol is in use' if symbol_exists?(obj)
     collection[idx] = obj
   end
 
@@ -77,7 +78,7 @@ class Markers
 end
 
 module Neighborhood
-  NEIGHBORHOOD_DEPTH = 1
+  NEIGHBORHOOD_DEPTH = 2
   @@top_left_limit = nil
   @@bottom_right_limit = nil
 
@@ -116,7 +117,7 @@ module Neighborhood
     board.square_at(location).mark == mark ? 1 : 0
   end
 
-  class Vertical
+  module Vertical
     def self.score_for(mark, location, board)
       return 0 unless board.square_at(location)
       (top(mark, location, board) +
@@ -126,7 +127,7 @@ module Neighborhood
 
     def self.top(mark, location, board)
       score = 0
-      Neighborhood::NEIGHBORHOOD_DEPTH.times do |offset|
+      board.neighborhood_depth.times do |offset|
         new_location = [location[0] - (offset + 1), location[1]]
         break if new_location[0] < Neighborhood.top_left_limit[0]
         score += 1 if board.square_at(new_location).mark == mark
@@ -136,7 +137,7 @@ module Neighborhood
 
     def self.bottom(mark, location, board)
       score = 0
-      Neighborhood::NEIGHBORHOOD_DEPTH.times do |offset|
+      board.neighborhood_depth.times do |offset|
         new_location = [location[0] + (offset + 1), location[1]]
         break if new_location[0] > Neighborhood.bottom_right_limit[0]
         score += 1 if board.square_at(new_location).mark == mark
@@ -145,7 +146,7 @@ module Neighborhood
     end
   end
 
-  class Horizontal
+  module Horizontal
     def self.score_for(mark, location, board)
       return 0 unless board.square_at(location)
       (left(mark, location, board) +
@@ -155,7 +156,7 @@ module Neighborhood
 
     def self.left(mark, location, board)
       score = 0
-      Neighborhood::NEIGHBORHOOD_DEPTH.times do |offset|
+      board.neighborhood_depth.times do |offset|
         new_location = [location[0], location[1] - (offset + 1)]
         break if new_location[1] < Neighborhood.top_left_limit[1]
         score += 1 if board.square_at(new_location).mark == mark
@@ -165,7 +166,7 @@ module Neighborhood
 
     def self.right(mark, location, board)
       score = 0
-      Neighborhood::NEIGHBORHOOD_DEPTH.times do |offset|
+      board.neighborhood_depth.times do |offset|
         new_location = [location[0], location[1] + (offset + 1)]
         break if new_location[1] > Neighborhood.bottom_right_limit[1]
         score += 1 if board.square_at(new_location).mark == mark
@@ -174,7 +175,7 @@ module Neighborhood
     end
   end
 
-  class RightDiag
+  module RightDiag
     def self.score_for(mark, location, board)
       return 0 unless board.square_at(location)
       (upper_left(mark, location, board) +
@@ -184,7 +185,7 @@ module Neighborhood
 
     def self.upper_left(mark, location, board)
       score = 0
-      Neighborhood::NEIGHBORHOOD_DEPTH.times do |offset|
+      board.neighborhood_depth.times do |offset|
         new_location = [location[0] - (offset + 1),
                         location[1] - (offset + 1)]
         break if new_location[1] < Neighborhood.top_left_limit[1]
@@ -195,7 +196,7 @@ module Neighborhood
 
     def self.lower_right(mark, location, board)
       score = 0
-      Neighborhood::NEIGHBORHOOD_DEPTH.times do |offset|
+      board.neighborhood_depth.times do |offset|
         new_location = [location[0] + (offset + 1),
                         location[1] + (offset + 1)]
         break if new_location[1] > Neighborhood.bottom_right_limit[1]
@@ -205,7 +206,7 @@ module Neighborhood
     end
   end
 
-  class LeftDiag
+  module LeftDiag
     def self.score_for(mark, location, board)
       return 0 unless board.square_at(location)
       (upper_right(mark, location, board) +
@@ -215,7 +216,7 @@ module Neighborhood
 
     def self.upper_right(mark, location, board)
       score = 0
-      Neighborhood::NEIGHBORHOOD_DEPTH.times do |offset|
+      board.neighborhood_depth.times do |offset|
         new_location = [location[0] - (offset + 1),
                         location[1] + (offset + 1)]
         break if new_location[1] > Neighborhood.bottom_right_limit[1] ||
@@ -227,7 +228,7 @@ module Neighborhood
 
     def self.lower_left(mark, location, board)
       score = 0
-      Neighborhood::NEIGHBORHOOD_DEPTH.times do |offset|
+      board.neighborhood_depth.times do |offset|
         new_location = [location[0] + (offset + 1),
                         location[1] - (offset + 1)]
         break if new_location[1] < Neighborhood.top_left_limit[1] ||
@@ -240,37 +241,15 @@ module Neighborhood
 end
 
 class Board
-  include Enumerable
-  attr_accessor :squares
+  attr_accessor :squares, :neighborhood_depth
 
-  def initialize(*size)
-    self.squares = []
-    build_board(size[0]) if size[0]
-  end
-
-  def each(&block)
-    return squares.each unless block
-    squares.each { |item| block.call(item) }
-  end
-
-  def <<(square)
-    squares.push square
-  end
-
-  def [](idx)
-    squares[idx]
-  end
-
-  def []=(idx, obj)
-    squares[idx] = obj
+  def initialize(game_type = 'regular')
+    build_board(CONFIG[game_type]['board_size'])
+    self.neighborhood_depth = CONFIG[game_type]['neighborhood_depth']
   end
 
   def update_square_at(location, marker)
     square_at(location).mark = marker if square_at(location)
-  end
-
-  def empty?
-    squares.empty?
   end
 
   def square_at(location)
@@ -335,6 +314,7 @@ class Board
   end
 
   def build_board(size)
+    self.squares = []
     size.times do |row|
       size.times { |col| self.squares << Square.new('', [row, col]) }
     end
@@ -348,7 +328,7 @@ class Square
 
   def initialize(mark, location)
     unless valid_location?(location)
-      fail ArgumentError, 'Square location must be an array of two numbers'
+      raise ArgumentError, 'Square location must be an array of two numbers'
     end
 
     @mark = mark
@@ -364,5 +344,29 @@ class Square
 
   def valid_location?(location)
     location.class == Array && location.length == 2
+  end
+end
+
+class Player
+  attr_accessor :name
+
+  def initialize(name = 'NO_NAME')
+    self.name = name
+  end
+
+  def to_s
+    "#{name}"
+  end
+end
+
+class Human < Player
+  def move
+
+  end
+
+  def valid_move?(move)
+    move.class == Array &&
+    move.length == 2    &&
+    move.all? { |input| input =~ /\d/ }
   end
 end
