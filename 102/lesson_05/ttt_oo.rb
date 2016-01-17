@@ -248,6 +248,10 @@ class Board
     self.neighborhood_depth = CONFIG[game_type]['neighborhood_depth']
   end
 
+  def empty_square?(location)
+    square_at(location).mark == ''
+  end
+
   def update_square_at(location, marker)
     square_at(location).mark = marker if square_at(location)
   end
@@ -360,13 +364,38 @@ class Player
 end
 
 class Human < Player
-  def move
+  def move(board)
+    puts 'Input a location in the board to put marker (i.e. 1, 1).'
+    loop do
+      print '=> '
+      move = gets.chomp
+      location = move.split(',')
+      return location.map(&:to_i) if valid_move?(location) &&
+                                     valid_location?(location, board)
+    end
+  end
 
+  def choose_marker(markers)
+    puts 'What marker do you want to use for the game?'
+
+    begin
+      print '=> '
+      mark = gets.chomp
+      markers << Marker.new(mark, self)
+    rescue ArgumentError
+      retry
+    end
   end
 
   def valid_move?(move)
-    move.class == Array &&
-    move.length == 2    &&
-    move.all? { |input| input =~ /\d/ }
+    move.length == 2 && move.all? { |input| input =~ /\d/ }
   end
+
+  def valid_location?(location, board)
+    board.empty_square?(location)
+  end
+end
+
+class Computer < Player
+
 end

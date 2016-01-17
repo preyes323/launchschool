@@ -1,5 +1,21 @@
 allowed_marker_length: 1
 
+computer_names:
+  - R2D2
+  - C3P0
+  - Deep Blue
+  - Meta
+  - Hal
+
+computer_marker_choices:
+  - x
+  - o
+  - *
+  - ^
+  - $
+  - c
+  - m
+
 regular:
   board_size: 3
   neighborhood_depth: 1

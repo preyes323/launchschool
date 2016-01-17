@@ -220,6 +220,17 @@ describe Board do
     end
   end
 
+  describe '#empty_square' do
+    it 'must return true if the square at the location is empty' do
+      assert @board.empty_square?([1, 1])
+    end
+
+    it 'must return false if the square at the location is not empty' do
+      @board.update_square_at([1, 1], 'x')
+      refute @board.empty_square?([1, 1])
+    end
+  end
+
   describe '#draw_board' do
     it 'must return the string representation of a board with empty sqaures' do
       board_output = %(    0   1   2
@@ -493,6 +504,12 @@ end
 describe Human do
   before do
     @human = Human.new
+    @board = Board.new
+    @markers = Markers.new
+    @marker = Marker.new('x', 'Paolo')
+    @test_valid_marker = Marker.new('y', 'Rachelle')
+    @test_invalid_marker = Marker.new('x', 'Rachelle')
+    @markers << @marker
   end
 
   describe '#valid_move?' do
@@ -513,9 +530,37 @@ describe Human do
     end
   end
 
+  describe '#valid_location?' do
+    it 'must return true if the chosen location is not currently marked' do
+      assert @human.valid_location?([1, 1], @board)
+    end
+
+    it 'must return false if the chosen location is currently marked' do
+      @board.update_square_at([1, 1], 'y')
+      refute @human.valid_location?([1, 1], @board)
+    end
+  end
+end
+
+describe Computer do
+  before do
+    @computer_names = CONFIG['computer_names']
+    @computer = Computer.new(@computer_names.sample)
+  end
+
+  describe '#new' do
+    it 'must only have a name based on the valid choices' do
+      @computer_names.must_include @computer.name
+    end
+  end
+
   describe '#move' do
+    it 'must return a location on the board that has an empty square' do
+    end
   end
 
   describe '#choose_marker' do
+    it 'must return a marker that is not yet part of the marker collection' do
+    end
   end
 end
