@@ -10,11 +10,11 @@ computer_names:
 computer_marker_choices:
   - x
   - o
-  - *
   - ^
   - $
   - c
   - m
+
 
 regular:
   board_size: 3

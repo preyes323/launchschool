@@ -42,6 +42,8 @@ describe Markers do
   before do
     @markers = Markers.new
     @marker = Marker.new('p', 'Paolo')
+    @rachelle = Human.new
+    @marker2 = Marker.new('r', @rachelle)
     @collection = []
   end
 
@@ -54,7 +56,6 @@ describe Markers do
   describe '#<<' do
     it 'must add to the marker collection' do
       @collection <<  @marker
-
       @markers << @marker
       @markers.collection.must_equal @collection
     end
@@ -98,11 +99,17 @@ describe Markers do
     end
   end
 
+  describe '#marker_of' do
+    it 'must return the marker of the owner specified' do
+      @markers << @marker2
+      @markers.marker_of(@rachelle).must_equal @marker2
+    end
+  end
+
   describe '#[]=' do
     it 'must store the marker symbol in the array' do
       @collection[0] = @marker
       @markers[0] = @marker
-
       @markers.collection.must_equal @collection
     end
 
@@ -220,7 +227,7 @@ describe Board do
     end
   end
 
-  describe '#empty_square' do
+  describe '#empty_square?' do
     it 'must return true if the square at the location is empty' do
       assert @board.empty_square?([1, 1])
     end
@@ -228,6 +235,35 @@ describe Board do
     it 'must return false if the square at the location is not empty' do
       @board.update_square_at([1, 1], 'x')
       refute @board.empty_square?([1, 1])
+    end
+  end
+
+  describe '#empty_squares' do
+    it 'must return an array of empty squares' do
+      @board.empty_squares.must_be_instance_of Array
+    end
+    it 'must return all unmarked/empty squares in the board' do
+      @board.empty_squares.count.must_equal 9
+    end
+
+    it 'must return all unmarked/empty squares in the board_2' do
+      @board.update_square_at([1, 1], 'y')
+      @board.update_square_at([1, 2], 'x')
+      @board.empty_squares.count.must_equal 7
+    end
+  end
+
+  describe '#empty_squares_location' do
+    it 'must return the location of all squares that are empty' do
+      @board.update_square_at([0, 1], 'y')
+      @board.update_square_at([0, 2], 'x')
+      @board.update_square_at([0, 0], 'y')
+      @board.update_square_at([1, 1], 'x')
+      @board.update_square_at([1, 2], 'y')
+      @board.update_square_at([2, 2], 'x')
+      @board.update_square_at([2, 1], 'y')
+      @board.update_square_at([2, 0], 'x')
+      @board.empty_squares_location.must_equal [[1, 0]]
     end
   end
 
@@ -319,6 +355,8 @@ end
 
 describe Neighborhood::Vertical do
   before do
+    Neighborhood.top_left_limit = nil
+    Neighborhood.bottom_right_limit = nil
     @board = Board.new
     @board.update_square_at([1, 1], 'x')
   end
@@ -386,6 +424,8 @@ end
 
 describe Neighborhood::Horizontal do
   before do
+    Neighborhood.top_left_limit = nil
+    Neighborhood.bottom_right_limit = nil
     @board = Board.new
     @board.update_square_at([1, 1], 'x')
   end
@@ -416,6 +456,8 @@ end
 
 describe Neighborhood::RightDiag do
   before do
+    Neighborhood.top_left_limit = nil
+    Neighborhood.bottom_right_limit = nil
     @board = Board.new
     @board.update_square_at([1, 1], 'x')
   end
@@ -451,6 +493,8 @@ end
 
 describe Neighborhood::LeftDiag do
   before do
+    Neighborhood.top_left_limit = nil
+    Neighborhood.bottom_right_limit = nil
     @board = Board.new
     @board.update_square_at([1, 1], 'x')
   end
@@ -505,11 +549,6 @@ describe Human do
   before do
     @human = Human.new
     @board = Board.new
-    @markers = Markers.new
-    @marker = Marker.new('x', 'Paolo')
-    @test_valid_marker = Marker.new('y', 'Rachelle')
-    @test_invalid_marker = Marker.new('x', 'Rachelle')
-    @markers << @marker
   end
 
   describe '#valid_move?' do
@@ -545,7 +584,11 @@ end
 describe Computer do
   before do
     @computer_names = CONFIG['computer_names']
-    @computer = Computer.new(@computer_names.sample)
+    @computer = Computer.new
+    @markers = Markers.new
+    @marker = Marker.new('x', 'Paolo')
+    @markers << @marker
+    @board = Board.new
   end
 
   describe '#new' do
@@ -554,13 +597,19 @@ describe Computer do
     end
   end
 
-  describe '#move' do
-    it 'must return a location on the board that has an empty square' do
+  describe '#choose_marker' do
+    it 'must add a marker that is not yet part of the marker collection' do
+      @computer.choose_marker(@markers)
+      @markers.count.must_equal 2
     end
   end
 
-  describe '#choose_marker' do
-    it 'must return a marker that is not yet part of the marker collection' do
-    end
-  end
+  # describe '#offensive_move' do
+  #   it 'must return valid move based on the current boards markers' do
+  #     @board.update_square_at([1, 1], 'y')
+  #     @board.update_square_at([1, 0], 'y')
+  #     valid_moves = [[1, 1]]
+
+  #   end
+  # end
 end

@@ -54,6 +54,10 @@ class Markers
     collection[idx]
   end
 
+  def marker_of(owner)
+    collection.select { |marker| marker.owner.equal? owner }[0]
+  end
+
   def owners
     collection.map(&:owner)
   end
@@ -188,7 +192,8 @@ module Neighborhood
       board.neighborhood_depth.times do |offset|
         new_location = [location[0] - (offset + 1),
                         location[1] - (offset + 1)]
-        break if new_location[1] < Neighborhood.top_left_limit[1]
+        break if new_location[1] < Neighborhood.top_left_limit[1] ||
+                 new_location[0] < Neighborhood.top_left_limit[0]
         score += 1 if board.square_at(new_location).mark == mark
       end
       score
@@ -199,7 +204,8 @@ module Neighborhood
       board.neighborhood_depth.times do |offset|
         new_location = [location[0] + (offset + 1),
                         location[1] + (offset + 1)]
-        break if new_location[1] > Neighborhood.bottom_right_limit[1]
+        break if new_location[1] > Neighborhood.bottom_right_limit[1] ||
+                 new_location[0] > Neighborhood.bottom_right_limit[0]
         score += 1 if board.square_at(new_location).mark == mark
       end
       score
@@ -246,6 +252,14 @@ class Board
   def initialize(game_type = 'regular')
     build_board(CONFIG[game_type]['board_size'])
     self.neighborhood_depth = CONFIG[game_type]['neighborhood_depth']
+  end
+
+  def empty_squares_location
+    empty_squares.map(&:location)
+  end
+
+  def empty_squares
+    squares.select { |square| empty_square?(square.location) }
   end
 
   def empty_square?(location)
@@ -397,5 +411,17 @@ class Human < Player
 end
 
 class Computer < Player
+  def initialize
+    name = CONFIG['computer_names'].sample
+    super(name)
+  end
 
+  def choose_marker(markers)
+    begin
+      mark = CONFIG['computer_marker_choices'].sample
+      markers << Marker.new(mark, self)
+    rescue ArgumentError
+      retry
+    end
+  end
 end
