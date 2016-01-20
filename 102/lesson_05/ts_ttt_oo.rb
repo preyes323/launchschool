@@ -604,6 +604,15 @@ describe Computer do
     end
   end
 
+  describe '#win_on_next_squares' do
+  end
+
+  describe '#square_values' do
+  end
+
+  describe '#high_value_squares' do
+  end
+
   # describe '#offensive_move' do
   #   it 'must return valid move based on the current boards markers' do
   #     @board.update_square_at([1, 1], 'y')
