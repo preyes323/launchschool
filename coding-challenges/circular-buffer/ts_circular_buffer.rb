@@ -8,7 +8,6 @@ class CircularBufferTest < Minitest::Test
   end
 
   def test_write_and_read_back_one_item
-    skip
     buffer = CircularBuffer.new(1)
     buffer.write '1'
     assert_equal '1', buffer.read
