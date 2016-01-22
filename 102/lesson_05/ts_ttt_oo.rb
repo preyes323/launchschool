@@ -294,6 +294,19 @@ describe Board do
       @board.draw_board.must_equal board_output
     end
   end
+
+  describe '#square_values_for' do
+    it 'must return the values/score that all squares have for a marker' do
+      scores = [0, 0, 0, 0, 0, 0, 0, 0, 0]
+      @board.square_values_for('x').must_equal scores
+    end
+
+    it 'must return the values/score that all squares have for a marker_2' do
+      @board.update_square_at([1, 1], 'x')
+      scores = [0, 0, 0, 0, 0, 0, 0, 0, 0]
+      @board.square_values_for('x').must_equal scores
+    end
+  end
 end
 
 
@@ -605,9 +618,6 @@ describe Computer do
   end
 
   describe '#win_on_next_squares' do
-  end
-
-  describe '#square_values' do
   end
 
   describe '#high_value_squares' do
