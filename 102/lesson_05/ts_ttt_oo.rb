@@ -106,6 +106,23 @@ describe Markers do
     end
   end
 
+  describe '#other_than' do
+    it 'must return all markers that are not equal to the symbol/mark' do
+      @markers << @marker
+      @markers << @marker2
+      other_markers = ['p', 'r'].sort
+      @markers.other_than('x').sort.must_equal other_markers
+    end
+
+    it 'must return all markers that are not equal to the symbol/mark' do
+      @markers << @marker
+      @markers << @marker2
+      @markers << Marker.new('s', 'Raine')
+      other_markers = ['p', 'r'].sort
+      @markers.other_than('s').sort.must_equal other_markers
+    end
+  end
+
   describe '#[]=' do
     it 'must store the marker symbol in the array' do
       @collection[0] = @marker
@@ -294,19 +311,6 @@ describe Board do
       @board.draw_board.must_equal board_output
     end
   end
-
-  describe '#square_values_for' do
-    it 'must return the values/score that all squares have for a marker' do
-      scores = [0, 0, 0, 0, 0, 0, 0, 0, 0]
-      @board.square_values_for('x').must_equal scores
-    end
-
-    it 'must return the values/score that all squares have for a marker_2' do
-      @board.update_square_at([1, 1], 'x')
-      scores = [0, 0, 0, 0, 0, 0, 0, 0, 0]
-      @board.square_values_for('x').must_equal scores
-    end
-  end
 end
 
 
@@ -362,6 +366,47 @@ describe Neighborhood do
       sq2 = Square.new('x', [2, 1])
       sq3 = Square.new('x', [0, 0])
       Neighborhood.bottom_right_limit.must_equal [2, 1]
+    end
+  end
+
+  describe '#neighborhood_score_for' do
+    it 'must return the total neigborhood score for a square' do
+      board = Board.new
+      square = board.square_at([1, 1])
+      Neighborhood.score_for('x', square.location, board).must_equal 0
+    end
+
+    it 'must return the total neigborhood score for a square_2' do
+      board = Board.new
+      square = board.square_at([1, 1])
+      board.update_square_at([0, 0], 'x')
+      board.update_square_at([0, 1], 'y')
+      Neighborhood.score_for('x', square.location, board).must_equal 1
+    end
+
+    it 'must return the total neigborhood score for a square_3' do
+      board = Board.new
+      square = board.square_at([1, 1])
+      board.update_square_at([0, 0], 'x')
+      board.update_square_at([0, 1], 'x')
+      Neighborhood.score_for('x', square.location, board).must_equal 2
+    end
+
+    it 'must return the total neigborhood score for a square_3' do
+      board = Board.new
+      square = board.square_at([1, 0])
+      board.update_square_at([0, 0], 'x')
+      board.update_square_at([0, 1], 'x')
+      Neighborhood.score_for('x', square.location, board).must_equal 2
+    end
+
+    it 'must return the total neigborhood score for a square_3' do
+      board = Board.new
+      square = board.square_at([1, 1])
+      board.update_square_at([0, 0], 'x')
+      board.update_square_at([0, 1], 'x')
+      board.update_square_at([1, 1], 'x')
+      Neighborhood.score_for('x', square.location, board).must_equal 6
     end
   end
 end
@@ -616,19 +661,4 @@ describe Computer do
       @markers.count.must_equal 2
     end
   end
-
-  describe '#win_on_next_squares' do
-  end
-
-  describe '#high_value_squares' do
-  end
-
-  # describe '#offensive_move' do
-  #   it 'must return valid move based on the current boards markers' do
-  #     @board.update_square_at([1, 1], 'y')
-  #     @board.update_square_at([1, 0], 'y')
-  #     valid_moves = [[1, 1]]
-
-  #   end
-  # end
 end

@@ -101,8 +101,11 @@ module Neighborhood
     end
   end
 
-  def neighborhood_score_for(marker)
-
+  def self.score_for(mark, location, board)
+    Vertical.score_for(mark, location, board)     +
+      Horizontal.score_for(mark, location, board) +
+      RightDiag.score_for(mark, location, board)  +
+      LeftDiag.score_for(mark, location, board)
   end
 
   def self.top_left_limit
@@ -256,10 +259,6 @@ class Board
   def initialize(game_type = 'regular')
     build_board(CONFIG[game_type]['board_size'])
     self.neighborhood_depth = CONFIG[game_type]['neighborhood_depth']
-  end
-
-  def square_values_for(marker)
-
   end
 
   def empty_squares_location
