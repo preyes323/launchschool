@@ -762,6 +762,8 @@ end
 
 describe Computer do
   before do
+    Neighborhood.top_left_limit = nil
+    Neighborhood.bottom_right_limit = nil
     @computer_names = CONFIG['computer_names']
     @computer = Computer.new
     @markers = Markers.new
@@ -842,6 +844,20 @@ describe Computer do
       square2 = @board.square_at([2, 0])
       squares = [square2, square1]
       @computer.opponents_winning_move(@board, @markers).must_equal squares
+    end
+  end
+
+  describe '#high_value_squares' do
+    it 'must return squares with highest values' do
+      @computer.choose_marker(@markers)
+      @markers << Marker.new('y', 'Raine')
+      mark = @markers.marker_of(@computer).mark
+      @board.update_square_at([2, 0], mark)
+      @board.update_square_at([1, 2], mark)
+      square1 = @board.square_at([1, 1])
+      square2 = @board.square_at([2, 1])
+      squares = [square1, square2]
+      @computer.high_value_squares(@board, @markers).must_equal squares
     end
   end
 end

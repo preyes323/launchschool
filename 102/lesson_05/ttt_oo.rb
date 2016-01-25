@@ -591,4 +591,19 @@ class Computer < Player
 
     squares.compact
   end
+
+  def high_value_squares(board, markers)
+    squares = {}
+    possible_squares = board.empty_squares
+    max_score = 0
+    mark = markers.marker_of(self).mark
+
+    possible_squares.each do |square|
+      score = square.score_for(mark, board)
+      squares[square] = score
+      max_score = score > max_score ? score : max_score
+    end
+
+    squares.keep_if { |_, score| score == max_score }.keys
+  end
 end
