@@ -398,6 +398,15 @@ describe Neighborhood do
       winning_square = board.square_at([2, 1])
       square.win_on_next_square('x', board).must_equal winning_square
     end
+
+    it 'must flag the square to win on next move given a marker_4' do
+      board = Board.new
+      square = board.square_at([1, 1])
+      board.update_square_at([0, 0], 'x')
+      board.update_square_at([1, 1], 'x')
+      winning_square = board.square_at([2, 2])
+      square.win_on_next_square('x', board).must_equal winning_square
+    end
   end
 
   describe '#score_for' do
@@ -632,6 +641,15 @@ describe Neighborhood::RightDiag do
       empty_squares = [square1, square2]
       @neighborhood.empty_neighbors_for([1, 1], board).must_equal empty_squares
     end
+
+    it 'must return the empty squares for the given location_2' do
+      board = Board.new
+      board.update_square_at([1, 1], 'x')
+      board.update_square_at([0, 0], 'x')
+      square2 = board.square_at([2, 2])
+      empty_squares = [square2]
+      @neighborhood.empty_neighbors_for([1, 1], board).must_equal empty_squares
+    end
   end
 end
 
@@ -780,6 +798,50 @@ describe Computer do
       mark = @markers.marker_of(@computer).mark
       @board.update_square_at([1, 1], mark)
       @computer.winning_move(@board, @markers).must_be_nil
+    end
+  end
+
+  describe '#opponents_winning_move' do
+    it 'must catch a sqaure that will make other markers win' do
+      @computer.choose_marker(@markers)
+      mark = @markers.marker_of(@computer).mark
+      @board.update_square_at([0, 0], 'x')
+      @board.update_square_at([1, 1], 'x')
+      squares = [@board.square_at([2, 2])]
+      @computer.opponents_winning_move(@board, @markers).must_equal squares
+    end
+
+    it 'must catch a sqaure that will make other markers win_2' do
+      @computer.choose_marker(@markers)
+      mark = @markers.marker_of(@computer).mark
+      @board.update_square_at([0, 0], 'x')
+      @board.update_square_at([1, 1], 'x')
+      @board.update_square_at([1, 0], 'x')
+      square2 = @board.square_at([2, 0])
+      square3 = @board.square_at([1, 2])
+      squares = [square2, square3]
+      @computer.opponents_winning_move(@board, @markers).must_equal squares
+    end
+
+    it 'must return empty array if no other marker has a winning move' do
+      @computer.choose_marker(@markers)
+      mark = @markers.marker_of(@computer).mark
+      @board.update_square_at([1, 1], 'x')
+      assert @computer.opponents_winning_move(@board, @markers).empty?
+    end
+
+    it 'must catch a sqaure that will make other markers win_3' do
+      @computer.choose_marker(@markers)
+      @markers << Marker.new('y', 'Raine')
+      mark = @markers.marker_of(@computer).mark
+      @board.update_square_at([0, 0], 'x')
+      @board.update_square_at([1, 0], 'x')
+      @board.update_square_at([0, 2], 'y')
+      @board.update_square_at([1, 2], 'y')
+      square1 = @board.square_at([2, 2])
+      square2 = @board.square_at([2, 0])
+      squares = [square2, square1]
+      @computer.opponents_winning_move(@board, @markers).must_equal squares
     end
   end
 end

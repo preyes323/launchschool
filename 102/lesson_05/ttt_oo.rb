@@ -577,4 +577,18 @@ class Computer < Player
     end
     squares.compact.sample
   end
+
+  def opponents_winning_move(board, markers)
+    squares = []
+    mark = markers.marker_of(self).mark
+    other_markers = markers.other_than(mark)
+
+    other_markers.each do |mark|
+      board.squares.select do |square|
+        squares << square.win_on_next_square(mark, board)
+      end
+    end
+
+    squares.compact
+  end
 end
