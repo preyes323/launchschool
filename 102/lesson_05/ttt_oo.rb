@@ -86,7 +86,6 @@ class Markers
 end
 
 module Neighborhood
-  NEIGHBORHOOD_DEPTH = 2
   @@top_left_limit = nil
   @@bottom_right_limit = nil
 
@@ -112,6 +111,20 @@ module Neighborhood
       LeftDiag.score_for(mark, self.location, board)
   end
 
+  def win_on_next_square(mark, board)
+    winning_score = board.neighborhood_depth * 2
+    square = case winning_score
+             when Vertical.score_for(mark, self.location, board)
+               Vertical.empty_neighbors_for(self.location, board)[0]
+             when Horizontal.score_for(mark, self.location, board)
+               Horizontal.empty_neighbors_for(self.location, board)[0]
+             when RightDiag.score_for(mark, self.location, board)
+               RightDiag.empty_neighbors_for(self.location, board)[0]
+             when LeftDiag.score_for(mark, self.location, board)
+               LeftDiag.empty_neighbors_for(self.location, board)[0]
+             end
+  end
+
   def self.top_left_limit
     @@top_left_limit
   end
@@ -135,12 +148,40 @@ module Neighborhood
   module Vertical
     def self.score_for(mark, location, board)
       return 0 unless board.square_at(location)
-      (top(mark, location, board) +
-       bottom(mark, location, board) +
+      (top_score(mark, location, board) +
+       bottom_score(mark, location, board) +
        Neighborhood.current(mark, location, board))
     end
 
-    def self.top(mark, location, board)
+    def self.empty_neighbors_for(location, board)
+      empty_top(location, board) + empty_bottom(location, board)
+    end
+
+    def self.empty_top(location, board)
+      result = []
+      board.neighborhood_depth.times do |offset|
+        new_location = [location[0] - (offset + 1), location[1]]
+        break if new_location[0] < Neighborhood.top_left_limit[0]
+        if board.square_at(new_location).mark == ''
+          result << board.square_at(new_location)
+        end
+      end
+      result
+    end
+
+    def self.empty_bottom(location, board)
+      result = []
+      board.neighborhood_depth.times do |offset|
+        new_location = [location[0] + (offset + 1), location[1]]
+        break if new_location[0] > Neighborhood.bottom_right_limit[0]
+        if board.square_at(new_location).mark == ''
+          result << board.square_at(new_location)
+        end
+      end
+      result
+    end
+
+    def self.top_score(mark, location, board)
       score = 0
       board.neighborhood_depth.times do |offset|
         new_location = [location[0] - (offset + 1), location[1]]
@@ -150,7 +191,7 @@ module Neighborhood
       score
     end
 
-    def self.bottom(mark, location, board)
+    def self.bottom_score(mark, location, board)
       score = 0
       board.neighborhood_depth.times do |offset|
         new_location = [location[0] + (offset + 1), location[1]]
@@ -164,12 +205,40 @@ module Neighborhood
   module Horizontal
     def self.score_for(mark, location, board)
       return 0 unless board.square_at(location)
-      (left(mark, location, board) +
-       right(mark, location, board) +
+      (left_score(mark, location, board) +
+       right_score(mark, location, board) +
        Neighborhood.current(mark, location, board))
     end
 
-    def self.left(mark, location, board)
+    def self.empty_neighbors_for(location, board)
+      empty_left(location, board) + empty_right(location, board)
+    end
+
+    def self.empty_left(location, board)
+      result = []
+      board.neighborhood_depth.times do |offset|
+        new_location = [location[0], location[1] - (offset + 1)]
+        break if new_location[1] < Neighborhood.top_left_limit[1]
+        if board.square_at(new_location).mark == ''
+          result << board.square_at(new_location)
+        end
+      end
+      result
+    end
+
+    def self.empty_right(location, board)
+      result = []
+      board.neighborhood_depth.times do |offset|
+        new_location = [location[0], location[1] + (offset + 1)]
+        break if new_location[1] > Neighborhood.bottom_right_limit[1]
+        if board.square_at(new_location).mark == ''
+          result << board.square_at(new_location)
+        end
+      end
+      result
+    end
+
+    def self.left_score(mark, location, board)
       score = 0
       board.neighborhood_depth.times do |offset|
         new_location = [location[0], location[1] - (offset + 1)]
@@ -179,7 +248,7 @@ module Neighborhood
       score
     end
 
-    def self.right(mark, location, board)
+    def self.right_score(mark, location, board)
       score = 0
       board.neighborhood_depth.times do |offset|
         new_location = [location[0], location[1] + (offset + 1)]
@@ -193,12 +262,44 @@ module Neighborhood
   module RightDiag
     def self.score_for(mark, location, board)
       return 0 unless board.square_at(location)
-      (upper_left(mark, location, board) +
-       lower_right(mark, location, board) +
+      (upper_left_score(mark, location, board) +
+       lower_right_score(mark, location, board) +
        Neighborhood.current(mark, location, board))
     end
 
-    def self.upper_left(mark, location, board)
+    def self.empty_neighbors_for(location, board)
+      empty_upper_left(location, board) + empty_lower_right(location, board)
+    end
+
+    def self.empty_upper_left(location, board)
+      result = []
+      board.neighborhood_depth.times do |offset|
+        new_location = [location[0] - (offset + 1),
+                        location[1] - (offset + 1)]
+        break if new_location[1] < Neighborhood.top_left_limit[1] ||
+                 new_location[0] < Neighborhood.top_left_limit[0]
+        if board.square_at(new_location).mark == ''
+          result << board.square_at(new_location)
+        end
+      end
+      result
+    end
+
+    def self.empty_lower_right(location, board)
+      result = []
+      board.neighborhood_depth.times do |offset|
+        new_location = [location[0] + (offset + 1),
+                        location[1] + (offset + 1)]
+        break if new_location[1] > Neighborhood.bottom_right_limit[1] ||
+                 new_location[0] > Neighborhood.bottom_right_limit[0]
+        if board.square_at(new_location).mark == ''
+          result << board.square_at(new_location)
+        end
+      end
+      result
+    end
+
+    def self.upper_left_score(mark, location, board)
       score = 0
       board.neighborhood_depth.times do |offset|
         new_location = [location[0] - (offset + 1),
@@ -210,7 +311,7 @@ module Neighborhood
       score
     end
 
-    def self.lower_right(mark, location, board)
+    def self.lower_right_score(mark, location, board)
       score = 0
       board.neighborhood_depth.times do |offset|
         new_location = [location[0] + (offset + 1),
@@ -226,12 +327,44 @@ module Neighborhood
   module LeftDiag
     def self.score_for(mark, location, board)
       return 0 unless board.square_at(location)
-      (upper_right(mark, location, board) +
-       lower_left(mark, location, board) +
+      (upper_right_score(mark, location, board) +
+       lower_left_score(mark, location, board) +
        Neighborhood.current(mark, location, board))
     end
 
-    def self.upper_right(mark, location, board)
+    def self.empty_neighbors_for(location, board)
+      empty_upper_right(location, board) + empty_lower_left(location, board)
+    end
+
+    def self.empty_upper_right(location, board)
+      result = []
+      board.neighborhood_depth.times do |offset|
+        new_location = [location[0] - (offset + 1),
+                        location[1] + (offset + 1)]
+        break if new_location[1] > Neighborhood.bottom_right_limit[1] ||
+                 new_location[0] < Neighborhood.top_left_limit[0]
+        if board.square_at(new_location).mark == ''
+          result << board.square_at(new_location)
+        end
+      end
+      result
+    end
+
+    def self.empty_lower_left(location, board)
+      result = []
+      board.neighborhood_depth.times do |offset|
+        new_location = [location[0] + (offset + 1),
+                        location[1] - (offset + 1)]
+        break if new_location[1] < Neighborhood.top_left_limit[1] ||
+                 new_location[0] > Neighborhood.bottom_right_limit[0]
+        if board.square_at(new_location).mark == ''
+          result << board.square_at(new_location)
+        end
+      end
+      result
+    end
+
+    def self.upper_right_score(mark, location, board)
       score = 0
       board.neighborhood_depth.times do |offset|
         new_location = [location[0] - (offset + 1),
@@ -243,7 +376,7 @@ module Neighborhood
       score
     end
 
-    def self.lower_left(mark, location, board)
+    def self.lower_left_score(mark, location, board)
       score = 0
       board.neighborhood_depth.times do |offset|
         new_location = [location[0] + (offset + 1),

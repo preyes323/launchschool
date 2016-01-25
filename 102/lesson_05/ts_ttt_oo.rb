@@ -369,15 +369,36 @@ describe Neighborhood do
     end
   end
 
-  # describe '#win_on?' do
-  #   it 'must flag the square to win on next move given a marker' do
-  #     board = Board.new
-  #     square = board.square_at([1, 1])
-  #     board.update_square_at([0, 0], 'x')
-  #     board.update_square_at([0, 1], 'x')
-  #     square.win_on?('x')
-  #   end
-  # end
+  describe '#win_on_next_square' do
+    it 'must flag the square to win on next move given a marker' do
+      board = Board.new
+      square = board.square_at([0, 1])
+      board.update_square_at([0, 0], 'x')
+      board.update_square_at([0, 1], 'x')
+      winning_square = board.square_at([0, 2])
+      square.win_on_next_square('x', board).must_equal winning_square
+    end
+
+    it 'must flag the square to win on next move given a marker_2' do
+      board = Board.new
+      square = board.square_at([0, 2])
+      board.update_square_at([0, 0], 'x')
+      board.update_square_at([0, 1], 'x')
+      winning_square = nil
+      square.win_on_next_square('y', board).must_equal winning_square
+    end
+
+    it 'must flag the square to win on next move given a marker_3' do
+      board = Board.new
+      square = board.square_at([1, 1])
+      board.update_square_at([0, 0], 'x')
+      board.update_square_at([0, 1], 'x')
+      board.update_square_at([1, 1], 'x')
+      board.update_square_at([2, 2], 'x')
+      winning_square = board.square_at([2, 1])
+      square.win_on_next_square('x', board).must_equal winning_square
+    end
+  end
 
   describe '#score_for' do
     it 'must return the total neigborhood score for a square' do
@@ -427,39 +448,40 @@ describe Neighborhood::Vertical do
     Neighborhood.bottom_right_limit = nil
     @board = Board.new
     @board.update_square_at([1, 1], 'x')
+    @neighborhood = Neighborhood::Vertical
   end
 
-  describe '#score' do
+  describe '#score_for' do
     it "must return correct score given neighborhood squares 'marker'" do
-      Neighborhood::Vertical.score_for('x', [1, 1], @board).must_equal 1
+      @neighborhood.score_for('x', [1, 1], @board).must_equal 1
     end
 
     it "must return correct score given neighborhood squares 'marker'_2" do
       @board.update_square_at([1, 1], 'y')
-      Neighborhood::Vertical.score_for('x', [1, 1], @board).must_equal 0
+      @neighborhood.score_for('x', [1, 1], @board).must_equal 0
     end
 
     it "must return correct score given neighborhood squares 'marker'_3" do
       @board.update_square_at([0, 1], 'x')
-      Neighborhood::Vertical.score_for('x', [1, 1], @board).must_equal 2
+      @neighborhood.score_for('x', [1, 1], @board).must_equal 2
     end
 
     it "must return correct score given neighborhood squares 'marker'_4" do
       @board.update_square_at([0, 1], 'x')
       @board.update_square_at([0, 2], 'x')
       @board.update_square_at([2, 1], 'x')
-      Neighborhood::Vertical.score_for('x', [1, 1], @board).must_equal 3
+      @neighborhood.score_for('x', [1, 1], @board).must_equal 3
     end
 
     it "must return correct score given neighborhood squares @corner" do
       @board.update_square_at([0, 0], 'x')
       @board.update_square_at([1, 0], 'x')
       @board.update_square_at([2, 0], 'x')
-      Neighborhood::Vertical.score_for('x', [0, 0], @board).must_equal 2
+      @neighborhood.score_for('x', [0, 0], @board).must_equal 2
     end
 
     it 'must return 0 if the square location does not exist' do
-      Neighborhood::Vertical.score_for('x', [-1, 0], @board).must_equal 0
+      @neighborhood.score_for('x', [-1, 0], @board).must_equal 0
     end
 
     it 'must return correct score with bigger board' do
@@ -467,7 +489,7 @@ describe Neighborhood::Vertical do
       board.update_square_at([0, 0], 'x')
       board.update_square_at([1, 0], 'x')
       board.update_square_at([2, 0], 'x')
-      Neighborhood::Vertical.score_for('x', [0, 0], board).must_equal 3
+      @neighborhood.score_for('x', [0, 0], board).must_equal 3
     end
 
     it 'must return correct score with bigger board_2' do
@@ -475,7 +497,7 @@ describe Neighborhood::Vertical do
       board.update_square_at([0, 0], 'x')
       board.update_square_at([1, 0], 'x')
       board.update_square_at([2, 0], 'x')
-      Neighborhood::Vertical.score_for('x', [2, 0], board).must_equal 3
+      @neighborhood.score_for('x', [2, 0], board).must_equal 3
     end
 
     it 'must return correct score with bigger board_2' do
@@ -485,7 +507,25 @@ describe Neighborhood::Vertical do
       board.update_square_at([2, 0], 'x')
       board.update_square_at([3, 0], 'y')
       board.update_square_at([4, 0], 'x')
-      Neighborhood::Vertical.score_for('x', [2, 0], board).must_equal 4
+      @neighborhood.score_for('x', [2, 0], board).must_equal 4
+    end
+  end
+
+  describe '#empty_neighbors_for' do
+    it 'must return the empty squares for the given location' do
+      board = Board.new
+      square1 = board.square_at([0, 0])
+      square2 = board.square_at([2, 0])
+      empty_squares = [square1, square2]
+      @neighborhood.empty_neighbors_for([1, 0], board).must_equal empty_squares
+    end
+
+    it 'must return the empty squares for the given location_2' do
+      board = Board.new
+      board.update_square_at([0, 0], 'x')
+      square2 = board.square_at([2, 0])
+      empty_squares = [square2]
+      @neighborhood.empty_neighbors_for([1, 0], board).must_equal empty_squares
     end
   end
 end
@@ -496,28 +536,46 @@ describe Neighborhood::Horizontal do
     Neighborhood.bottom_right_limit = nil
     @board = Board.new
     @board.update_square_at([1, 1], 'x')
+    @neighborhood = Neighborhood::Horizontal
   end
 
   describe '#score' do
     it "must return correct score given neighborhood squares 'marker'" do
-      Neighborhood::Horizontal.score_for('x', [1, 1], @board).must_equal 1
+      @neighborhood.score_for('x', [1, 1], @board).must_equal 1
     end
 
     it "must return correct score given neighborhood squares 'marker'_2" do
       @board.update_square_at([1, 1], 'y')
-      Neighborhood::Horizontal.score_for('x', [1, 1], @board).must_equal 0
+      @neighborhood.score_for('x', [1, 1], @board).must_equal 0
     end
 
     it "must return correct score given neighborhood squares 'marker'_3" do
       @board.update_square_at([1, 2], 'x')
-      Neighborhood::Horizontal.score_for('x', [1, 1], @board).must_equal 2
+      @neighborhood.score_for('x', [1, 1], @board).must_equal 2
     end
 
     it "must return correct score given neighborhood squares 'marker'_4" do
       @board.update_square_at([1, 2], 'x')
       @board.update_square_at([0, 2], 'x')
       @board.update_square_at([1, 0], 'x')
-      Neighborhood::Horizontal.score_for('x', [1, 1], @board).must_equal 3
+      @neighborhood.score_for('x', [1, 1], @board).must_equal 3
+    end
+  end
+
+  describe '#empty_neighbors_for' do
+    it 'must return the empty squares for the given location' do
+      board = Board.new
+      square1 = board.square_at([0, 1])
+      empty_squares = [square1]
+      @neighborhood.empty_neighbors_for([0, 0], board).must_equal empty_squares
+    end
+
+    it 'must return the empty squares for the given location_2' do
+      board = Board.new
+      square1 = board.square_at([0, 0])
+      square2 = board.square_at([0, 2])
+      empty_squares = [square1, square2]
+      @neighborhood.empty_neighbors_for([0, 1], board).must_equal empty_squares
     end
   end
 end
@@ -528,33 +586,51 @@ describe Neighborhood::RightDiag do
     Neighborhood.bottom_right_limit = nil
     @board = Board.new
     @board.update_square_at([1, 1], 'x')
+    @neighborhood = Neighborhood::RightDiag
   end
 
   describe '#score' do
     it "must return correct score given neighborhood squares 'marker'" do
-      Neighborhood::RightDiag.score_for('x', [1, 1], @board).must_equal 1
+      @neighborhood.score_for('x', [1, 1], @board).must_equal 1
     end
 
     it "must return correct score given neighborhood squares 'marker'_2" do
       @board.update_square_at([1, 1], 'y')
-      Neighborhood::RightDiag.score_for('x', [1, 1], @board).must_equal 0
+      @neighborhood.score_for('x', [1, 1], @board).must_equal 0
     end
 
     it "must return correct score given neighborhood squares 'marker'_3" do
       @board.update_square_at([0, 0], 'x')
-      Neighborhood::RightDiag.score_for('x', [1, 1], @board).must_equal 2
+      @neighborhood.score_for('x', [1, 1], @board).must_equal 2
     end
 
     it "must return correct score given neighborhood squares 'marker'_4" do
       @board.update_square_at([0, 0], 'x')
       @board.update_square_at([0, 2], 'x')
       @board.update_square_at([2, 2], 'x')
-      Neighborhood::RightDiag.score_for('x', [1, 1], @board).must_equal 3
+      @neighborhood.score_for('x', [1, 1], @board).must_equal 3
     end
 
     it 'must return correct score given corner square' do
       @board.update_square_at([0, 1], 'x')
-      Neighborhood::RightDiag.score_for('x', [1, 2], @board).must_equal 1
+      @neighborhood.score_for('x', [1, 2], @board).must_equal 1
+    end
+  end
+
+  describe '#empty_neighbors_for' do
+    it 'must return the empty squares for the given location' do
+      board = Board.new
+      square1 = board.square_at([1, 1])
+      empty_squares = [square1]
+      @neighborhood.empty_neighbors_for([0, 0], board).must_equal empty_squares
+    end
+
+    it 'must return the empty squares for the given location_2' do
+      board = Board.new
+      square1 = board.square_at([0, 0])
+      square2 = board.square_at([2, 2])
+      empty_squares = [square1, square2]
+      @neighborhood.empty_neighbors_for([1, 1], board).must_equal empty_squares
     end
   end
 end
@@ -565,33 +641,50 @@ describe Neighborhood::LeftDiag do
     Neighborhood.bottom_right_limit = nil
     @board = Board.new
     @board.update_square_at([1, 1], 'x')
+    @neighborhood = Neighborhood::LeftDiag
   end
 
   describe '#score' do
     it "must return correct score given neighborhood squares 'marker'" do
-      Neighborhood::LeftDiag.score_for('x', [1, 1], @board).must_equal 1
+      @neighborhood.score_for('x', [1, 1], @board).must_equal 1
     end
 
     it "must return correct score given neighborhood squares 'marker'_2" do
       @board.update_square_at([1, 1], 'y')
-      Neighborhood::LeftDiag.score_for('x', [1, 1], @board).must_equal 0
+      @neighborhood.score_for('x', [1, 1], @board).must_equal 0
     end
 
     it "must return correct score given neighborhood squares 'marker'_3" do
       @board.update_square_at([0, 2], 'x')
-      Neighborhood::LeftDiag.score_for('x', [1, 1], @board).must_equal 2
+      @neighborhood.score_for('x', [1, 1], @board).must_equal 2
     end
 
     it "must return correct score given neighborhood squares 'marker'_4" do
       @board.update_square_at([0, 1], 'x')
       @board.update_square_at([0, 2], 'x')
       @board.update_square_at([2, 0], 'x')
-      Neighborhood::LeftDiag.score_for('x', [1, 1], @board).must_equal 3
+      @neighborhood.score_for('x', [1, 1], @board).must_equal 3
     end
 
     it 'must return correct score given corner square' do
       @board.update_square_at([2, 0], 'x')
-      Neighborhood::LeftDiag.score_for('x', [2, 0], @board).must_equal 2
+      @neighborhood.score_for('x', [2, 0], @board).must_equal 2
+    end
+  end
+
+  describe '#empty_neighbors_for' do
+    it 'must return the empty squares for the given location' do
+      board = Board.new
+      square1 = board.square_at([1, 1])
+      empty_squares = [square1]
+      @neighborhood.empty_neighbors_for([0, 2], board).must_equal empty_squares
+    end
+
+    it 'must return the empty squares for the given location_2' do
+      board = Board.new
+      square2 = board.square_at([2, 1])
+      empty_squares = [square2]
+      @neighborhood.empty_neighbors_for([1, 2], board).must_equal empty_squares
     end
   end
 end
