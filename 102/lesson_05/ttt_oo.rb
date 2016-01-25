@@ -4,23 +4,23 @@ require 'pry'
 CONFIG = YAML.load_file('ttt_config.yml')
 
 class Marker
-  attr_reader :symbol, :owner
+  attr_reader :mark, :owner
 
-  def initialize(symbol, owner)
-    if symbol.length > CONFIG['allowed_marker_length']
-      raise ArgumentError, 'Symbol exceeds allowed length'
+  def initialize(mark, owner)
+    if mark.length > CONFIG['allowed_marker_length']
+      raise ArgumentError, 'Mark exceeds allowed length'
     end
 
-    @symbol = symbol
+    @mark = mark
     @owner = owner
   end
 
   def to_s
-    "#{owner}: #{symbol}"
+    "#{owner}: #{mark}"
   end
 
   def ==(other)
-    symbol == other.symbol
+    mark == other.mark
   end
 end
 
@@ -38,15 +38,15 @@ class Markers
   end
 
   def <<(marker)
-    if symbol_exists?(marker) || owner_exists?(marker)
-      raise ArgumentError, 'Symbol and owner must be unique'
+    if mark_exists?(marker) || owner_exists?(marker)
+      raise ArgumentError, 'Mark and owner must be unique'
     end
 
     collection.push marker
   end
 
   def []=(idx, obj)
-    raise ArgumentError, 'Symbol is in use' if symbol_exists?(obj)
+    raise ArgumentError, 'Mark is in use' if mark_exists?(obj)
     collection[idx] = obj
   end
 
@@ -62,21 +62,25 @@ class Markers
     collection.map(&:owner)
   end
 
-  def symbols
-    collection.map(&:symbol)
+  def marks
+    collection.map(&:mark)
   end
 
-  def symbol_exists?(marker)
-    symbols.include? marker.symbol
+  def mark_exists?(marker)
+    marks.include? marker.mark
   end
 
   def owner_exists?(marker)
     owners.include? marker.owner
   end
 
+  def other_than(other_mark)
+    marks.keep_if { |mark| mark != other_mark }
+  end
+
   def to_s
     collection.map do |marker|
-      [marker.owner, marker.symbol]
+      [marker.owner, marker.mark]
     end
   end
 end
@@ -101,11 +105,11 @@ module Neighborhood
     end
   end
 
-  def self.score_for(mark, location, board)
-    Vertical.score_for(mark, location, board)     +
-      Horizontal.score_for(mark, location, board) +
-      RightDiag.score_for(mark, location, board)  +
-      LeftDiag.score_for(mark, location, board)
+  def score_for(mark, board)
+    Vertical.score_for(mark, self.location, board)     +
+      Horizontal.score_for(mark, self.location, board) +
+      RightDiag.score_for(mark, self.location, board)  +
+      LeftDiag.score_for(mark, self.location, board)
   end
 
   def self.top_left_limit

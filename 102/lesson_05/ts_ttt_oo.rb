@@ -8,8 +8,8 @@ describe Marker do
   end
 
   describe '#initialize' do
-    it 'must create a marker with the symbol provided' do
-      @marker.symbol.must_equal 'p'
+    it 'must create a marker with the mark provided' do
+      @marker.mark.must_equal 'p'
     end
 
     it 'must create a marker with the owner provided' do
@@ -22,17 +22,17 @@ describe Marker do
   end
 
   describe '#to_s' do
-    it 'must display the owner & symbol when Marker is converted to string' do
+    it 'must display the owner & mark when Marker is converted to string' do
       "#{@marker}".must_equal 'Paolo: p'
     end
   end
 
   describe '#==' do
-    it 'must catch that marker symbol matches other marker symbol' do
+    it 'must catch that marker mark matches other marker mark' do
       @marker.must_be :==, Marker.new('p', 'Paolo')
     end
 
-    it 'must catch that marker symbol does not match other marker symbol' do
+    it 'must catch that marker mark does not match other marker mark' do
       @marker.must_be :!=, Marker.new('d', 'Paolo')
     end
   end
@@ -70,7 +70,7 @@ describe Markers do
       @markers.collection.must_equal @collection
     end
 
-    it 'must raise an error if marker symbol is already in use' do
+    it 'must raise an error if marker mark is already in use' do
       @markers << @marker
       proc { @markers << Marker.new('p', 'Rachelle') }.must_raise ArgumentError
     end
@@ -90,12 +90,12 @@ describe Markers do
     end
   end
 
-  describe '#symbols' do
-    it 'must return an array of symbols for markers' do
+  describe '#marks' do
+    it 'must return an array of marks for markers' do
       @markers << @marker
       @markers << Marker.new('r', 'Rachelle')
-      symbols = %w(p r)
-      @markers.symbols.must_equal symbols
+      marks = %w(p r)
+      @markers.marks.must_equal marks
     end
   end
 
@@ -107,14 +107,14 @@ describe Markers do
   end
 
   describe '#other_than' do
-    it 'must return all markers that are not equal to the symbol/mark' do
+    it 'must return all markers that are not equal to the mark' do
       @markers << @marker
       @markers << @marker2
       other_markers = ['p', 'r'].sort
       @markers.other_than('x').sort.must_equal other_markers
     end
 
-    it 'must return all markers that are not equal to the symbol/mark' do
+    it 'must return all markers that are not equal to the mark' do
       @markers << @marker
       @markers << @marker2
       @markers << Marker.new('s', 'Raine')
@@ -124,13 +124,13 @@ describe Markers do
   end
 
   describe '#[]=' do
-    it 'must store the marker symbol in the array' do
+    it 'must store the marker mark in the array' do
       @collection[0] = @marker
       @markers[0] = @marker
       @markers.collection.must_equal @collection
     end
 
-    it 'must overwrite the symbol if the owner exists' do
+    it 'must overwrite the mark if the owner exists' do
       @collection[0] = @marker
       @collection[0] = Marker.new('r', 'Paolo')
 
@@ -140,7 +140,7 @@ describe Markers do
       @markers.collection.must_equal @collection
     end
 
-    it 'must fail when assigning an existing symbol' do
+    it 'must fail when assigning an existing mark' do
       @markers << @marker
       proc do
         @markers[@markers.collection.length] = Marker.new('p', 'Rachelle')
@@ -200,13 +200,13 @@ describe Square do
   end
 
   describe '#mark' do
-    it 'must return the symbol-mark that is tagged on the square' do
+    it 'must return the mark that is tagged on the square' do
       @square.mark.must_equal 'x'
     end
   end
 
   describe '#to_s' do
-    it 'must return the marker symbol' do
+    it 'must return the marker mark' do
       @square.to_s.must_equal 'x'
     end
   end
@@ -369,11 +369,21 @@ describe Neighborhood do
     end
   end
 
-  describe '#neighborhood_score_for' do
+  # describe '#win_on?' do
+  #   it 'must flag the square to win on next move given a marker' do
+  #     board = Board.new
+  #     square = board.square_at([1, 1])
+  #     board.update_square_at([0, 0], 'x')
+  #     board.update_square_at([0, 1], 'x')
+  #     square.win_on?('x')
+  #   end
+  # end
+
+  describe '#score_for' do
     it 'must return the total neigborhood score for a square' do
       board = Board.new
       square = board.square_at([1, 1])
-      Neighborhood.score_for('x', square.location, board).must_equal 0
+      square.score_for('x', board).must_equal 0
     end
 
     it 'must return the total neigborhood score for a square_2' do
@@ -381,7 +391,7 @@ describe Neighborhood do
       square = board.square_at([1, 1])
       board.update_square_at([0, 0], 'x')
       board.update_square_at([0, 1], 'y')
-      Neighborhood.score_for('x', square.location, board).must_equal 1
+      square.score_for('x', board).must_equal 1
     end
 
     it 'must return the total neigborhood score for a square_3' do
@@ -389,7 +399,7 @@ describe Neighborhood do
       square = board.square_at([1, 1])
       board.update_square_at([0, 0], 'x')
       board.update_square_at([0, 1], 'x')
-      Neighborhood.score_for('x', square.location, board).must_equal 2
+      square.score_for('x', board).must_equal 2
     end
 
     it 'must return the total neigborhood score for a square_3' do
@@ -397,7 +407,7 @@ describe Neighborhood do
       square = board.square_at([1, 0])
       board.update_square_at([0, 0], 'x')
       board.update_square_at([0, 1], 'x')
-      Neighborhood.score_for('x', square.location, board).must_equal 2
+      square.score_for('x', board).must_equal 2
     end
 
     it 'must return the total neigborhood score for a square_3' do
@@ -406,7 +416,7 @@ describe Neighborhood do
       board.update_square_at([0, 0], 'x')
       board.update_square_at([0, 1], 'x')
       board.update_square_at([1, 1], 'x')
-      Neighborhood.score_for('x', square.location, board).must_equal 6
+      square.score_for('x', board).must_equal 6
     end
   end
 end
@@ -661,4 +671,13 @@ describe Computer do
       @markers.count.must_equal 2
     end
   end
+
+  # describe '#high_value_squares' do
+  #   it 'must return the squares with the highest values' do
+  #     @computer.choose_marker(@markers)
+  #     @board.update_square_at([0, 0], 'x')
+  #     @board.update_square_at([1, 0], 'x')
+  #     @board.update_square_at([2, 2], 'x')
+  #   end
+  # end
 end
