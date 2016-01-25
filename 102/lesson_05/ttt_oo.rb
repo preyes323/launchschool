@@ -568,4 +568,13 @@ class Computer < Player
       retry
     end
   end
+
+  def winning_move(board, markers)
+    mark = markers.marker_of(self).mark
+    squares = []
+    board.squares.select do |square|
+      squares << square.win_on_next_square(mark, board)
+    end
+    squares.compact.sample
+  end
 end

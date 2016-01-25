@@ -765,12 +765,21 @@ describe Computer do
     end
   end
 
-  # describe '#high_value_squares' do
-  #   it 'must return the squares with the highest values' do
-  #     @computer.choose_marker(@markers)
-  #     @board.update_square_at([0, 0], 'x')
-  #     @board.update_square_at([1, 0], 'x')
-  #     @board.update_square_at([2, 2], 'x')
-  #   end
-  # end
+  describe '#winning_move' do
+    it 'must return a square that will make the computer win' do
+      @computer.choose_marker(@markers)
+      mark = @markers.marker_of(@computer).mark
+      @board.update_square_at([1, 1], mark)
+      @board.update_square_at([0, 1], mark)
+      winning_square = @board.square_at([2, 1])
+      @computer.winning_move(@board, @markers).must_equal winning_square
+    end
+
+    it 'must return nil when no square will make the computer win' do
+      @computer.choose_marker(@markers)
+      mark = @markers.marker_of(@computer).mark
+      @board.update_square_at([1, 1], mark)
+      @computer.winning_move(@board, @markers).must_be_nil
+    end
+  end
 end
