@@ -8,8 +8,8 @@ describe Marker do
   end
 
   describe '#initialize' do
-    it 'must create a marker with the symbol provided' do
-      @marker.symbol.must_equal 'p'
+    it 'must create a marker with the mark provided' do
+      @marker.mark.must_equal 'p'
     end
 
     it 'must create a marker with the owner provided' do
@@ -22,17 +22,17 @@ describe Marker do
   end
 
   describe '#to_s' do
-    it 'must display the owner & symbol when Marker is converted to string' do
+    it 'must display the owner & mark when Marker is converted to string' do
       "#{@marker}".must_equal 'Paolo: p'
     end
   end
 
   describe '#==' do
-    it 'must catch that marker symbol matches other marker symbol' do
+    it 'must catch that marker mark matches other marker mark' do
       @marker.must_be :==, Marker.new('p', 'Paolo')
     end
 
-    it 'must catch that marker symbol does not match other marker symbol' do
+    it 'must catch that marker mark does not match other marker mark' do
       @marker.must_be :!=, Marker.new('d', 'Paolo')
     end
   end
@@ -70,7 +70,7 @@ describe Markers do
       @markers.collection.must_equal @collection
     end
 
-    it 'must raise an error if marker symbol is already in use' do
+    it 'must raise an error if marker mark is already in use' do
       @markers << @marker
       proc { @markers << Marker.new('p', 'Rachelle') }.must_raise ArgumentError
     end
@@ -90,12 +90,12 @@ describe Markers do
     end
   end
 
-  describe '#symbols' do
-    it 'must return an array of symbols for markers' do
+  describe '#marks' do
+    it 'must return an array of marks for markers' do
       @markers << @marker
       @markers << Marker.new('r', 'Rachelle')
-      symbols = %w(p r)
-      @markers.symbols.must_equal symbols
+      marks = %w(p r)
+      @markers.marks.must_equal marks
     end
   end
 
@@ -106,14 +106,31 @@ describe Markers do
     end
   end
 
+  describe '#other_than' do
+    it 'must return all markers that are not equal to the mark' do
+      @markers << @marker
+      @markers << @marker2
+      other_markers = ['p', 'r'].sort
+      @markers.other_than('x').sort.must_equal other_markers
+    end
+
+    it 'must return all markers that are not equal to the mark' do
+      @markers << @marker
+      @markers << @marker2
+      @markers << Marker.new('s', 'Raine')
+      other_markers = ['p', 'r'].sort
+      @markers.other_than('s').sort.must_equal other_markers
+    end
+  end
+
   describe '#[]=' do
-    it 'must store the marker symbol in the array' do
+    it 'must store the marker mark in the array' do
       @collection[0] = @marker
       @markers[0] = @marker
       @markers.collection.must_equal @collection
     end
 
-    it 'must overwrite the symbol if the owner exists' do
+    it 'must overwrite the mark if the owner exists' do
       @collection[0] = @marker
       @collection[0] = Marker.new('r', 'Paolo')
 
@@ -123,7 +140,7 @@ describe Markers do
       @markers.collection.must_equal @collection
     end
 
-    it 'must fail when assigning an existing symbol' do
+    it 'must fail when assigning an existing mark' do
       @markers << @marker
       proc do
         @markers[@markers.collection.length] = Marker.new('p', 'Rachelle')
@@ -183,13 +200,13 @@ describe Square do
   end
 
   describe '#mark' do
-    it 'must return the symbol-mark that is tagged on the square' do
+    it 'must return the mark that is tagged on the square' do
       @square.mark.must_equal 'x'
     end
   end
 
   describe '#to_s' do
-    it 'must return the marker symbol' do
+    it 'must return the marker mark' do
       @square.to_s.must_equal 'x'
     end
   end
@@ -267,7 +284,7 @@ describe Board do
     end
   end
 
-  describe '#draw_board' do
+  describe '#draw' do
     it 'must return the string representation of a board with empty sqaures' do
       board_output = %(    0   1   2
   +---+---+---+
@@ -277,7 +294,7 @@ describe Board do
   +---+---+---+
 2 |   |   |   |
   +---+---+---+).chomp
-      @board.draw_board.must_equal board_output
+      @board.draw.must_equal board_output
     end
 
     it 'must return the string representation of a board with non-empty sq' do
@@ -291,7 +308,7 @@ describe Board do
   +---+---+---+).chomp
       @board.update_square_at([1, 1], 'x')
       @board.update_square_at([2, 2], 'o')
-      @board.draw_board.must_equal board_output
+      @board.draw.must_equal board_output
     end
   end
 end
@@ -351,6 +368,87 @@ describe Neighborhood do
       Neighborhood.bottom_right_limit.must_equal [2, 1]
     end
   end
+
+  describe '#win_on_next_square' do
+    it 'must flag the square to win on next move given a marker' do
+      board = Board.new
+      square = board.square_at([0, 1])
+      board.update_square_at([0, 0], 'x')
+      board.update_square_at([0, 1], 'x')
+      winning_square = board.square_at([0, 2])
+      square.win_on_next_square('x', board).must_equal winning_square
+    end
+
+    it 'must flag the square to win on next move given a marker_2' do
+      board = Board.new
+      square = board.square_at([0, 2])
+      board.update_square_at([0, 0], 'x')
+      board.update_square_at([0, 1], 'x')
+      winning_square = nil
+      square.win_on_next_square('y', board).must_equal winning_square
+    end
+
+    it 'must flag the square to win on next move given a marker_3' do
+      board = Board.new
+      square = board.square_at([1, 1])
+      board.update_square_at([0, 0], 'x')
+      board.update_square_at([0, 1], 'x')
+      board.update_square_at([1, 1], 'x')
+      board.update_square_at([2, 2], 'x')
+      winning_square = board.square_at([2, 1])
+      square.win_on_next_square('x', board).must_equal winning_square
+    end
+
+    it 'must flag the square to win on next move given a marker_4' do
+      board = Board.new
+      square = board.square_at([1, 1])
+      board.update_square_at([0, 0], 'x')
+      board.update_square_at([1, 1], 'x')
+      winning_square = board.square_at([2, 2])
+      square.win_on_next_square('x', board).must_equal winning_square
+    end
+  end
+
+  describe '#score_for' do
+    it 'must return the total neigborhood score for a square' do
+      board = Board.new
+      square = board.square_at([1, 1])
+      square.score_for('x', board).must_equal 0
+    end
+
+    it 'must return the total neigborhood score for a square_2' do
+      board = Board.new
+      square = board.square_at([1, 1])
+      board.update_square_at([0, 0], 'x')
+      board.update_square_at([0, 1], 'y')
+      square.score_for('x', board).must_equal 1
+    end
+
+    it 'must return the total neigborhood score for a square_3' do
+      board = Board.new
+      square = board.square_at([1, 1])
+      board.update_square_at([0, 0], 'x')
+      board.update_square_at([0, 1], 'x')
+      square.score_for('x', board).must_equal 2
+    end
+
+    it 'must return the total neigborhood score for a square_3' do
+      board = Board.new
+      square = board.square_at([1, 0])
+      board.update_square_at([0, 0], 'x')
+      board.update_square_at([0, 1], 'x')
+      square.score_for('x', board).must_equal 2
+    end
+
+    it 'must return the total neigborhood score for a square_3' do
+      board = Board.new
+      square = board.square_at([1, 1])
+      board.update_square_at([0, 0], 'x')
+      board.update_square_at([0, 1], 'x')
+      board.update_square_at([1, 1], 'x')
+      square.score_for('x', board).must_equal 6
+    end
+  end
 end
 
 describe Neighborhood::Vertical do
@@ -359,39 +457,40 @@ describe Neighborhood::Vertical do
     Neighborhood.bottom_right_limit = nil
     @board = Board.new
     @board.update_square_at([1, 1], 'x')
+    @neighborhood = Neighborhood::Vertical
   end
 
-  describe '#score' do
+  describe '#score_for' do
     it "must return correct score given neighborhood squares 'marker'" do
-      Neighborhood::Vertical.score_for('x', [1, 1], @board).must_equal 1
+      @neighborhood.score_for('x', [1, 1], @board).must_equal 1
     end
 
     it "must return correct score given neighborhood squares 'marker'_2" do
       @board.update_square_at([1, 1], 'y')
-      Neighborhood::Vertical.score_for('x', [1, 1], @board).must_equal 0
+      @neighborhood.score_for('x', [1, 1], @board).must_equal 0
     end
 
     it "must return correct score given neighborhood squares 'marker'_3" do
       @board.update_square_at([0, 1], 'x')
-      Neighborhood::Vertical.score_for('x', [1, 1], @board).must_equal 2
+      @neighborhood.score_for('x', [1, 1], @board).must_equal 2
     end
 
     it "must return correct score given neighborhood squares 'marker'_4" do
       @board.update_square_at([0, 1], 'x')
       @board.update_square_at([0, 2], 'x')
       @board.update_square_at([2, 1], 'x')
-      Neighborhood::Vertical.score_for('x', [1, 1], @board).must_equal 3
+      @neighborhood.score_for('x', [1, 1], @board).must_equal 3
     end
 
     it "must return correct score given neighborhood squares @corner" do
       @board.update_square_at([0, 0], 'x')
       @board.update_square_at([1, 0], 'x')
       @board.update_square_at([2, 0], 'x')
-      Neighborhood::Vertical.score_for('x', [0, 0], @board).must_equal 2
+      @neighborhood.score_for('x', [0, 0], @board).must_equal 2
     end
 
     it 'must return 0 if the square location does not exist' do
-      Neighborhood::Vertical.score_for('x', [-1, 0], @board).must_equal 0
+      @neighborhood.score_for('x', [-1, 0], @board).must_equal 0
     end
 
     it 'must return correct score with bigger board' do
@@ -399,7 +498,7 @@ describe Neighborhood::Vertical do
       board.update_square_at([0, 0], 'x')
       board.update_square_at([1, 0], 'x')
       board.update_square_at([2, 0], 'x')
-      Neighborhood::Vertical.score_for('x', [0, 0], board).must_equal 3
+      @neighborhood.score_for('x', [0, 0], board).must_equal 3
     end
 
     it 'must return correct score with bigger board_2' do
@@ -407,7 +506,7 @@ describe Neighborhood::Vertical do
       board.update_square_at([0, 0], 'x')
       board.update_square_at([1, 0], 'x')
       board.update_square_at([2, 0], 'x')
-      Neighborhood::Vertical.score_for('x', [2, 0], board).must_equal 3
+      @neighborhood.score_for('x', [2, 0], board).must_equal 3
     end
 
     it 'must return correct score with bigger board_2' do
@@ -417,7 +516,25 @@ describe Neighborhood::Vertical do
       board.update_square_at([2, 0], 'x')
       board.update_square_at([3, 0], 'y')
       board.update_square_at([4, 0], 'x')
-      Neighborhood::Vertical.score_for('x', [2, 0], board).must_equal 4
+      @neighborhood.score_for('x', [2, 0], board).must_equal 4
+    end
+  end
+
+  describe '#empty_neighbors_for' do
+    it 'must return the empty squares for the given location' do
+      board = Board.new
+      square1 = board.square_at([0, 0])
+      square2 = board.square_at([2, 0])
+      empty_squares = [square1, square2]
+      @neighborhood.empty_neighbors_for([1, 0], board).must_equal empty_squares
+    end
+
+    it 'must return the empty squares for the given location_2' do
+      board = Board.new
+      board.update_square_at([0, 0], 'x')
+      square2 = board.square_at([2, 0])
+      empty_squares = [square2]
+      @neighborhood.empty_neighbors_for([1, 0], board).must_equal empty_squares
     end
   end
 end
@@ -428,28 +545,46 @@ describe Neighborhood::Horizontal do
     Neighborhood.bottom_right_limit = nil
     @board = Board.new
     @board.update_square_at([1, 1], 'x')
+    @neighborhood = Neighborhood::Horizontal
   end
 
   describe '#score' do
     it "must return correct score given neighborhood squares 'marker'" do
-      Neighborhood::Horizontal.score_for('x', [1, 1], @board).must_equal 1
+      @neighborhood.score_for('x', [1, 1], @board).must_equal 1
     end
 
     it "must return correct score given neighborhood squares 'marker'_2" do
       @board.update_square_at([1, 1], 'y')
-      Neighborhood::Horizontal.score_for('x', [1, 1], @board).must_equal 0
+      @neighborhood.score_for('x', [1, 1], @board).must_equal 0
     end
 
     it "must return correct score given neighborhood squares 'marker'_3" do
       @board.update_square_at([1, 2], 'x')
-      Neighborhood::Horizontal.score_for('x', [1, 1], @board).must_equal 2
+      @neighborhood.score_for('x', [1, 1], @board).must_equal 2
     end
 
     it "must return correct score given neighborhood squares 'marker'_4" do
       @board.update_square_at([1, 2], 'x')
       @board.update_square_at([0, 2], 'x')
       @board.update_square_at([1, 0], 'x')
-      Neighborhood::Horizontal.score_for('x', [1, 1], @board).must_equal 3
+      @neighborhood.score_for('x', [1, 1], @board).must_equal 3
+    end
+  end
+
+  describe '#empty_neighbors_for' do
+    it 'must return the empty squares for the given location' do
+      board = Board.new
+      square1 = board.square_at([0, 1])
+      empty_squares = [square1]
+      @neighborhood.empty_neighbors_for([0, 0], board).must_equal empty_squares
+    end
+
+    it 'must return the empty squares for the given location_2' do
+      board = Board.new
+      square1 = board.square_at([0, 0])
+      square2 = board.square_at([0, 2])
+      empty_squares = [square1, square2]
+      @neighborhood.empty_neighbors_for([0, 1], board).must_equal empty_squares
     end
   end
 end
@@ -460,33 +595,60 @@ describe Neighborhood::RightDiag do
     Neighborhood.bottom_right_limit = nil
     @board = Board.new
     @board.update_square_at([1, 1], 'x')
+    @neighborhood = Neighborhood::RightDiag
   end
 
   describe '#score' do
     it "must return correct score given neighborhood squares 'marker'" do
-      Neighborhood::RightDiag.score_for('x', [1, 1], @board).must_equal 1
+      @neighborhood.score_for('x', [1, 1], @board).must_equal 1
     end
 
     it "must return correct score given neighborhood squares 'marker'_2" do
       @board.update_square_at([1, 1], 'y')
-      Neighborhood::RightDiag.score_for('x', [1, 1], @board).must_equal 0
+      @neighborhood.score_for('x', [1, 1], @board).must_equal 0
     end
 
     it "must return correct score given neighborhood squares 'marker'_3" do
       @board.update_square_at([0, 0], 'x')
-      Neighborhood::RightDiag.score_for('x', [1, 1], @board).must_equal 2
+      @neighborhood.score_for('x', [1, 1], @board).must_equal 2
     end
 
     it "must return correct score given neighborhood squares 'marker'_4" do
       @board.update_square_at([0, 0], 'x')
       @board.update_square_at([0, 2], 'x')
       @board.update_square_at([2, 2], 'x')
-      Neighborhood::RightDiag.score_for('x', [1, 1], @board).must_equal 3
+      @neighborhood.score_for('x', [1, 1], @board).must_equal 3
     end
 
     it 'must return correct score given corner square' do
       @board.update_square_at([0, 1], 'x')
-      Neighborhood::RightDiag.score_for('x', [1, 2], @board).must_equal 1
+      @neighborhood.score_for('x', [1, 2], @board).must_equal 1
+    end
+  end
+
+  describe '#empty_neighbors_for' do
+    it 'must return the empty squares for the given location' do
+      board = Board.new
+      square1 = board.square_at([1, 1])
+      empty_squares = [square1]
+      @neighborhood.empty_neighbors_for([0, 0], board).must_equal empty_squares
+    end
+
+    it 'must return the empty squares for the given location_2' do
+      board = Board.new
+      square1 = board.square_at([0, 0])
+      square2 = board.square_at([2, 2])
+      empty_squares = [square1, square2]
+      @neighborhood.empty_neighbors_for([1, 1], board).must_equal empty_squares
+    end
+
+    it 'must return the empty squares for the given location_2' do
+      board = Board.new
+      board.update_square_at([1, 1], 'x')
+      board.update_square_at([0, 0], 'x')
+      square2 = board.square_at([2, 2])
+      empty_squares = [square2]
+      @neighborhood.empty_neighbors_for([1, 1], board).must_equal empty_squares
     end
   end
 end
@@ -497,33 +659,50 @@ describe Neighborhood::LeftDiag do
     Neighborhood.bottom_right_limit = nil
     @board = Board.new
     @board.update_square_at([1, 1], 'x')
+    @neighborhood = Neighborhood::LeftDiag
   end
 
   describe '#score' do
     it "must return correct score given neighborhood squares 'marker'" do
-      Neighborhood::LeftDiag.score_for('x', [1, 1], @board).must_equal 1
+      @neighborhood.score_for('x', [1, 1], @board).must_equal 1
     end
 
     it "must return correct score given neighborhood squares 'marker'_2" do
       @board.update_square_at([1, 1], 'y')
-      Neighborhood::LeftDiag.score_for('x', [1, 1], @board).must_equal 0
+      @neighborhood.score_for('x', [1, 1], @board).must_equal 0
     end
 
     it "must return correct score given neighborhood squares 'marker'_3" do
       @board.update_square_at([0, 2], 'x')
-      Neighborhood::LeftDiag.score_for('x', [1, 1], @board).must_equal 2
+      @neighborhood.score_for('x', [1, 1], @board).must_equal 2
     end
 
     it "must return correct score given neighborhood squares 'marker'_4" do
       @board.update_square_at([0, 1], 'x')
       @board.update_square_at([0, 2], 'x')
       @board.update_square_at([2, 0], 'x')
-      Neighborhood::LeftDiag.score_for('x', [1, 1], @board).must_equal 3
+      @neighborhood.score_for('x', [1, 1], @board).must_equal 3
     end
 
     it 'must return correct score given corner square' do
       @board.update_square_at([2, 0], 'x')
-      Neighborhood::LeftDiag.score_for('x', [2, 0], @board).must_equal 2
+      @neighborhood.score_for('x', [2, 0], @board).must_equal 2
+    end
+  end
+
+  describe '#empty_neighbors_for' do
+    it 'must return the empty squares for the given location' do
+      board = Board.new
+      square1 = board.square_at([1, 1])
+      empty_squares = [square1]
+      @neighborhood.empty_neighbors_for([0, 2], board).must_equal empty_squares
+    end
+
+    it 'must return the empty squares for the given location_2' do
+      board = Board.new
+      square2 = board.square_at([2, 1])
+      empty_squares = [square2]
+      @neighborhood.empty_neighbors_for([1, 2], board).must_equal empty_squares
     end
   end
 end
@@ -583,6 +762,8 @@ end
 
 describe Computer do
   before do
+    Neighborhood.top_left_limit = nil
+    Neighborhood.bottom_right_limit = nil
     @computer_names = CONFIG['computer_names']
     @computer = Computer.new
     @markers = Markers.new
@@ -604,21 +785,95 @@ describe Computer do
     end
   end
 
-  describe '#win_on_next_squares' do
+  describe '#winning_move' do
+    it 'must return a square that will make the computer win' do
+      @computer.choose_marker(@markers)
+      mark = @markers.marker_of(@computer).mark
+      @board.update_square_at([1, 1], mark)
+      @board.update_square_at([0, 1], mark)
+      winning_square = [@board.square_at([2, 1])]
+      @computer.winning_move(@board, @markers).must_equal winning_square
+    end
+
+    it 'must return nil when no square will make the computer win' do
+      @computer.choose_marker(@markers)
+      mark = @markers.marker_of(@computer).mark
+      @board.update_square_at([1, 1], mark)
+      assert @computer.winning_move(@board, @markers).empty?
+    end
   end
 
-  describe '#square_values' do
+  describe '#opponents_winning_move' do
+    it 'must catch a sqaure that will make other markers win' do
+      @computer.choose_marker(@markers)
+      mark = @markers.marker_of(@computer).mark
+      @board.update_square_at([0, 0], 'x')
+      @board.update_square_at([1, 1], 'x')
+      squares = [@board.square_at([2, 2])]
+      @computer.opponents_winning_move(@board, @markers).must_equal squares
+    end
+
+    it 'must catch a sqaure that will make other markers win_2' do
+      @computer.choose_marker(@markers)
+      mark = @markers.marker_of(@computer).mark
+      @board.update_square_at([0, 0], 'x')
+      @board.update_square_at([1, 1], 'x')
+      @board.update_square_at([1, 0], 'x')
+      square2 = @board.square_at([2, 0])
+      square3 = @board.square_at([1, 2])
+      squares = [square2, square3]
+      @computer.opponents_winning_move(@board, @markers).must_equal squares
+    end
+
+    it 'must return empty array if no other marker has a winning move' do
+      @computer.choose_marker(@markers)
+      mark = @markers.marker_of(@computer).mark
+      @board.update_square_at([1, 1], 'x')
+      assert @computer.opponents_winning_move(@board, @markers).empty?
+    end
+
+    it 'must catch a sqaure that will make other markers win_3' do
+      @computer.choose_marker(@markers)
+      @markers << Marker.new('y', 'Raine')
+      mark = @markers.marker_of(@computer).mark
+      @board.update_square_at([0, 0], 'x')
+      @board.update_square_at([1, 0], 'x')
+      @board.update_square_at([0, 2], 'y')
+      @board.update_square_at([1, 2], 'y')
+      square1 = @board.square_at([2, 2])
+      square2 = @board.square_at([2, 0])
+      squares = [square2, square1]
+      @computer.opponents_winning_move(@board, @markers).must_equal squares
+    end
   end
 
   describe '#high_value_squares' do
+    it 'must return squares with highest values' do
+      @computer.choose_marker(@markers)
+      @markers << Marker.new('y', 'Raine')
+      mark = @markers.marker_of(@computer).mark
+      @board.update_square_at([2, 0], mark)
+      @board.update_square_at([1, 2], mark)
+      square1 = @board.square_at([1, 1])
+      square2 = @board.square_at([2, 1])
+      squares = [square1, square2]
+      @computer.high_value_squares(@board, @markers).must_equal squares
+    end
   end
 
-  # describe '#offensive_move' do
-  #   it 'must return valid move based on the current boards markers' do
-  #     @board.update_square_at([1, 1], 'y')
-  #     @board.update_square_at([1, 0], 'y')
-  #     valid_moves = [[1, 1]]
-
-  #   end
-  # end
+  describe '#move' do
+    it 'must return the appropriate move given the board squares' do
+      @computer.choose_marker(@markers)
+      @markers << Marker.new('y', 'Raine')
+      mark = @markers.marker_of(@computer).mark
+      @board.update_square_at([1, 1], mark)
+      @board.update_square_at([1, 0], 'x')
+      @board.update_square_at([2, 0], mark)
+      @board.update_square_at([0, 2], 'x')
+      square1 = @board.square_at([2, 2])
+      square2 = @board.square_at([2, 1])
+      squares = [square1, square2]
+      squares.must_include @computer.move(@board, @markers)
+    end
+  end
 end
