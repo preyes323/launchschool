@@ -1,5 +1,4 @@
 require 'yaml'
-require 'pry'
 
 CONFIG = YAML.load_file('ttt_config.yml')
 
@@ -834,4 +833,4 @@ class TTTGame
   end
 end
 
-# TTTGame.new.play
+TTTGame.new.play
