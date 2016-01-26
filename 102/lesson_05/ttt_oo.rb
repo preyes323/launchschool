@@ -94,7 +94,7 @@ module Neighborhood
     Neighborhood.bottom_right_limit ||= location
 
     if location[0] <= Neighborhood.top_left_limit[0] &&
-        location[1] <= Neighborhood.top_left_limit[1]
+       location[1] <= Neighborhood.top_left_limit[1]
       Neighborhood.top_left_limit = location
     end
 
@@ -104,33 +104,33 @@ module Neighborhood
     end
   end
 
-  def is_winner?(mark, board)
+  def winner?(mark, board)
     winning_score = board.neighborhood_depth * 2 + 1
-    Vertical.score_for(mark, self.location, board)     == winning_score ||
-      Horizontal.score_for(mark, self.location, board) == winning_score ||
-      RightDiag.score_for(mark, self.location, board)  == winning_score ||
-      LeftDiag.score_for(mark, self.location, board)   == winning_score
+    Vertical.score_for(mark, location, board)     == winning_score ||
+      Horizontal.score_for(mark, location, board) == winning_score ||
+      RightDiag.score_for(mark, location, board)  == winning_score ||
+      LeftDiag.score_for(mark, location, board)   == winning_score
   end
 
   def score_for(mark, board)
-    Vertical.score_for(mark, self.location, board)     +
-      Horizontal.score_for(mark, self.location, board) +
-      RightDiag.score_for(mark, self.location, board)  +
-      LeftDiag.score_for(mark, self.location, board)
+    Vertical.score_for(mark, location, board)     +
+      Horizontal.score_for(mark, location, board) +
+      RightDiag.score_for(mark, location, board)  +
+      LeftDiag.score_for(mark, location, board)
   end
 
   def win_on_next_square(mark, board)
     winning_score = board.neighborhood_depth * 2
-    square = case winning_score
-             when Vertical.score_for(mark, self.location, board)
-               Vertical.empty_neighbors_for(self.location, board)[0]
-             when Horizontal.score_for(mark, self.location, board)
-               Horizontal.empty_neighbors_for(self.location, board)[0]
-             when RightDiag.score_for(mark, self.location, board)
-               RightDiag.empty_neighbors_for(self.location, board)[0]
-             when LeftDiag.score_for(mark, self.location, board)
-               LeftDiag.empty_neighbors_for(self.location, board)[0]
-             end
+    case winning_score
+    when Vertical.score_for(mark, location, board)
+      Vertical.empty_neighbors_for(location, board)[0]
+    when Horizontal.score_for(mark, location, board)
+      Horizontal.empty_neighbors_for(location, board)[0]
+    when RightDiag.score_for(mark, location, board)
+      RightDiag.empty_neighbors_for(location, board)[0]
+    when LeftDiag.score_for(mark, location, board)
+      LeftDiag.empty_neighbors_for(location, board)[0]
+    end
   end
 
   def self.top_left_limit
@@ -415,7 +415,7 @@ class Board
   end
 
   def mark_wins?(mark)
-    squares.any? { |square| square.is_winner?(mark, self) }
+    squares.any? { |square| square.winner?(mark, self) }
   end
 
   def empty_squares
@@ -494,7 +494,7 @@ class Board
   def build(size)
     self.squares = []
     size.times do |row|
-      size.times { |col| self.squares << Square.new('', [row, col]) }
+      size.times { |col| squares << Square.new('', [row, col]) }
     end
   end
 end
@@ -511,7 +511,7 @@ class Square
 
     @mark = mark
     @location = location
-    self.update_top_left_bottom_right(@location)
+    update_top_left_bottom_right(@location)
   end
 
   def to_s
@@ -650,8 +650,6 @@ class TTTGame
 
     self.markers = Markers.new
     setup_players_marker(markers)
-
-
   end
 
   def play
@@ -696,9 +694,9 @@ class TTTGame
   def display_results(winner)
     puts '+----------=----------+'
     if winner
-      puts "#{winner.name}(#{markers.marker_of(winner)}) wins!"
+      puts "#{winner.name}(#{markers.marker_of(winner).mark}) wins!"
     else
-      puts "Tie Game! Better luck next round"
+      puts 'Tie Game! Better luck next round'
     end
     puts '+----------=----------+'
   end
@@ -716,7 +714,7 @@ class TTTGame
   end
 
   def play_again?
-    puts "Do you want to play again (y/n)?"
+    puts 'Do you want to play again (y/n)?'
     print '=> '
     gets.chomp.downcase == 'y'
   end
@@ -737,15 +735,15 @@ class TTTGame
 
   def display_game_info
     markers_win = board.neighborhood_depth * 2 + 1
-    puts "+----------+----------+----------+----------+----------+"
+    puts '+----------+----------+----------+----------+----------+'
     puts "GAME TYPE: #{game_type}, CONSECUTIVE MARKERS TO WIN: #{markers_win}"
-    puts "+----------+----------+----------+----------+----------+"
+    puts '+----------+----------+----------+----------+----------+'
   end
 
   def display_game_stats
     puts ''
-    print "PLAYERS".center(20, ' ')
-    print "SCORES".center(10, ' ')
+    print 'PLAYERS'.center(20, ' ')
+    print 'SCORES'.center(10, ' ')
     print "\n"
     markers.each do |marker|
       print "#{marker.owner.name} (#{marker.mark})".center(20, ' ')
@@ -753,7 +751,7 @@ class TTTGame
       print "\n"
     end
     puts ''
-    puts "+----------+----------+----------+----------+----------+"
+    puts '+----------+----------+----------+----------+----------+'
   end
 
   def display_board
@@ -774,9 +772,7 @@ class TTTGame
     puts 'How many human players will play?'
     human_count = human_count_input
     computer_count = CONFIG[game_type]['players'] - human_count
-    result = []
-    result += human_players(human_count)
-    result += computer_players(computer_count)
+    human_players(human_count) + computer_players(computer_count)
   end
 
   def human_players(count)
@@ -810,7 +806,7 @@ class TTTGame
       puts "[#{idx}]: #{game_type}"
     end
 
-    selection = game_selection_input
+    game_selection_input
   end
 
   def game_selection_input
@@ -838,4 +834,4 @@ class TTTGame
   end
 end
 
-TTTGame.new.play
+# TTTGame.new.play
