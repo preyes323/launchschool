@@ -8,3 +8,5 @@ In this version of the famous tic-tac-toe game more than two players is allowed.
 | Advance   | 4                 | 5 x 5           | 3                          |
 | Expert    | 5                 | 7 x 7           | 5                          |
 | Impossible| 6                 | 9 x 9           | 5                          |
+
+If you choose to do so, you can add more game types by editing the [configuration file](https://github.com/preyes323/launchschool/blob/master/102/lesson_05/ttt_config.yml). Just follow the setup of the current setup of the other game types or [email me]<mailto:vpaoloreyes@gmail.com> for details.
