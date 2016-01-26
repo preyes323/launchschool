@@ -104,6 +104,14 @@ module Neighborhood
     end
   end
 
+  def is_winner?(mark, board)
+    winning_score = board.neighborhood_depth * 2 + 1
+    Vertical.score_for(mark, self.location, board)     == winning_score ||
+      Horizontal.score_for(mark, self.location, board) == winning_score ||
+      RightDiag.score_for(mark, self.location, board)  == winning_score ||
+      LeftDiag.score_for(mark, self.location, board)   == winning_score
+  end
+
   def score_for(mark, board)
     Vertical.score_for(mark, self.location, board)     +
       Horizontal.score_for(mark, self.location, board) +
@@ -394,12 +402,20 @@ class Board
   attr_accessor :squares, :neighborhood_depth
 
   def initialize(game_type = 'regular')
-    build_board(CONFIG[game_type]['board_size'])
+    build(CONFIG[game_type]['board_size'])
     self.neighborhood_depth = CONFIG[game_type]['neighborhood_depth']
   end
 
   def empty_squares_location
     empty_squares.map(&:location)
+  end
+
+  def full?
+    empty_squares.empty?
+  end
+
+  def mark_wins?(mark)
+    squares.any? { |square| square.is_winner?(mark, self) }
   end
 
   def empty_squares
@@ -418,7 +434,7 @@ class Board
     squares.select { |square| square.location == location }[0]
   end
 
-  def draw_board
+  def draw
     board = ''
     size = (squares.count**(0.5)).to_i
 
@@ -475,7 +491,7 @@ class Board
     result
   end
 
-  def build_board(size)
+  def build(size)
     self.squares = []
     size.times do |row|
       size.times { |col| self.squares << Square.new('', [row, col]) }
@@ -528,13 +544,14 @@ class Human < Player
       print '=> '
       move = gets.chomp
       location = move.split(',')
-      return location.map(&:to_i) if valid_move?(location) &&
-                                     valid_location?(location, board)
+      if valid_move?(location) && valid_location?(location.map(&:to_i), board)
+        return location.map(&:to_i)
+      end
     end
   end
 
   def choose_marker(markers)
-    puts 'What marker do you want to use for the game?'
+    puts "What marker do you want to use for the game #{name}?"
 
     begin
       print '=> '
@@ -569,19 +586,33 @@ class Computer < Player
     end
   end
 
+  def move(board, markers)
+    result = if !opponents_winning_move(board, markers).empty?
+               opponents_winning_move(board, markers)
+             elsif !winning_move(board, markers).empty?
+               winning_move(board, markers)
+             else
+               high_value_squares(board, markers)
+             end
+
+    result.sample
+  end
+
+  def get_mark(markers)
+    markers.marker_of(self).mark
+  end
+
   def winning_move(board, markers)
-    mark = markers.marker_of(self).mark
     squares = []
     board.squares.select do |square|
-      squares << square.win_on_next_square(mark, board)
+      squares << square.win_on_next_square(get_mark(markers), board)
     end
-    squares.compact.sample
+    squares.compact
   end
 
   def opponents_winning_move(board, markers)
     squares = []
-    mark = markers.marker_of(self).mark
-    other_markers = markers.other_than(mark)
+    other_markers = markers.other_than(get_mark(markers))
 
     other_markers.each do |mark|
       board.squares.select do |square|
@@ -596,10 +627,9 @@ class Computer < Player
     squares = {}
     possible_squares = board.empty_squares
     max_score = 0
-    mark = markers.marker_of(self).mark
 
     possible_squares.each do |square|
-      score = square.score_for(mark, board)
+      score = square.score_for(get_mark(markers), board)
       squares[square] = score
       max_score = score > max_score ? score : max_score
     end
@@ -607,3 +637,205 @@ class Computer < Player
     squares.keep_if { |_, score| score == max_score }.keys
   end
 end
+
+class TTTGame
+  attr_accessor :players, :markers, :scores, :current_marker
+  attr_reader :board, :game_type
+
+  def initialize
+    @game_type = game_selection
+
+    self.players = players_setup
+    initialize_player_scores
+
+    self.markers = Markers.new
+    setup_players_marker(markers)
+
+
+  end
+
+  def play
+    loop do
+      winner = nil
+      round = 0
+
+      initialize_game
+
+      loop do
+        move = player_move(current_marker.owner)
+        sleep 1 if current_marker.owner.class == Computer
+
+        board.update_square_at(move, current_marker.mark)
+        display_game_area
+        winner = current_marker.owner if board.mark_wins?(current_marker.mark)
+
+        break if board.full? || winner
+        round += 1
+        self.current_marker = next_marker(round)
+      end
+
+      process_results(winner)
+      break unless play_again?
+    end
+  end
+
+  private
+
+  def initialize_game
+    @board = Board.new(game_type)
+    display_game_area
+    self.current_marker = markers.first
+  end
+
+  def process_results(winner)
+    scores[winner] += 1 if winner
+    display_game_area
+    display_results(winner)
+  end
+
+  def display_results(winner)
+    puts '+----------=----------+'
+    if winner
+      puts "#{winner.name}(#{markers.marker_of(winner)}) wins!"
+    else
+      puts "Tie Game! Better luck next round"
+    end
+    puts '+----------=----------+'
+  end
+
+  def next_marker(round)
+    markers[round % markers.count]
+  end
+
+  def player_move(player)
+    if player.class == Human
+      player.move(board)
+    else
+      player.move(board, markers).location
+    end
+  end
+
+  def play_again?
+    puts "Do you want to play again (y/n)?"
+    print '=> '
+    gets.chomp.downcase == 'y'
+  end
+
+  def initialize_player_scores
+    self.scores = {}
+    players.each do |player|
+      scores[player] = 0
+    end
+  end
+
+  def display_game_area
+    system 'clear' || system('cls')
+    display_game_info
+    display_game_stats
+    display_board
+  end
+
+  def display_game_info
+    markers_win = board.neighborhood_depth * 2 + 1
+    puts "+----------+----------+----------+----------+----------+"
+    puts "GAME TYPE: #{game_type}, CONSECUTIVE MARKERS TO WIN: #{markers_win}"
+    puts "+----------+----------+----------+----------+----------+"
+  end
+
+  def display_game_stats
+    puts ''
+    print "PLAYERS".center(20, ' ')
+    print "SCORES".center(10, ' ')
+    print "\n"
+    markers.each do |marker|
+      print "#{marker.owner.name} (#{marker.mark})".center(20, ' ')
+      print "#{scores[marker.owner]}".center(10, ' ')
+      print "\n"
+    end
+    puts ''
+    puts "+----------+----------+----------+----------+----------+"
+  end
+
+  def display_board
+    puts board.draw
+  end
+
+  def setup_players_marker(markers)
+    players.each do |player|
+      player.choose_marker(markers)
+    end
+    markers.collection.shuffle!
+  end
+
+  def players_setup
+    system 'clear' || system('cls')
+    puts CONFIG[game_type]['intro']
+    puts ''
+    puts 'How many human players will play?'
+    human_count = human_count_input
+    computer_count = CONFIG[game_type]['players'] - human_count
+    result = []
+    result += human_players(human_count)
+    result += computer_players(computer_count)
+  end
+
+  def human_players(count)
+    players = []
+    count.times do
+      players << Human.new(player_name)
+    end
+    players
+  end
+
+  def computer_players(count)
+    players = []
+    count.times do
+      players << Computer.new
+    end
+    players
+  end
+
+  def player_name
+    puts 'Input human player name:'
+    print '=> '
+    gets.chomp
+  end
+
+  def game_selection
+    system 'clear' || system('cls')
+    puts 'Welcome to the extended version of the classic tic-tac-toe game'
+    puts 'Choose a game type before we begin'
+
+    CONFIG['game_types'].each_with_index do |game_type, idx|
+      puts "[#{idx}]: #{game_type}"
+    end
+
+    selection = game_selection_input
+  end
+
+  def game_selection_input
+    loop do
+      print '=> '
+      selection = gets.chomp.to_i
+      return CONFIG['game_types'][selection] if valid_selection?(selection)
+    end
+  end
+
+  def human_count_input
+    loop do
+      print '=> '
+      count = gets.chomp
+      return count.to_i if valid_count?(count)
+    end
+  end
+
+  def valid_count?(count)
+    count =~ /\d/ && count.to_i <= CONFIG[game_type]['players']
+  end
+
+  def valid_selection?(selection)
+    (0..CONFIG['game_types'].count - 1).to_a.include? selection
+  end
+end
+
+TTTGame.new.play

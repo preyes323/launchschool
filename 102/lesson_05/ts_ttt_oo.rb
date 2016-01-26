@@ -284,7 +284,7 @@ describe Board do
     end
   end
 
-  describe '#draw_board' do
+  describe '#draw' do
     it 'must return the string representation of a board with empty sqaures' do
       board_output = %(    0   1   2
   +---+---+---+
@@ -294,7 +294,7 @@ describe Board do
   +---+---+---+
 2 |   |   |   |
   +---+---+---+).chomp
-      @board.draw_board.must_equal board_output
+      @board.draw.must_equal board_output
     end
 
     it 'must return the string representation of a board with non-empty sq' do
@@ -308,7 +308,7 @@ describe Board do
   +---+---+---+).chomp
       @board.update_square_at([1, 1], 'x')
       @board.update_square_at([2, 2], 'o')
-      @board.draw_board.must_equal board_output
+      @board.draw.must_equal board_output
     end
   end
 end
@@ -791,7 +791,7 @@ describe Computer do
       mark = @markers.marker_of(@computer).mark
       @board.update_square_at([1, 1], mark)
       @board.update_square_at([0, 1], mark)
-      winning_square = @board.square_at([2, 1])
+      winning_square = [@board.square_at([2, 1])]
       @computer.winning_move(@board, @markers).must_equal winning_square
     end
 
@@ -799,7 +799,7 @@ describe Computer do
       @computer.choose_marker(@markers)
       mark = @markers.marker_of(@computer).mark
       @board.update_square_at([1, 1], mark)
-      @computer.winning_move(@board, @markers).must_be_nil
+      assert @computer.winning_move(@board, @markers).empty?
     end
   end
 
@@ -858,6 +858,22 @@ describe Computer do
       square2 = @board.square_at([2, 1])
       squares = [square1, square2]
       @computer.high_value_squares(@board, @markers).must_equal squares
+    end
+  end
+
+  describe '#move' do
+    it 'must return the appropriate move given the board squares' do
+      @computer.choose_marker(@markers)
+      @markers << Marker.new('y', 'Raine')
+      mark = @markers.marker_of(@computer).mark
+      @board.update_square_at([1, 1], mark)
+      @board.update_square_at([1, 0], 'x')
+      @board.update_square_at([2, 0], mark)
+      @board.update_square_at([0, 2], 'x')
+      square1 = @board.square_at([2, 2])
+      square2 = @board.square_at([2, 1])
+      squares = [square1, square2]
+      squares.must_include @computer.move(@board, @markers)
     end
   end
 end

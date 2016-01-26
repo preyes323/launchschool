@@ -1,3 +1,11 @@
+default_game: advance
+
+game_types:
+  - regular
+  - advance
+  - expert
+  - impossible
+
 allowed_marker_length: 1
 
 computer_names:
@@ -29,29 +37,29 @@ regular:
 advance:
   board_size: 5
   neighborhood_depth: 1
-  players: 3
+  players: 4
   win: 3
   intro: >-
-    This is the advanced version of the classic tic-tac-toe game. In this version the board is bigger but there are now 3 players. 3 in a row still wins it.
+    This is the advanced version of the classic tic-tac-toe game. In this version the board is bigger but there are now 4 players. 3 in a row still wins it.
 
     The game can be played by all AI, all HUMAN, or a MIX.
 
 expert:
   board_size: 7
   neighborhood_depth: 2
-  players: 4
+  players: 5
   win: 5
   intro: >-
-    This is the expert version of the classic tic-tac-toe game. The board is now significantly bigger. There are now 4 players. For this one, a player must have 5 in a row to win.
+    This is the expert version of the classic tic-tac-toe game. The board is now significantly bigger. There are now 5 players. For this one, a player must have 5 in a row to win.
 
     The game can be played by all AI, all HUMAN, or a MIX.
 
 impossible:
   board_size: 9
   neighborhood_depth: 2
-  players: 5
+  players: 6
   win: 5
   intro: >-
-    This is the impossible version of the classic tic-tac-toe game. This game features 9x9 board, with 5 players playing. A player wins if they can form five in a row of their marker!
+    This is the impossible version of the classic tic-tac-toe game. This game features 9x9 board, with 6 players playing. A player wins if they can form five in a row of their marker!
 
     The game can be played by all AI, all HUMAN, or a MIX.
