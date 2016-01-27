@@ -50,7 +50,28 @@ puts my_text
 end
 
 puts my_text
-This produces an error: undefined local variable or method `my_text`
+# This produces an error: undefined local variable or method `my_text`
 ```
 
-**Note:* Ruby does not make use of keywords to initialize variables. It is not so easy to determine if something is an initialization or reassignment.
+**Note:** Ruby does not make use of keywords to initialize variables. It is not so easy to determine if something is an initialization or reassignment.
+
+### Method Arguments
+
+* Ruby is not pass by value
+* Ruby is not 100% pass by reference
+* Ruby is pass by value/reference depending on the method called on the object
+  * How methods used the parameter passed to it is *key*
+
+**Note:** Don't rely on side effects
+
+### Collections
+
+* each
+* map
+* inject
+* reduce
+* take_while
+* select
+* keep_if
+* delete_if
+* detect
