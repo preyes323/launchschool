@@ -62,6 +62,11 @@ puts my_text
 * Ruby is pass by value/reference depending on the method called on the object
   * How methods used the parameter passed to it is *key*
 
+Pass by value
+
+```ruby
+def
+
 **Note:** Don't rely on side effects
 
 ### Collections
