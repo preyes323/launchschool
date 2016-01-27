@@ -4,14 +4,53 @@
 
 * Local variables are not accessible to methods unless they are passed in as parameters
 
-This produces an error: undefined local variable or method `local_variable`
-
 ```ruby
-local_variable
+my_text = "Hello World!"
 
 def my_method
-  puts local_variable
+  puts my_text
 end
 
 my_method
+
+# This produces an error: undefined local variable or method `my_text`
 ```
+
+* Methods have their own scope!
+* Blocks create an inner scope. It can make use of local variables declared from an outer scope.
+
+```ruby
+my_text = "Hello World!"
+
+[1].each do |num|
+  puts my_text
+end
+```
+
+* An inner scope can reassign the value of a local variable declared in its outer scope.
+
+```ruby
+my_text = "Hello World!"
+
+[1].each do |num|
+  puts my_text
+  my_text = "New World!"
+end
+
+puts my_text
+
+=> New World!
+```
+
+* Local variables that are initialized in an inner scope are not accesible in its outer scope.
+
+```ruby
+[1].each do |num|
+  my_text = "New World!"
+end
+
+puts my_text
+This produces an error: undefined local variable or method `my_text`
+```
+
+**Note:* Ruby does not make use of keywords to initialize variables. It is not so easy to determine if something is an initialization or reassignment.
