@@ -62,7 +62,7 @@ puts my_text
 * Ruby is pass by value/reference depending on the method called on the object
   * How methods used the parameter passed to it is *key*
 
-Pass by value
+*Pass by value*
 
 ```ruby
 def append_wolrd(str)
@@ -78,7 +78,7 @@ puts str
 => "Hello"
 ```
 
-Pass by reference
+*Pass by reference*
 
 ```ruby
 def append_world(str)
