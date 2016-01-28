@@ -65,9 +65,53 @@ puts my_text
 Pass by value
 
 ```ruby
-def
+def append_wolrd(str)
+    str += " World"
+end
 
+str = "Hello"
+
+str_contact(" World")
+
+puts str
+
+=> "Hello"
+```
+
+Pass by reference
+
+```ruby
+def append_world(str)
+    str << " World"
+end
+
+str = "Hello"
+
+str_contact(" World")
+
+puts str
+
+=> "Hello World"
+```
 **Note:** Don't rely on side effects
+
+### Block
+
+* Variables in the block that are initialized in an outer scope always start fresh in the inner loop
+
+```ruby
+[1, 2, 3, 4, 5].times do |num|
+  total_product ||= 1
+  total_product *= num
+  puts total_product
+end
+
+=> 1
+=> 2
+=> 3
+=> 4
+=> 5
+```
 
 ### Collections
 
