@@ -16,6 +16,6 @@ class School
 
   def to_h
     students.each { |_, students| students.sort! }
-    students.sort_by { |grade_level| grade_level }.to_h
+            .sort_by { |grade_level| grade_level }.to_h
   end
 end
