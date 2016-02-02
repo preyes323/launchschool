@@ -124,13 +124,11 @@ class TodoList
   end
 
   def all_not_done
-    select do |todo|
-      !todo.done?
-    end
+    select { |todo| !todo.done? }
   end
 
   def mark_done(todo_title)
-    find_by_title(todo_title).done!
+    find_by_title(todo_title) &&  find_by_title(todo_title).done!
   end
 
   def mark_all_done
