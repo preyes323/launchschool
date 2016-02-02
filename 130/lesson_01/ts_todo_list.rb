@@ -1,7 +1,11 @@
+require 'simplecov'
+SimpleCov.start
+
 require 'minitest/spec'
 require 'minitest/autorun'
 require 'minitest/reporters'
 require_relative 'todo_list'
+
 
 Minitest::Reporters.use!
 
