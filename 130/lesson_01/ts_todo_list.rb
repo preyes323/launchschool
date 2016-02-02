@@ -1,6 +1,9 @@
 require 'minitest/spec'
 require 'minitest/autorun'
+require 'minitest/reporters'
 require_relative 'todo_list'
+
+Minitest::Reporters.use!
 
 describe TodoList do
   attr_reader :todo1, :todo2, :todo3, :list, :populated_list
