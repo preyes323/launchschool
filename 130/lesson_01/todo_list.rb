@@ -41,7 +41,7 @@ class TodoList
   end
 
   def add(todo)
-    raise TypeError, 'Can only add Todo objects' unless todo.is_a? Todo
+    raise TypeError, 'Can only add Todo objects' unless todo.instance_of? Todo
     @todos << todo
   end
 
@@ -64,14 +64,12 @@ class TodoList
     @todos.fetch(index)
   end
 
-  def mark_done_at(index = nil)
-    raise ArgumentError unless index
-    @todos.fetch(index).done!
+  def mark_done_at(index)
+    item_at(index).done!
   end
 
   def mark_undone_at(index = nil)
-    raise ArgumentError unless index
-    @todos.fetch(index).undone!
+    item_at(index).undone!
   end
 
   def done?
@@ -87,12 +85,59 @@ class TodoList
   end
 
   def remove_at(index = nil)
-    raise ArgumentError unless index
-    @todos.delete(@todos.fetch(index))
+    @todos.delete(item_at(index))
   end
 
   def to_s
     result = "---- #{title} ----\n"
     result << @todos.map(&:to_s).join("\n")
+  end
+
+  def each
+    counter = 0
+
+    while counter < @todos.size
+      yield(@todos[counter])
+      counter += 1
+    end
+
+    self
+  end
+
+  def select
+    new_list = TodoList.new(title)
+
+    each do |todo|
+      new_list << todo if yield(todo)
+    end
+
+    new_list
+  end
+
+  def find_by_title(todo_title)
+    each { |todo| return todo if todo.title == todo_title }
+    nil
+  end
+
+  def all_done
+    select(&:done?)
+  end
+
+  def all_not_done
+    select do |todo|
+      !todo.done?
+    end
+  end
+
+  def mark_done(todo_title)
+    find_by_title(todo_title).done!
+  end
+
+  def mark_all_done
+    each(&:done!)
+  end
+
+  def mark_all_undone
+    each(&:undone!)
   end
 end

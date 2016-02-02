@@ -158,4 +158,101 @@ describe TodoList do
       populated_list.to_s.must_equal string_rep
     end
   end
+
+  describe '#each' do
+    it 'must return every todo object in the Todo List' do
+      items = [todo1, todo2, todo3]
+      index = 0
+
+      populated_list.each do |list_todo|
+        list_todo.must_equal items[index]
+        index += 1
+      end
+    end
+
+    it 'must return a list after running the each method' do
+       populated_list.each { |_| 'do something' }.must_equal populated_list
+    end
+  end
+
+  describe '#select' do
+    it 'must return the correct todo items based on the given block' do
+      todo2.done!
+
+      new_list = populated_list.select(&:done?)
+
+      new_list.each { |todo| todo.must_equal todo2 }
+    end
+
+    it 'must return a new TodoList object after running the select' do
+      todo2.done!
+
+      new_list = populated_list.select { |todo| todo.done? }
+
+      assert new_list.instance_of?(TodoList) &&
+             new_list.object_id != populated_list.object_id
+    end
+  end
+
+  describe '#find_by_title' do
+    it 'must return the first Todo object that matches the argument' do
+      populated_list.find_by_title('Buy milk').must_equal todo1
+    end
+
+    it 'must return nil if no todo is found' do
+      populated_list.find_by_title('Play game').must_be_nil
+    end
+  end
+
+  describe '#all_done' do
+    it 'must return all todos that are marked done' do
+      todo1.done!
+      todo2.done!
+      index = 0
+
+      done_items = [todo1, todo2]
+      new_list = populated_list.all_done
+
+      new_list.each do |todo|
+        todo.must_equal done_items[index]
+        index += 1
+      end
+    end
+  end
+
+  describe '#all_not_done' do
+    it 'must return all todos that are marked undone' do
+      todo2.done!
+      index = 0
+
+      done_items = [todo1, todo3]
+      new_list = populated_list.all_not_done
+
+      new_list.each do |todo|
+        todo.must_equal done_items[index]
+        index += 1
+      end
+    end
+  end
+
+  describe '#mark_done' do
+    it 'must mark the first Todo object that matches the argument as done' do
+      populated_list.mark_done(todo1.title)
+      assert todo1.done?
+    end
+  end
+
+  describe '#mark_all_done' do
+    it 'must mark every todo as done' do
+      populated_list.mark_all_done
+      populated_list.each { |todo| assert todo.done? }
+    end
+  end
+
+  describe' #mark_all_undone' do
+    it 'must mark every todo as not done' do
+      populated_list.mark_all_undone
+      populated_list.each { |todo| refute todo.done? }
+    end
+  end
 end
