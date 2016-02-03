@@ -9,6 +9,24 @@ require_relative 'todo_list'
 
 Minitest::Reporters.use!
 
+describe Todo do
+  before do
+    @todo1 = Todo.new('Buy milk')
+  end
+
+  describe '#done!' do
+    it 'must set the Todo to be done by marking it as true' do
+      @todo1.done!.must_be :==, true
+    end
+  end
+
+  describe '#undone!' do
+    it 'must set the Todo to be undone my marking it as false' do
+      @todo1.undone!.must_be :==, false
+    end
+  end
+end
+
 describe TodoList do
   attr_reader :todo1, :todo2, :todo3, :list, :populated_list
 
@@ -63,11 +81,19 @@ describe TodoList do
     it 'must return the first item in the list' do
       populated_list.first.must_equal todo1
     end
+
+    it 'must return nil if TodoList is empty' do
+      list.first.must_be_nil
+    end
   end
 
   describe '#last' do
     it 'must return the last item in the list' do
       populated_list.last.must_equal todo3
+    end
+
+    it 'must return nil if TodoList is empty' do
+      list.last.must_be_nil
     end
   end
 
@@ -87,7 +113,7 @@ describe TodoList do
   end
 
   describe '#item_at' do
-    it 'must raise an ArgumentError' do
+    it 'must raise an ArgumentError if no index was provided' do
       proc { populated_list.item_at }.must_raise ArgumentError
     end
 
@@ -101,7 +127,7 @@ describe TodoList do
   end
 
   describe '#mark_done_at' do
-    it 'must raise an ArgumentError' do
+    it 'must raise an ArgumentError if no index was provided' do
       proc { populated_list.mark_done_at }.must_raise ArgumentError
     end
 
@@ -115,7 +141,7 @@ describe TodoList do
   end
 
   describe '#mark_undone_at' do
-    it 'must raise an ArgumentError' do
+    it 'must raise an ArgumentError if no index was provided' do
       proc { populated_list.mark_undone_at }.must_raise ArgumentError
     end
 
@@ -141,7 +167,7 @@ describe TodoList do
   end
 
   describe '#remove_at' do
-    it 'must raise an ArgumentError' do
+    it 'must raise an ArgumentError no index was provided' do
       proc { populated_list.remove_at }.must_raise ArgumentError
     end
 

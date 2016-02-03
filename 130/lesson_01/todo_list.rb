@@ -16,7 +16,7 @@ class Todo
   end
 
   def done!
-    self.done = true
+    self.done = 'true'
   end
 
   def done?
@@ -24,7 +24,7 @@ class Todo
   end
 
   def undone!
-    self.done = false
+    self.done = nil
   end
 
   def to_s
@@ -128,7 +128,7 @@ class TodoList
   end
 
   def mark_done(todo_title)
-    find_by_title(todo_title) &&  find_by_title(todo_title).done!
+    find_by_title(todo_title)&.done!
   end
 
   def mark_all_done
