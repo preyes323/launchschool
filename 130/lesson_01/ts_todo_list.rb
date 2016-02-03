@@ -16,13 +16,13 @@ describe Todo do
 
   describe '#done!' do
     it 'must set the Todo to be done by marking it as true' do
-      @todo1.done!.must_be :==, true
+      assert @todo1.done!
     end
   end
 
   describe '#undone!' do
     it 'must set the Todo to be undone my marking it as false' do
-      @todo1.undone!.must_be :==, false
+      refute @todo1.undone!
     end
   end
 end
@@ -222,8 +222,8 @@ describe TodoList do
 
       new_list = populated_list.select { |todo| todo.done? }
 
-      assert new_list.instance_of?(TodoList) &&
-             new_list.object_id != populated_list.object_id
+      new_list.must_be_instance_of TodoList
+      new_list.wont_be_same_as populated_list
     end
   end
 
