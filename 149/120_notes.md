@@ -4,4 +4,4 @@
 
 * classes are the blueprints for objects
 * classes are also objects
-* every class defined is an __**instance**__ of a class named Class
+* every class defined is an <u>**instance**<u> of a class named Class
