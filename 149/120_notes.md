@@ -15,3 +15,14 @@
     * 5 is a `Fixnum`
     * + is a method of a `Fixnum`
     * result will become a `Fixnum`
+
+
+**Inheritance**
+
+*class-based*
+
+* works best when used to model hierarchical domains
+* can use `method lookup path` to see order in which Ruby will traverse the class hierarchy to look for methods to invoke.
+  * see the lookup path by calling the `#ancestors` method on a class object.
+
+*module-based*
