@@ -96,3 +96,53 @@ class Board
   end
 end
 ```
+
+#### Instance vs Class methods
+
+* Class methods belong to the class. It is not tied to any particular single instance
+* Instance methods can only be called by a particular instance (object) of the class
+```ruby
+class SampleClass
+  def self.class_method; end
+
+  def instance_method; end
+end
+```
+
+#### Self
+
+* `self` only has a meaning in the context of a Ruby Class.
+* `self` can only be called within an `instance method` or `class method`
+* `self` references the calling object
+```ruby
+class Person
+  def existensial_crisis
+    self
+  end
+end
+
+Shane = Person.new('Shane')
+s = shane.existensial_crisis    # Shane is the object calling; self is == Shane
+Shane.name    # => Shane
+s.name        # => Shane
+```
+
+#### Truthiness
+
+* everything in Ruby is considered `truthy` except for `false` and `nil`.
+
+
+#### Fake operators
+
+
+#### Equivalence
+
+* `==`
+  * compares two objects' value
+  * to compare custom objects, the `==` method has to be overridden to specify how those objects will be compares
+* `equal?`
+  * checks whether two variables point to the same object
+  * comparing two objects `object_id` is the same as using `equal?`
+* `===`
+  * used implicitly in `case` statements
+* 'eql?`
