@@ -34,6 +34,15 @@ my_string.instance_of? String # => true
 * every class is an Object
 * everyone can modify a class structure
   * since everything is an object, even what `strings` can do can be modified by editing its blueprint; its `class`
+```ruby
+class String
+  def new_method
+    puts 'Hello!'
+  end
+end
+
+'paolo'.new_method  # => 'Hello!'
+```
 * everything in ruby is an object
   * i.e. : result = 5 + 2
     * 5 is a `Fixnum`
