@@ -6,11 +6,11 @@
   * classes provide the defintion of what states and behaviors an object can have and perfrom
   * classes are like factories that churn out objects that can differ based on its states and behaviours
 ```ruby
- new_string_factory = Class.new(String)
- my_string = new_string_factory("hello, world!")
- puts my_string                 # => hello, world!
- my_string.is_a? String         # => true
- my_string.instance_of? String  # => true
+new_string_factory = Class.new(String)
+my_string = new_string_factory("hello, world!")
+puts my_string                 # => hello, world!
+my_string.is_a? String         # => true
+my_string.instance_of? String  # => true
 ```
 * classes are also objects
   * a look at the #ancestors of class shows that it is derived from an Object class
@@ -32,6 +32,10 @@ my_string.is_a? String        # => true
 my_string.instance_of? String # => true
 ```
 * every class is an Object
+```ruby
+Class.ancestors
+=> [Class, Module, Object, Kernel, BasicObject]
+```
 * everyone can modify a class structure
   * since everything is an object, even what `strings` can do can be modified by editing its blueprint; its `class`
 ```ruby
