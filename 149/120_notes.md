@@ -1,6 +1,6 @@
 # Course 120 Notes
 
-[**Classes and Objects**](http://www.rubyfleebie.com/3-steps-to-understand-how-classes-and-objects-work-in-ruby/)
+#### [Classes and Objects](http://www.rubyfleebie.com/3-steps-to-understand-how-classes-and-objects-work-in-ruby/)
 
 * classes are the blueprints for objects
   * classes provide the defintion of what states and behaviors an object can have and perfrom
@@ -53,7 +53,7 @@ end
     * + is a method of a `Fixnum`
     * result will become a `Fixnum`
 
-**Inheritance**
+#### Inheritance
 
 *class-based*
 
@@ -62,3 +62,37 @@ end
   * see the lookup path by calling the `#ancestors` method on a class object.
 
 *module-based*
+
+* `Ruby`'s approach to multiple inheritance
+* As a rule, ruby can only subclass, from one parent.. however, zero one or more `modules` can be *mix-in* to add additional behavior
+```ruby
+module Swimmable; end
+
+class Dog < Animal
+  include Swimmable
+end
+
+class Fish < Animal
+  include Swimmable
+end
+```
+
+#### Collaborator Objects
+
+* These are objects that are assigned to states/instance variables of classes.
+* This concept is at the heart of OO programming. It allows to chop up and modularize the problem domain into cohesive pieces
+```ruby
+class Square; end
+
+class Board
+  attr_reader :squares
+
+  def initialize
+    squares = []
+  end
+
+  def add
+    squares << Square.new
+  end
+end
+```
