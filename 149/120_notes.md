@@ -6,8 +6,19 @@
   * classes provide the defintion of what states and behaviors an object can have and perfrom
 * classes are also objects
   * a look at the #ancestors of class shows that it is derived from an Object class
+  * `Class.is_a? Object` `=> true`
 * every class defined is an **instance** of a class named Class
   * the class of a class is Class
+```ruby
+String.instance_of? Class
+String.is_a? Class
+my_string = String.new("Paolo")
+my_string.is_a? Object        # => true
+my_string.instance_of? Class  # => flase
+my_string.instance_of? Object # => false
+my_string.is_a? Class         # => false
+```
+* every class is an Object
 * everyone can modify a class structure
   * since everything is an object, even what `strings` can do can be modified by editing its blueprint; its `class`
 * everything in ruby is an object
@@ -15,7 +26,6 @@
     * 5 is a `Fixnum`
     * + is a method of a `Fixnum`
     * result will become a `Fixnum`
-
 
 **Inheritance**
 
