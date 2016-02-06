@@ -10,13 +10,18 @@
 * every class defined is an **instance** of a class named Class
   * the class of a class is Class
 ```ruby
-String.instance_of? Class
-String.is_a? Class
+String.instance_of? Class     # => true
+String.is_a? Class            # => true
+String.instance_of? Object    # => false
+String.is_a? Object           # => true
+
 my_string = String.new("Paolo")
 my_string.is_a? Object        # => true
 my_string.instance_of? Class  # => flase
 my_string.instance_of? Object # => false
 my_string.is_a? Class         # => false
+my_string.is_a? String        # => true
+my_string.instance_of? String # => true
 ```
 * every class is an Object
 * everyone can modify a class structure
