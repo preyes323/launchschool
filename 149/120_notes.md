@@ -131,9 +131,15 @@ s.name        # => Shane
 
 * everything in Ruby is considered `truthy` except for `false` and `nil`.
 
-
 #### Fake operators
 
+* one of the thing that ruby provides is syntactical sugar.
+  * this allows for operators to look like methods
+    * i.e. `+`, `-`, `[]`, etc
+    * `Fixnum#+`: increments the value of the argument; returns a **new** integer
+    * `String#+`: concatenates the argument; returns a **new** string
+    * `Array#+` : concatenates the argument; returns a **new** array
+    * `Date#+`  : increments the date in days by value of the argument; returns a **new** date
 
 #### Equivalence
 
@@ -146,3 +152,4 @@ s.name        # => Shane
 * `===`
   * used implicitly in `case` statements
 * 'eql?`
+  * used implicilty by `Hash`
