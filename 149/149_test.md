@@ -228,7 +228,184 @@ class Manager < FullTime
   end
 end
 
-class PartTime < Employee
+class PartTime < Employee; end
+```
 
+13.Write a simple calculator program using OOP. This problem is open ended on purpose. Do your best and make some assumptions. We'll talk about this code during the interview.
+
+```ruby
+module Calculator
+  def self.add(num1, num2)
+    unless numeric_input?(num1, num2)
+      input_warning
+      return
+    end
+    Float(num1) + Float(num2)
+  end
+
+  def self.subtract(num1, num2)
+    unless numeric_input?(num1, num2)
+      input_warning
+      return
+    end
+    Float(num1) - Float(num2)
+  end
+
+  def self.divide(num1, num2)
+    unless numeric_input?(num1, num2)
+      input_warning
+      return
+    end
+    Float(num1) / Float(num2)
+  end
+
+  def self.multiply(num1, num2)
+    unless numeric_input?(num1, num2)
+      input_warning
+      return
+    end
+    Float(num1) * Float(num2)
+  end
+
+  def self.numeric_input?(num1, num2)
+    numeric?(num1) && numeric?(num2)
+  end
+
+  def self.numeric?(number)
+    Float(number) != nil rescue false
+  end
+
+  def self.input_warning
+    puts "please input a numeric input"
+  end
+end
+```
+
+# Blocks
+
+1.Explain what a closure is, and why do we say that it's at the core of understanding local variable scope?
+
+* A closure is a concept in programming that allows for code to be executed a later time. Being a `closure` it recognizes its surrounding objects and retains references to it (binding).
+* Closures are important in understanding local variable scope because it demonstrates the reach of a variable that is declared.
+```ruby
+def test_closure(closure_object)
+  closure_object.call
+end
+
+name = 'Paolo'
+my_closure = Proc.new { puts "Hello #{name} }
+name = 'Rachelle'
+
+test_closure(my_closure)
+```
+* In the code above, the concept of a `local variable` is very evident. If `local variables` was just all about the placement in the code, then the logical assumption would be that the output of the last line of code would be `Hello Paolo`. However, this is not the case in `Ruby`. In Ruby, the nature of being a local variable is dependent on the object that is using it.
+  * with closures, it takes note of the surrounding artifacts. In the case of the example provided, when `test_closure` was called the `my_closure` object recognized that the latest value of `name` from the surrouding artifacts is 'Paolo'.
+  * If my closure where not a `Proc` object and just say a code block ( `do ... end` or `{ ... }` ), then it would recognize already the `name` 'Paolo' as being an `outer_scope local variable`
+
+2.Explain the 2 major use cases for implementing a method that can take a block. Use code to illustrate your explanation.
+
+* Defer implementation of code to method caller/invocation. This can happen:
+  * When there different possible code that could be executed depending on a given condition
+  * When it is defferd to a caller how certain input will be manipulated i.e. the `select` method
+  * Can also be used to when a set methods have similar code. The similar code can be extracted out and the code that is different can be passed as block
+```ruby
+def manipulate_value(value, &block)
+  &block.call(value)
+end
+```
+**VS**
+```ruby
+def manipulate_value(value, switch)
+  case switch
+  when :switch1 then some_code(value)
+  when :switch2 then some_code(value)
+  else some_code(value)
+  end
+end
+
+# Comparing the two implementations, the evident challenge of not being able to pass a block is anticipating what the method caller wants to do. With the latter implementation the developer would have to anticipate lots of possible `cases`.
+```
+* Methods that need to perform some before and after actions "sandwich code"
+  * A good use case is when testing how long a code executes
+  * Another use case is when doing resource management (i.e making sure that a file is closed)
+```ruby
+  def time_implemetation(&block)
+    time_start = time.now
+    block.call
+    elapsed = time.now - time_start
+  end
+
+  # The sandwich method is useful when there are certain things that needs to be done at the start and finish, but the caller has the choice of what to do in between.
+```
+
+# Testing
+
+1.What's the difference between MiniTest and RSpec?
+
+* Minitest is built into Ruby
+* The syntax is different.
+* RSpec is more human readable
+
+2.Explain what assert_equal does. How does it test for equality?
+* `assert_equal` checks whether two objects will return true when using the `==` method.
+* `==` is dependent on the objects implementation of it. If no `==` method is specificed for the object then the test will fail citing that it doesn't know howto compare the equality (`==`) of the objects.
+
+3.Write a test suite for your calculator app from before. We'll talk about this code during the interview.
+
+```ruby
+require 'minitest/autorun'
+require 'minitest/spec'
+require_relative 'simple_oo_calc'
+
+describe Calculator do
+  describe '#numeric_input?' do
+    it 'must catch that an input was not a number' do
+      Calculator.numeric_input?('a', 1).must_be :==, false
+    end
+
+    it 'must catch that an input was a number' do
+      Calculator.numeric_input?('2', 1).must_be :==, true
+    end
+  end
+
+  describe '#add' do
+    it 'must be able to add number inputs' do
+      Calculator.add(1, 2).must_equal 3
+    end
+
+    it 'must be able to add string inputs that are numbers' do
+      Calculator.add('1', '2').must_equal 3
+    end
+  end
+
+  describe '#subtract' do
+    it 'must be able to subtract number inputs' do
+      Calculator.subtract(1, 2).must_equal -1
+    end
+
+    it 'must be able to subtract string inputs that are numbers' do
+      Calculator.subtract('1', '2').must_equal -1
+    end
+  end
+
+  describe '#divide' do
+    it 'must be able to divide number inputs' do
+      Calculator.divide(1, 2).must_equal 0.5
+    end
+
+    it 'must be able to divide string inputs that are numbers' do
+      Calculator.divide('1', '2').must_equal 0.5
+    end
+  end
+
+  describe '#multiply' do
+    it 'must be able to multiply number inputs' do
+      Calculator.multiply(1, 2).must_equal 2
+    end
+
+    it 'must be able to multiply string inputs that are numbers' do
+      Calculator.multiply('1', '2').must_equal 2
+    end
+  end
 end
 ```
