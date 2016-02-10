@@ -1,5 +1,7 @@
 # Object Oriented Programming
-1. Explain the relationship between classes and objects. Use code to illustrate your explanation.
+
+1.Explain the relationship between classes and objects. Use code to illustrate your explanation.
+
   * `classes` are the blueprints objects. It gives a definition of the possible states and behaviours that an object will have and perform.
   * From an analogy point of view, the `class` acts like a car factory that is able to churn out `objects` as cars.
     * With this the act of the factory producing cars is like the instantiation of an `object` from a `class`.
@@ -34,7 +36,9 @@ new_car2 = Car.new(4, 8)
   Fixnum.ancestors      # [Fixnum, Integer, Numeric, Comparable, Object, Kernel, BasicObject]
   Class.ancestors       # [Class, Module, Object, Kernel, BasicObject]
 ```
-    * classes are instances of the class `Class`
+
+  * classes are instances of the class `Class`
+
 ```ruby
   new_string_factory = Class.new(String)
   my_string = new_string_factory("hello world")
@@ -42,7 +46,8 @@ new_car2 = Car.new(4, 8)
   my_string.is_a? String           # => true --> demonstrates that since the String class is an instance, that I can create another instance with a different name that operates the same
 ```
 
-2. Explain what class inheritance is. Use code to illustrate
+2.Explain what class inheritance is. Use code to illustrate
+
   * Class inheritance forms a relationship between classes.
     * This relationship is hierarchical.
     * In ruby a class can only inherit from one class
