@@ -80,5 +80,5 @@ end
 
 #### When to use blocks
 
-1 as
-2 asd
+1. as
+2. asd
