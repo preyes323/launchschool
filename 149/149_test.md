@@ -169,6 +169,7 @@ end
 
 10.Continuing on from the answer in the previous question, add a change_info(name, weight, height) instance method that can modify the object's 3 attributes all at once. Use the setter methods (as opposed to referencing the instance variables directly).
 
+```ruby
 class Person
   # ...rest of code omitted for brevity
 
@@ -178,6 +179,7 @@ class Person
     self.height = height
   end
 end
+```
 
 11.Looking at the final code of the previous question, describe why self can be used both to define a class method and invoke an instance method. Explain how self works here.
 
