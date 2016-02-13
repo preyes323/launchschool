@@ -13,7 +13,7 @@ class Meetup
     case schedule
     when :teenth
       weekday_instances(weekday)
-        .select { |_day| TEENTHS.include? _day.day }.first
+        .detect { |_day| TEENTHS.include? _day.day }
     when :first then weekday_instances(weekday).first
     when :second then weekday_instances(weekday)[1]
     when :third then weekday_instances(weekday)[2]
