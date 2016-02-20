@@ -1,0 +1,18 @@
+<h2 class='conent-subhead'>Search</h2>
+
+<form action='/search' method='get'>
+  <input name='query' value="<%= params[:query] %>">
+  <button type='submit'>Search</button>
+</form>
+
+<% unless @chapters.empty? %>
+  <h2 class='conent-subhead'>Results for '<%= @phrase %>'</h2>
+
+  <ul class='pure-menu-list'>
+    <% @chapters.each do |chapter, idx| %>
+      <li class='pure-menu-item'>
+        <a href="/chapters/<%= idx + 1 %>" class="pure-menu-link"><%= chapter %></a>
+      </li>
+    <% end %>
+  </ul>
+<% end %>
