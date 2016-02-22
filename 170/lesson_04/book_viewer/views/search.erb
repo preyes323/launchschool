@@ -1,3 +1,5 @@
+<% require 'pry' %>
+
 <h2 class='conent-subhead'>Search</h2>
 
 <form action='/search' method='get'>
@@ -5,13 +7,24 @@
   <button type='submit'>Search</button>
 </form>
 
-<% unless @chapters.empty? %>
+<% if @chapters %>
   <h2 class='conent-subhead'>Results for '<%= @phrase %>'</h2>
 
   <ul class='pure-menu-list'>
-    <% @chapters.each do |chapter, idx| %>
+    <% @chapters.each do |chap_idx, paragraph| %>
       <li class='pure-menu-item'>
-        <a href="/chapters/<%= idx + 1 %>" class="pure-menu-link"><%= chapter %></a>
+        <h3>
+          <a href="/chapters/<%= chap_idx %>" class="pure-menu-link"><%= @contents[chap_idx] %></a>
+        </h3>
+        <ul class='pure-menu-list'>
+          <% paragraph.each do |idx, lines| %>
+            <li class='pure-menu-item'>
+              <a href="/chapters/<%= chap_idx %>#paragraph<%= idx %>" class='pure-menu-link'>
+                <%= "paragraph #{idx}: #{lines}" %>
+              </a>
+            </li>
+          <% end %>
+        </ul>
       </li>
     <% end %>
   </ul>
