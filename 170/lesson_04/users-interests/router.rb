@@ -16,6 +16,6 @@ end
 
 helpers do
   def count_interests(users)
-    users.values
+    users.values.reduce(0) { |total, info| total + info[:interests].size }
   end
 end
