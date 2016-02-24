@@ -1,13 +1,44 @@
-<!doctype html>
-<html>
+<% require 'pry' %>
+<!DOCTYPE html>
+<html lang='en'>
   <head>
     <meta charset='utf-8'>
     <meta name='viewport' content='width=device-width, initial-scale=1.0'>
 
     <title><%= @title %></title>
 
-    <link rel='stylesheet' href='/stylesheets/pure.css'>
-    <link rel='stylesheet' href='/stylesheets/fonts.css'>
-    <link rel='stylesheet' href='/stylesheets/book_viewer.css'>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
   </head>
+
+  <body>
+    <div class='container'>
+      <%= yield %>
+    </div>
+
+    <nav class='navbar navbar-default navbar-fixed-bottom'>
+      <div class='container-fluid'>
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bottom-menu-1" aria-expanded="false">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="/">Users</a>
+        </div>
+
+        <div class='collapse navbar-collapse' id='bottom-menu-1'>
+          <ul class='nav navbar-nav'>
+            <% @users.select { |name| name.to_s != params[:user] }.keys.each do |user| %>
+              <li>
+                <a href="/users/<%= user %>"><%= user %></a>
+              </li>
+            <% end %>
+          </ul>
+          <p class='navbar-text'>have <%= @interests %> interests in total</p>
+        </div>
+      </div>
+    </nav>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+  </body>
 </html>

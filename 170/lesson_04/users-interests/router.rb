@@ -10,8 +10,13 @@ before do
 end
 
 get "/" do
-  binding.pry
   erb :home
+end
+
+get "/users/:user" do
+  filtered_users = @users.select { |name| name.to_s != params[:user] }
+  @interests = count_interests(filtered_users)
+  erb :user
 end
 
 helpers do

@@ -1,0 +1,6 @@
+<h1>Users</h1>
+<ul class='list-unstyled'>
+  <% @users.keys.each do |user| %>
+    <li><a href="/users/<%= user %>"><%= user %></a></li>
+  <% end %>
+</ul>

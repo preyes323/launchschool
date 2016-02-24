@@ -1,0 +1,6 @@
+<h1><%= params[:user] %></h1>
+<ul>
+  <% @users[params[:user].to_sym][:interests].each do |interest| %>
+    <li><%= interest %></li>
+  <% end %>
+</ul>
