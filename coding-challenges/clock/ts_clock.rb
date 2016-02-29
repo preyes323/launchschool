@@ -1,5 +1,5 @@
 require 'minitest/autorun'
-require_relative 'clock'
+require_relative 'clock2'
 
 class ClockTest < Minitest::Test
   def test_on_the_hour
@@ -54,5 +54,10 @@ class ClockTest < Minitest::Test
 
     clock = Clock.at(0, 30) - 60
     assert_equal '23:30', clock.to_s
+  end
+
+  def test_wrap_add_a_lot_of_days
+    clock = Clock.at(0, 30) + 180 * 24 * 60
+    assert_equal '00:30', clock.to_s
   end
 end
