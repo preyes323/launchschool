@@ -60,4 +60,19 @@ class ClockTest < Minitest::Test
     clock = Clock.at(0, 30) + 180 * 24 * 60
     assert_equal '00:30', clock.to_s
   end
+
+  def test_add_under_an_hour_and_wrap
+    clock = Clock.at(10, 50) + 20
+    assert_equal '11:10', clock.to_s
+  end
+
+  def test_subtract_100_minutes
+    clock = Clock.at(10) - 100
+    assert_equal '08:20', clock.to_s
+  end
+
+  def test_wrap_around_backwards_70_minutes
+    clock = Clock.at(0, 30) - 70
+    assert_equal '23:20', clock.to_s
+  end
 end
