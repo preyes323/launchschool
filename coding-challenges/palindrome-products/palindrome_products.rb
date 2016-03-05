@@ -1,3 +1,5 @@
+require 'pry'
+
 class Palindromes
   attr_reader :min_factor, :max_factor, :palindromes
 
@@ -12,39 +14,27 @@ class Palindromes
     @palindromes = (min_factor..max_factor)
       .to_a
       .repeated_combination(2)
-      .to_a
-      .keep_if { |num1, num2| palindrome? num1 * num2 }
+      .each_with_object({}) do |(num1, num2), result|
+      if palindrome? num1 * num2
+        result[num1 * num2] ||= []
+        result[num1 * num2] << [num1, num2]
+      end
+    end.sort
   end
 
   def largest
-    max_factors = palindromes.max_by { |num1, num2| num1 * num2 }
-    max_value = max_factors[0] * max_factors[1]
-
-    all_factors = palindromes.keep_if do |num1, num2|
-      num1 * num2 == max_value
-    end
-
-    Palindrome.new(all_factors, max_value)
+    palindrome = palindromes.last
+    Palindrome.new(palindrome[1], palindrome[0])
   end
 
   def smallest
-    min_factors = palindromes.min_by { |num1, num2| num1 * num2 }
-    min_value = min_factors[0] * min_factors[1]
-
-    all_factors = palindromes.keep_if do |num1, num2|
-      num1 * num2 == min_value
-    end
-
-    Palindrome.new(all_factors, min_value)
+    palindrome = palindromes.first
+    Palindrome.new(palindrome[1], palindrome[0])
   end
 
   private
 
   def palindrome?(number)
-    number_reveresed = number.to_s.chars.reverse
-
-    number.to_s.chars.each_with_index.all? do |char, index|
-      char == number_reveresed[index]
-    end
+    number.to_s == number.to_s.reverse
   end
 end
