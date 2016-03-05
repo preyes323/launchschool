@@ -1,6 +1,8 @@
 class Palindromes
   attr_reader :min_factor, :max_factor, :palindromes
 
+  Palindrome = Struct.new(:factors, :value)
+
   def initialize(min_factor: 1, max_factor: nil)
     @min_factor = min_factor
     @max_factor = max_factor
@@ -22,7 +24,7 @@ class Palindromes
       num1 * num2 == max_value
     end
 
-    Largest.new(all_factors, max_value)
+    Palindrome.new(all_factors, max_value)
   end
 
   def smallest
@@ -33,7 +35,7 @@ class Palindromes
       num1 * num2 == min_value
     end
 
-    Smallest.new(all_factors, min_value)
+    Palindrome.new(all_factors, min_value)
   end
 
   private
@@ -46,16 +48,3 @@ class Palindromes
     end
   end
 end
-
-class Palindrome
-  attr_reader :factors, :value
-
-  def initialize(factors, value)
-    @factors = factors
-    @value = value
-  end
-end
-
-class Largest < Palindrome; end
-
-class Smallest < Palindrome; end
