@@ -1,5 +1,3 @@
-require 'pry'
-
 class Palindromes
   attr_reader :min_factor, :max_factor, :palindromes
 
