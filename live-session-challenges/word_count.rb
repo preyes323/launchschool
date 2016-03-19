@@ -37,3 +37,5 @@ def words_frequency(words)
 end
 
 p word_count(p)
+p word_count(p).values.reduce(:+)
+p parse_words(p).size
