@@ -1,3 +1,4 @@
+require 'pry'
 p = <<-TEXT
 Then Almitra spoke again and said, "And what of Marriage, master?"
 And he answered saying:
@@ -21,8 +22,7 @@ TEXT
 
 
 def word_count(text)
-  words = parse_words(text)
-  words_frequency(words)
+  words_frequency(parse_words(text))
 end
 
 def parse_words(text)
@@ -30,10 +30,18 @@ def parse_words(text)
 end
 
 def words_frequency(words)
-  words.each_with_object({}) do |word, result|
-    result[word] ||= 0
-    result[word] += 1 if result.keys.map(&:downcase).include? word.downcase
+  words.each_with_object(Hash.new(0)) do |word, result|
+    if result.keys.map(&:downcase).include? word.downcase
+      result[identify_key(result, word)] += 1
+    else
+      result[word] += 1
+    end
   end
+end
+
+def identify_key(hash, word)
+  return word if word == word.capitalize && hash.keys.include?(word)
+  word.downcase
 end
 
 p word_count(p)
