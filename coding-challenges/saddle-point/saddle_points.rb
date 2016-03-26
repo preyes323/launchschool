@@ -1,5 +1,3 @@
-require 'pry'
-
 class Matrix
   attr_reader :cells
 
