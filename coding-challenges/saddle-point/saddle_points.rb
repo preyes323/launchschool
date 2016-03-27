@@ -1,22 +1,16 @@
 class Matrix
-  attr_reader :cells
+  attr_reader :rows, :columns
 
   def initialize(cell_values)
-    @cells = cell_values.split("\n").map(&:split).map do |row|
+    @rows = cell_values.split("\n").map(&:split).map do |row|
       row.map(&:to_i)
     end
-  end
 
-  def rows
-    cells
-  end
-
-  def columns
-    cells.transpose
+    @columns = rows.transpose
   end
 
   def saddle_points
-    cells.each_with_index.each_with_object([]) do |(row, row_idx), result|
+    rows.each_with_index.each_with_object([]) do |(row, row_idx), result|
       row.each_with_index do |point_value, col_idx|
         result << [row_idx, col_idx] if saddle_point?(point_value, row_idx, col_idx)
       end
