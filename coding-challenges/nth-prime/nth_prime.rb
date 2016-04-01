@@ -1,11 +1,8 @@
-require 'pry'
-
 class Prime
   def self.nth(count)
     raise ArgumentError if count == 0
     primes.take(count).max[0]
   end
-
 
   def self.primes
     (2..Float::INFINITY).lazy.with_object([]).select do |num, result|
