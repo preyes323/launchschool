@@ -46,4 +46,12 @@ class TestPrimes < Minitest::Test
       Prime.nth(0)
     end
   end
+
+  def test_huge_prime
+    assert_equal 1_299_709, Prime.nth(100_000)
+  end
+
+  def test_really_huge_prime
+    assert_equal 15_485_863, Prime.nth(1_000_000)
+  end
 end
