@@ -2,7 +2,7 @@ class SumOfMultiples
   DEFAULT_NUMBERS = [3, 5]
   @@custom_numbers = nil
 
-  def self.new *numbers
+  def new *numbers
     @@custom_numbers = numbers
     self
   end
