@@ -15,7 +15,7 @@ class WordProblem
     result = @numbers.first
 
     @operands.each_with_index do |operand, idx|
-      result = result.send(OPERANDS[operand], @numbers[idx + 1])
+      result = result.send OPERANDS[operand], @numbers[idx + 1]
     end
 
     result
