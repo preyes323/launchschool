@@ -1,5 +1,3 @@
-require 'pry'
-
 class WordProblem
   OPERANDS = { 'plus' => '+', 'minus' => '-',
                 'divided' => '/', 'multiplied' => '*' }
