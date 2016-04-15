@@ -12,12 +12,8 @@ class WordProblem
   end
 
   def answer
-    result = @numbers.first
-
-    @operands.each_with_index do |operand, idx|
-      result = result.send OPERANDS[operand], @numbers[idx + 1]
+    @operands.each_with_index.reduce(@numbers.first) do |result, (operand, idx)|
+      result.send OPERANDS[operand], @numbers[idx + 1]
     end
-
-    result
   end
 end
