@@ -1,19 +1,19 @@
 class WordProblem
-  OPERANDS = { 'plus' => '+', 'minus' => '-',
+  OPERATORS = { 'plus' => '+', 'minus' => '-',
                 'divided' => '/', 'multiplied' => '*' }
 
   attr_reader :operands, :numbers
 
   def initialize question
     @numbers = question.scan(/-?\d+/).map(&:to_i)
-    @operands = question.scan(/plus|minus|divided|multiplied/)
+    @operators = question.scan(/plus|minus|divided|multiplied/)
 
-    raise ArgumentError, "Question not recognized" if @numbers.empty? || @operands.empty?
+    raise ArgumentError, "Question not recognized" if @numbers.empty? || @operators.empty?
   end
 
   def answer
-    @operands.each_with_index.reduce(@numbers.first) do |result, (operand, idx)|
-      result.send OPERANDS[operand], @numbers[idx + 1]
+    @operators.each_with_index.reduce(@numbers.first) do |result, (operator, idx)|
+      result.send OPERATORS[operator], @numbers[idx + 1]
     end
   end
 end
