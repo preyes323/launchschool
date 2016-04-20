@@ -12,8 +12,8 @@ class WordProblem
   end
 
   def answer
-    @operators.each_with_index.reduce(@numbers.first) do |result, (operator, idx)|
-      result.send OPERATORS[operator], @numbers[idx + 1]
+    @operators.reduce(@numbers.shift) do |result, (operator, idx)|
+      result.send OPERATORS[operator], @numbers.shift
     end
   end
 end
