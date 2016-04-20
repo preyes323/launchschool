@@ -2,8 +2,6 @@ class WordProblem
   OPERATORS = { 'plus' => '+', 'minus' => '-',
                 'divided' => '/', 'multiplied' => '*' }
 
-  attr_reader :operands, :numbers
-
   def initialize question
     @numbers = question.scan(/-?\d+/).map(&:to_i)
     @operators = question.scan(/plus|minus|divided|multiplied/)
