@@ -56,8 +56,19 @@ table {
 */
 
 body {
+  background-color: #293f50;
   color: #888;
   font: 300 16px/22px "Lato", "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+.primary-header a,
+.primary-footer a {
+  color: #fff;
+}
+
+.primary-header a:hover,
+.primary-footer a:hover {
+  color: #648880;
 }
 
 /*
@@ -129,6 +140,32 @@ body {
 /*
   =========================================================
 
+  Rows
+
+  =========================================================
+*/
+
+.row {
+  background: #fff;
+  min-width: 960px;
+  padding: 66px 0 44px 0;
+}
+
+.row, .row-alt {
+  min-width: 960px;
+}
+
+.row-alt {
+  background: #cbe2c1;
+  background: -webkit-linear-gradient(to right, #a1d3b0, #f6f1d3);
+  background: -moz-linear-gradient(to right, #a1d3b0, #f6f1d3);
+  background: linear-gradient(to right, #a1d3b0, #f6f1d3);
+  padding: 44px 0 22px 0;
+}
+
+/*
+  =========================================================
+
   Typography
 
   =========================================================
@@ -182,6 +219,23 @@ cite, em {
 /*
   =========================================================
 
+  Leads
+
+  =========================================================
+*/
+
+.lead {
+  text-align: center;
+}
+
+.lead p {
+  font-size: 21px;
+  line-height: 33px;
+}
+
+/*
+  =========================================================
+
   Links
 
   =========================================================
@@ -212,11 +266,21 @@ p a {
   border-radius: 5px;
   display: inline-block;
   margin: 0;
+  cursor: pointer;
+  display: inline-block;
+  letter-spacing: .5px;
+  text-transform: uppercase;
+  color: #fff;
 }
 
 .btn-alt {
-  border: 1px solid #dfe2e5;
+  border: 1px solid #fff;
   padding: 10px 30px;
+}
+
+.btn-alt:hover {
+  background: #fff;
+  color: #648880;
 }
 
 /*
@@ -231,6 +295,7 @@ p a {
   line-height: 44px;
   padding: 22px 80px 66px 80px;
   text-align: center;
+  color: #fff;
 }
 
 .hero h2 {
@@ -303,4 +368,34 @@ p a {
 
 .nav {
   text-align: right;
+}
+
+.nav li {
+  display: inline-block;
+  margin: 0 10px;
+  vertical-align: top;
+}
+
+.nav li:last-child {
+  margin-right: 0;
+}
+
+/*
+  =========================================================
+
+  Speakers
+
+  =========================================================
+*/
+
+.speaker-info {
+  border: 1px solid #dfe2e5;
+  margin-top: 88px;
+  padding: 22px 0;
+  border-radius: 5px;
+  text-align: center;
+}
+
+.speaker {
+  bottom-margin: 44px;
 }
