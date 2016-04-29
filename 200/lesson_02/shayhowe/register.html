@@ -23,6 +23,56 @@
       </nav>
     </header>
 
+    <section class="row">
+      <div class="grid">
+        <section class="col-2-3">
+          <h2>Purchase a conference pass</h2>
+          <h5>$99 per Pass</h5>
+
+          <p>Purchase your Styles Conference pass using the form to the right. Multiple passes may be purchased within the same order, so feel free to bring a friend or two along. Once your order is finished we&#8217;ll follow up and provide a receipt for your purchase. See you soon!</p>
+
+          <h4>Why Attend?</h4>
+
+          <ul class="why-attend">
+            <li>Over twenty world class speakers</li>
+            <li>One full day of workshops and two full days of presentations</li>
+            <li>Hosted at the Chicago Theatre</li>
+            <li>August in Chicago is simply Amazing!</li>
+          </ul>
+        </section><!--
+        --><form class="col-1-3" action="#" method="post">
+          <fieldset class="register-group">
+            <label for="name">
+              Name
+              <input type="text" id="name" name="name" placeholder="Full Name" required>
+            </label>
+            <label for="email">
+              Email
+              <input type="email" id="email" name="email" placeholder="Email Address" required>
+            </label>
+            <label for="passess">
+              Number of Passes
+              <select name="passess" id="passess" required>
+                <option value="1" selected>1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+              </select>
+            </label>
+            <label for="comments">
+              Comments
+              <textarea id="comments" name="comments" placeholder="Commnets">
+              </textarea>
+            </label>
+          </fieldset>
+
+          <button class="btn btn-default" type="submit" name="submit">
+            Purchase
+          </button>
+        </form>
+      </div>
+    </section>
+
     <footer class="primary-footer container group">
       <small>&copy; Styles Conference</small>
       <nav class="nav primary-nav">
