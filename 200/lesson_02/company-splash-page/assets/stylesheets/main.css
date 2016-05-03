@@ -1,0 +1,153 @@
+/* http://meyerweb.com/eric/tools/css/reset/
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+  display: block;
+}
+body {
+  line-height: 1;
+}
+ol, ul {
+  list-style: none;
+}
+blockquote, q {
+  quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+            content: '';
+            content: none;
+          }
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+/*
+  =========================================================
+
+  Custom Styles
+
+  =========================================================
+*/
+
+body {
+  background-image: url("../images/bg_body.gif");
+  font: 400 20px Helvetica, Arial, sans-serif;
+  color: #45494D;
+}
+
+h2 {
+  font-weight: bold;
+  font-size: 36px;
+}
+
+.founder {
+  display: block;
+  margin-top: 25px;
+  color: #3E98B2;
+  font-size: 24px;
+}
+
+/*
+  =========================================================
+
+  Logo
+
+  =========================================================
+*/
+
+.logo {
+  display: block;
+  box-sizing: border-box;
+  margin: 110px auto;
+}
+
+/*
+  =========================================================
+
+  Main
+
+  =========================================================
+*/
+
+.row, footer {
+  background: #fff;
+  display: block;
+  box-sizing: border-box;
+  margin: 0 auto;
+  text-align: center;
+  max-width: 980px;
+}
+
+/*
+  =========================================================
+
+  Articles
+
+  =========================================================
+*/
+
+article {
+  padding: 80px 100px;
+  margin: 70px 0;
+}
+
+article:last-of-type {
+  margin-bottom: 0;
+}
+
+article h2 {
+  margin: 25px 0;
+}
+
+/*
+  =========================================================
+
+  Footer
+
+  =========================================================
+*/
+
+footer {
+  background: #E7E7E7;
+  margin-bottom: 75px;
+}
+
+/*
+  =========================================================
+
+  Socials
+
+  =========================================================
+*/
+
+.socials li {
+  display: inline-block;
+  box-sizing: border-box;
+  margin: 25px 50px;
+}
