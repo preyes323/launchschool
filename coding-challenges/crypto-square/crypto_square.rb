@@ -19,12 +19,12 @@ class Crypto
   end
 
   def ciphertext
-    padded_ciphertext.gsub('!', '')
+    padded_ciphertext.gsub(DUMMY_CHAR, '')
   end
 
   def normalize_ciphertext
     segmented = segment_text(padded_ciphertext, plaintext_segments.size)
-    segmented.join(' ').gsub('!', '')
+    segmented.join(' ').gsub(DUMMY_CHAR, '')
   end
 
   private
