@@ -10,8 +10,7 @@ class Crypto
   end
 
   def size
-    columns = (normalize_plaintext.size)**(0.5)
-    columns.to_s =~ /./ ? columns.ceil : columns
+    ((normalize_plaintext.size)**(0.5)).ceil
   end
 
   def plaintext_segments
