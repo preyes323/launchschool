@@ -1,0 +1,59 @@
+@import url("tantek_css_reset.css");
+
+body {
+  background: linear-gradient(to bottom, #d1dbbd, #fcfef4);
+  background-repeat: no-repeat;
+  font: 18px "Roboto Condensed", Helvetica, Arial, sans-serif;
+  color: #3e606f;
+}
+
+/*
+  ==========================================================
+
+  Header
+
+  =========================================================
+*/
+
+header {
+  width: 920px;
+  margin: 0 auto;
+  padding: 20px 20px 0 20px;
+}
+
+.logo {
+  float: left;
+  font-size: 36px;
+  font-color: #193441;
+  background: transparent url("../images/logo.png") 0 0 no-repeat;
+  padding: 50px 0 12px 112px;
+  color: #193441;
+}
+
+header nav {
+  float: right;
+  padding-top: 75px;
+}
+
+header li {
+  display: inline-block;
+}
+
+header a {
+  display: block;
+  text-decoration: none;
+  color: #91aa9d;
+  background: #fcfff5;
+  text-align: center;
+  width: 130px;
+  height: 45px;
+  box-sizing: border-box;
+  padding: 10px;
+  border-top-right-radius: 10px;
+  border-top-left-radius: 10px;
+}
+
+.active {
+  background: #91aa9d;
+  color: #fcfff5;
+}
