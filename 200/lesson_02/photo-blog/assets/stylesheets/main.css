@@ -57,3 +57,65 @@ header a {
   background: #91aa9d;
   color: #fcfff5;
 }
+
+/*
+  ==========================================================
+
+  Article
+
+  =========================================================
+*/
+
+article {
+  background: #fff;
+  width: 960px;
+  padding: 30px;
+  box-sizing: border-box;
+  margin: 15px auto;
+  box-shadow: 0 10px 5px #bdbebd;
+  overflow: hidden;
+}
+
+img + h2 {
+  margin-top: 45px;
+  margin-bottom: 35px;
+  font-size: 32px;
+  font-weight: normal;
+}
+
+article p {
+  margin-bottom: 25px;
+}
+
+.article_img_right {
+  float: right;
+  margin-left: 40px;
+}
+
+
+/*
+  ==========================================================
+
+  Footer
+
+  =========================================================
+*/
+
+footer {
+  font-size: 14px;
+  width: 960px;
+  margin: 0 auto;
+}
+
+
+/*
+  ==========================================================
+
+  Clearfix
+
+  =========================================================
+*/
+
+.clearfix {
+  clear: both;
+}
