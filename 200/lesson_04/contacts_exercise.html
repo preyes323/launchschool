@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="en-US">
+  <head>
+    <title>Contacts Exercise</title>
+    <style>
+      li {
+      list-style: none;
+      }
+      input[type="text"] {
+      width: 100%;
+      }
+      dd {
+      margin: 0 0 25px 0;
+      }
+    </style>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+
+    <form action="" method="post">
+      <fieldset>
+        <dl>
+          <dt>
+            <label for="first_name">
+              First Name
+            </label>
+            </dt>
+          <dd>
+            <input type="text" id="first_name" name="first_name" />
+          </dd>
+        </dl>
+        <label for="last_name">
+          Last Name
+          <input type="text" id="last_name" name="last_name" /><br>
+        </label>
+        <label for="email">
+          Email Address
+          <input type="email" id="email" name="email" placeholder="email@email.com"/><br>
+        </label>
+        <label for="city">
+          City
+          <input type="text" id="city" name="city" /><br>
+        </label>
+        <label for="state">
+          State
+          <select id="state" name="state">
+            <option>AK</option>
+            <option>AL</option>
+            <option>AR</option>
+            <option>AZ</option>
+            <option>CA</option>
+            <option>CO</option>
+            <option>CT</option>
+            <option>DC</option>
+            <option>DE</option>
+            <option>FL</option>
+            <option>GA</option>
+            <option>HI</option>
+            <option>IA</option>
+            <option>ID</option>
+            <option>IL</option>
+            <option>IN</option>
+            <option>KS</option>
+            <option>KY</option>
+            <option>LA</option>
+            <option>MA</option>
+            <option>MD</option>
+            <option>ME</option>
+            <option>MI</option>
+            <option>MN</option>
+            <option>MO</option>
+            <option>MS</option>
+            <option>MT</option>
+            <option>NC</option>
+            <option>ND</option>
+            <option>NE</option>
+            <option>NH</option>
+            <option>NJ</option>
+            <option>NM</option>
+            <option>NV</option>
+            <option>NY</option>
+            <option>OH</option>
+            <option>OK</option>
+            <option>OR</option>
+            <option>PA</option>
+            <option>RI</option>
+            <option>SC</option>
+            <option>SD</option>
+            <option>TN</option>
+            <option>TX</option>
+            <option>UT</option>
+            <option>VA</option>
+            <option>VT</option>
+            <option>WA</option>
+            <option>WI</option>
+            <option>WV</option>
+            <option>WY</option>
+          </select><br>
+        </label>
+        <label for="zip_code">
+          Zip Code
+          <input type="text" id="zip_code" name="zip_code" maxlength="5"/><br>
+        </label>
+        <h3>Choose your color mood?</h3>
+        <ul>
+          <li>
+            <label for="mood_red">
+              <input type="radio" id="mood_red" name="color_mood" value="red" checked />
+              Red
+            </label>
+          </li>
+          <li>
+            <label for="mood_blue">
+              <input type="radio" id="mood_blue" name="color_mood" value="blue" />
+              Blue
+            </label>
+          </li>
+          <li>
+            <label for="mood_yellow">
+              <input type="radio" id="mood_yellow" name="color_mood" value="yellow" />
+              Yellow
+            </label>
+          </li>
+        </ul>
+        <h3>What do you want to learn?</h3>
+        <ul>
+          <li>
+            <label for="html">
+              <input type="checkbox" id="html" name="html" value="html" checked />
+              HTML
+            </label>
+          </li>
+          <li>
+            <label for="css">
+              <input type="checkbox" id="css" name="css" value="css" />
+              CSS
+            </label>
+          </li>
+        </ul>
+        <label for="comments">
+          Comments
+          <br>
+          <textarea name="comments" id="comments" rows="10" cols="50"></textarea>
+        </label>
+      </fieldset>
+    </form>
+  </body>
+</html
