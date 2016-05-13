@@ -1,16 +1,13 @@
 class DNA
-  def initialize(strand)
+  def initialize strand
     @strand = strand
   end
 
-  def hamming_distance(new_strand)
-    distance = 0
-    max_length = [@strand.size, new_strand.size].min - 1
+  def hamming_distance other
+    length = [@strand.size, other.size].min - 1
 
-    (0..max_length).count do |idx|
-      distance += 1 unless @strand[idx] == new_strand[idx]
+    (0..length).reduce(0) do |distance, idx|
+      @strand[idx] == other[idx] ? distance : distance + 1
     end
-
-    distance
   end
 end
