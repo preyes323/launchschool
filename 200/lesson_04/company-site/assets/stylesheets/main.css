@@ -1,0 +1,44 @@
+@import url("meyer_css_reset.css");
+
+/*
+  ==================================================
+
+  Layout
+
+  ==================================================
+*/
+
+body {
+  font: normal 20px "Avenir", Helvetica, Arial, sans-serif;
+  color: #45494d;
+}
+
+header {
+  background: transparent url("../images/bg_body.gif") 0 0 repeat;
+  height: 570px;
+  text-align: center;
+}
+
+header h1 {
+  box-sizing: border-box;
+  padding-top: 130px;
+}
+
+header a {
+  text-decoration: none;
+  color: #cacaca;
+}
+
+nav {
+  padding-top: 100px;
+}
+
+header nav li {
+  display: inline-block;
+  font-size: 26px;
+  padding-right: 85px;
+}
+
+header nav li:last-child {
+  padding-right: 0;
+}
