@@ -1,4 +1,4 @@
-class DNA # :nodoc:
+class DNAs
   def initialize(strand)
     @strand = strand
   end
