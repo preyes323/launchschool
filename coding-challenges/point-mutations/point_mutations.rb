@@ -1,9 +1,9 @@
-class DNA
-  def initialize strand
+class DNA # :nodoc:
+  def initialize(strand)
     @strand = strand
   end
 
-  def hamming_distance other
+  def hamming_distance(other)
     length = [@strand.size, other.size].min - 1
 
     (0..length).reduce(0) do |distance, idx|
