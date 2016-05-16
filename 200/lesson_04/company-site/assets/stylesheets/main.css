@@ -3,7 +3,7 @@
 /*
   ==================================================
 
-  Layout
+  Layout: Header
 
   ==================================================
 */
@@ -15,18 +15,24 @@ body {
 }
 
 header {
-  background: transparent url("../images/bg_body.gif") 0 0 repeat;
-  height: 570px;
+  background: #2f2840 url("../images/bg_body.gif") 50% 0 repeat;
+  height: 530px;
 }
 
 header h1 {
   box-sizing: border-box;
-  padding-top: 130px;
+  padding-top: 100px;
 }
 
 header a {
   text-decoration: none;
   color: #cacaca;
+  text-transform: uppercase;
+}
+
+.active {
+  color: #6db9ff;
+  font-weight: 700;
 }
 
 nav {
@@ -43,14 +49,119 @@ header nav li:last-child {
   padding-right: 0;
 }
 
-main h1 {
-  font-size: 36px;
-  font-weight: 700;
+/*
+  ==================================================
+
+  Layout: Main
+
+  ==================================================
+*/
+
+main {
+  padding-top: 80px;
 }
 
-main h1:before,
-main h1:after {
+.column {
+  width: 1000px;
+  margin: 0 auto;
+}
+
+article {
+  padding-bottom: 50px;
+  margin-bottom: 50px;
+}
+
+article img {
+  display: block;
+  width: 100%;
+}
+
+.article-bottom-border {
+  border-bottom: 1px solid #e7e7e7;
+}
+
+article p {
+  text-align: justify;
+  padding: 0 100px;
+}
+
+h2 {
+  font-size: 36px;
+  font-weight: 700;
+  padding: 45px;
+}
+
+h2:before,
+h2:after {
   display: inline-block;
-  content: "\00b7";
+  content: "\2022";
   margin: 0 25px;
+}
+
+h3 {
+  color: #3e59b2;
+  font-size: 24px;
+  font-weight: 700;
+  padding: 10px 0;
+}
+
+article li {
+  display: inline-block;
+  padding: 0 30px;
+}
+
+article ul {
+  padding: 100px 0;
+}
+
+article a {
+  text-decoration: none;
+}
+
+#team img {
+  height: 155px;
+  width: 140px;
+  display: block;
+}
+/*
+  ==================================================
+
+  Layout: Footer
+
+  ==================================================
+*/
+
+footer {
+  background: #e7e7e7;
+  color: #b6b6b6;
+  padding-top: 90px;
+}
+
+footer li {
+  display: inline-block;
+}
+
+footer a {
+  display: block;
+  width: 46px;
+  height: 46px;
+  background: transparent url("../images/icons_social-media.png") 0 0 no-repeat;
+  padding-right: 125px;
+}
+
+footer a.fb {
+  background-position: 0 -46px;
+}
+
+footer a.email {
+  background-position: 0 -92px;
+}
+
+footer a.instagram {
+  background-position: 0 100%;
+  padding-right: 0;
+}
+
+footer ul {
+  padding: 45px 0 80px 0;
 }
