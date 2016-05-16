@@ -1,0 +1,53 @@
+@import url("meyer_css_reset.css");
+
+body {
+  background: #000;
+  font: 16px Helvetica, Arial, sans-serif;
+  color: #F0F0F0;
+}
+
+h1 {
+  text-align: center;
+  font-size: 32px;
+  font-weight: bold;
+  padding: 25px 0;
+}
+
+img {
+  display: block;
+  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  width: 100%;
+  height: auto;
+  border: 15px solid #fff;
+  margin: 0 auto;
+}
+
+.column {
+  display: block;
+  background: #333;
+  max-width: 1000px;
+  min-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+ul {
+  margin: 0 -15px;
+  padding: 15px 0;
+  font-size: 0;
+}
+
+ul li {
+  display: inline-block;
+  width: 25%;
+  padding: 0 15px;
+  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+}
+
+ul li img {
+  border: 3px solid #fff;
+}
