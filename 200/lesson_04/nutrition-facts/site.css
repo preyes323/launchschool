@@ -1,0 +1,115 @@
+@import url("meyer_css_reset.css");
+
+body {
+  font: 28px Helvetica, Arial, sans-serif;
+}
+
+main {
+  width: 680px;
+  border: 2px solid #000;
+  margin: 10px;
+  padding: 15px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th,
+table caption {
+  text-align: left
+}
+
+table caption h1 {
+  font-weight: 900;
+  font-size: 56px;
+  letter-spacing: 0.3px;
+}
+
+table caption h3 {
+  margin: 1px 0;
+}
+
+table caption h3:last-child {
+  padding-bottom: 3px;
+  border-bottom: 30px solid #000;
+}
+
+td {
+  text-align: right;
+}
+
+thead {
+  border-collapse: separate;
+}
+
+thead tr {
+  border-bottom: 1px solid #000;
+}
+
+thead tr:last-child {
+  border-bottom: 15px solid #000;
+}
+
+thead th {
+  padding: 5px 0;
+}
+
+thead td {
+  padding: 3px 0;
+}
+
+tbody td,
+b {
+  font-weight: 700;
+}
+
+tbody tr:first-child td {
+  padding-top: 10px;
+}
+
+td.indent {
+  width: 20px;
+}
+
+td.indent + td {
+  text-align: left;
+  font-weight: 400;
+}
+
+tfoot tr~tr,
+tbody tr~tr {
+  border-top: 1px solid #000;
+}
+
+tfoot tr:last-child td {
+  text-align: left;
+  text-indent: -15px;
+  padding-left: 15px;
+}
+
+i {
+  font-style: italic;
+}
+
+tbody tr:last-child {
+  border-bottom: 20px solid #000;
+}
+
+table + table {
+  margin-top: 10px;
+}
+
+table + table td {
+  text-align: left;
+  font-weight: 400;
+}
+
+table + table thead tr:last-child {
+  border-bottom: 1px solid #000;
+}
+
+table + table tbody tr:last-child {
+  border-style: none;
+}
