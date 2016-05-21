@@ -1,0 +1,388 @@
+@import url("meyer_css_reset.css");
+
+/*
+  ======================================================
+
+  General Page
+
+  =====================================================
+*/
+
+body {
+  font: 18px "Avenir", Helvetica, Arial, sans-serif;
+}
+
+footer,
+main {
+  max-width: 1000px;
+}
+
+body a {
+  text-decoration: none;
+}
+
+.active {
+  color: #50c3af;
+}
+
+/*
+  ======================================================
+
+  Header
+
+  =====================================================
+*/
+
+body > header {
+  background: #3d3d3d;
+  height: 545px;
+  width: 100%;
+  padding-top: 130px;
+  box-sizing: border-box;
+  text-transform: uppercase;
+  text-align: center;
+}
+
+body > header h1 {
+  background: transparent url("images/logo.png") 50% 100% no-repeat;
+  padding: 0 0 130px 0;
+  margin: 0 0 125px 0;
+  box-sizing: 0;
+}
+
+body > header a {
+  color: #fff;
+}
+
+body > header > a {
+  font-size: 4em;
+  letter-spacing: 6px;
+}
+
+header > nav a:hover {
+  color: #f5dc39;
+}
+
+header > nav li {
+  display: inline-block;
+  padding: 0 30px;
+}
+
+/*
+  ======================================================
+
+  Main
+
+  =====================================================
+*/
+
+main {
+  margin: 80px auto 20px auto;
+}
+
+.container:before,
+.container:after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+.container {
+  clear: both;
+  *zoom: 1;
+}
+
+.container section {
+  float: left;
+  width: 65%;
+}
+
+.container aside {
+  float: right;
+  width: 20%;
+}
+
+aside {
+  background: #f6f7f8;
+  padding: 30px;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+main section form {
+  padding: 0 0 60px 0;
+}
+
+/*
+  ======================================================
+
+  Main: Article
+
+  =====================================================
+*/
+
+main article {
+  padding: 0 0 80px 0;
+}
+
+main article h2 {
+  font-size: 2em;
+  font-weight: bold;
+  padding: 0 0 15px 0;
+}
+
+main article h3 {
+  padding: 0 0 25px 0;
+}
+
+main article p {
+  text-align: justify;
+}
+
+main article h3 a {
+  color: #50c3af;
+}
+
+main article h2 a {
+  color: #45494d;
+}
+
+main article h2 a:hover {
+  color: #50c3af;
+}
+
+/*
+  ======================================================
+
+  Main: Aside
+
+  =====================================================
+*/
+
+main aside h2 {
+  text-transform: uppercase;
+  font-weight: bold;
+  padding: 0 0 25px 0;
+}
+
+main aside p,
+main aside li {
+  font-size: .75em;
+}
+
+main aside a,
+main aside p {
+  color: #787b80;
+}
+
+
+main aside ul {
+  padding: 0 0 100px 20px;
+}
+
+main aside li {
+  list-style: url("images/arrow.png");
+}
+
+main aside a:hover {
+  color: #50c3af;
+}
+
+/*
+  ======================================================
+
+  Main: Comments
+
+  =====================================================
+*/
+
+#comments h3 {
+  display: inline-block;
+  padding-bottom: 15px;
+}
+
+#comments p + h3 {
+  margin-top: 40px;
+}
+
+#comments img {
+  display: inline-block;
+  vertical-align: middle;
+  margin: 0 10px 0 0;
+}
+
+/*
+  ======================================================
+
+  Main: Comments form
+
+  =====================================================
+*/
+
+input[type="checkbox"] {
+  display: none;
+}
+
+.comment-form {
+  display: none;
+  margin: 15px 0 0 0;
+}
+
+input:checked {
+  margin: 0 0 0 0;
+}
+
+input:checked ~ .comment-form {
+  display: block;
+}
+
+input:checked ~ div.btn {
+  margin: 0;
+}
+
+.comment-form h2 {
+  font-size: 2em;
+  margin: 0 0 10px 0;
+}
+
+.comment label {
+  font-weight: bold;
+}
+
+input[type="text"],
+input[type="email"] {
+  width: 378px;
+}
+/*
+  ======================================================
+
+  Buttons
+
+  =====================================================
+*/
+
+.btn {
+  width: auto;
+  height: 30px;
+  border-radius: 15px;
+  color: #fff;
+  font-size: .75em;
+  padding: 5px 25px;
+  border-style: none;
+  background: #50c3af;
+}
+
+div.btn {
+  display: inline-block;
+  text-align: center;
+  padding: 7px 25px;
+  height: 17px;
+  margin: 0 0 50px 0;
+}
+
+.btn-next {
+  margin: 0 0 0 25px;
+}
+
+.btn-disabled {
+  background: #d2d5da;
+}
+
+/*
+  ======================================================
+
+  Footer
+
+  =====================================================
+*/
+
+footer {
+  margin: 0 auto;
+  padding: 20px 0 35px 0;
+  border-top: 1px solid #d0d0d0;
+  font-size: .5em;
+  color: #7e8287;
+}
+
+/*
+  ======================================================
+
+  Media Queries
+
+  =====================================================
+*/
+
+@media (max-width: 768px) {
+  body > header > a {
+    font-size: 3em;
+  }
+
+  body > header {
+    padding-top: 50px;
+    height: 385px;
+  }
+
+  body > header h1 {
+    margin: 0 0 85px 0;
+  }
+
+  main article h2 {
+    font-size: 1.5em;
+  }
+}
+
+@media (max-width: 600px) {
+  .container section {
+    width: 100%;
+    padding: 0 20px;
+    box-sizing: border-box;
+  }
+
+  .container aside {
+    float: left;
+    width: 100%;
+  }
+
+  .container aside div {
+    float: left;
+    width: 48%;
+  }
+
+  main aside ul {
+    padding-bottom: 0;
+  }
+}
+
+@media (max-width: 480px) {
+  header > nav li {
+    width: 45%;
+    padding: 10px 25px;
+    box-sizing: border-box;
+  }
+
+  body > header h1 {
+    margin: 0 0 40px 0;
+    background-size: 90%;
+    padding: 0 0 80px 0;
+  }
+
+  body > header {
+    padding-top: 80px;
+  }
+
+  aside {
+    background: #fff;
+  }
+
+  .container aside div {
+    background: #f6f7f8;
+    padding: 15px;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .container aside div + div {
+    margin-top: 25px;
+  }
+}
