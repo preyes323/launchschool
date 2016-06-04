@@ -1,21 +1,20 @@
 class House
   def self.recite
     lines = House.new.send(:pieces)
-    @result = nil
 
-    house = lines.reverse.each_with_object([]) do |line, stanzas|
-      if @result
-        @result.gsub!('This is ','').gsub!('.', '')
-        @result = "This is " + [line.first, [line.last,  @result].join(' ')].join("\n")
+    rhyme = lines.reverse.each_with_object([]) do |line, stanzas|
+      if @phrase
+        @phrase.gsub!('This is ','').gsub!('.', '')
+        @phrase = "This is " + [line.first, [line.last,  @phrase].join(' ')].join("\n")
       else
-        @result ||= ['This is', line.first].join(' ')
+        @phrase ||= ['This is', line.first].join(' ')
       end
 
-      @result << '.'
-      stanzas << @result.dup
+      @phrase << '.'
+      stanzas << @phrase.dup
     end
 
-    house.join("\n\n") << "\n"
+    rhyme.join("\n\n") << "\n"
   end
 
   private
