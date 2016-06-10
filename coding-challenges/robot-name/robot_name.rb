@@ -25,13 +25,13 @@ class Robot
 
   def chars_component
     chars = ''
-    chars += ('A'..'Z').to_a.sample(random: rand) until chars.size == CHARS
+    chars += [*'A'..'Z'].sample(random: rand) until chars.size == CHARS
     chars
   end
 
   def numbers_component
     numbers = ''
-    numbers += ('0'..'9').to_a.sample(random: rand) until numbers.size == NUMBERS
+    numbers += [*'0'..'9'].sample(random: rand) until numbers.size == NUMBERS
     numbers
   end
 end
