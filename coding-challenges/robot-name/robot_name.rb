@@ -1,4 +1,4 @@
-class Robot
+class Robot # :nodoc:
   @@names = []
   CHARS = 2
   NUMBERS = 3
@@ -18,7 +18,7 @@ class Robot
   private
 
   def generate
-    name = chars_component + numbers_component until !@@names.include? name
+    name = chars_component + numbers_component while @@names.include? name
     @@names << name
     name
   end
