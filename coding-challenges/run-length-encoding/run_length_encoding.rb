@@ -1,31 +1,19 @@
 module RunLengthEncoding
   def self.encode(input)
-    input_array = input.chars
-    coded = []
-    prev_char = input_array.shift
     count = 1
 
-    input_array.each_with_index do |char, idx|
-      if char == prev_char
+    (1..input.length).each_with_object('') do |idx, result|
+      if input[idx] == input[idx - 1]
         count += 1
       else
-        coded << [prev_char, count]
+        result << (count > 1 ? "#{count}#{input[idx - 1]}" : input[idx - 1])
         count = 1
-        prev_char = char
       end
-
-      coded << [char, count] if idx == input_array.length - 1
     end
-
-    code_to_str(coded)
   end
 
   def self.decode(input)
-    input.scan(/\d*[\D]/i).map{ |coded| expand coded }.join
-  end
-
-  def self.code_to_str(code)
-    code.map{ |key, value| value > 1 ? "#{value}#{key}" : key }.join
+    input.scan(/\d*\D/).map{ |coded| expand coded }.join
   end
 
   def self.expand(coded)
