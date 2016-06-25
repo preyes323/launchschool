@@ -1,24 +1,49 @@
-var scores = [[2, 8, 5], [12, 48, 0], [12]];
+var invoices = {
+  unpaid: [],
+  paid: [],
+  add: function(name, amount) {
+    this.unpaid.push( { name: name, amount: amount } );
+  },
+  total_due: function() {
+    var total = 0
 
-function uniqueElements(values) {
-  result = []
-
-  function elementExists(element, arry) {
-    var exists = false;
-
-    for(var i = 0; i < arry.length; i++) {
-      if (element == arry[i]) { exists = true ; break; }
+    for (var i = 0; i < this.unpaid.length; i++) {
+      total += this.unpaid[i].amount;
     }
-    return exists
-  }
 
-  for(var i = 0; i < values.length; i++) {
-    if (!elementExists(values[i], result)) {
-      result.push(values[i]);
+    return total;
+  },
+  total_paid: function() {
+    var total = 0
+
+    for (var i = 0; i < this.paid.length; i++) {
+      total += this.paid[i].amount;
     }
+
+    return total;
+  },
+  pay_invoice: function(name) {
+    var new_unpaid = [];
+
+    for (var i = 0; i < this.unpaid.length; i++) {
+      if (this.unpaid[i].name === name) {
+        this.paid.push( this.unpaid[i] );
+      } else {
+        new_unpaid.push ( this.unpaid[i] );
+      }
+    }
+
+    this.unpaid = new_unpaid
   }
+};
 
-  return result
-}
+invoices.add("Due North Development", 250);
+invoices.add("Moonbeam Interactive", 187.5);
+invoices.add("Slough Digital", 300);
 
-console.log(uniqueElements([1, 2, 4, 3, 4, 1, 5, 4]));
+console.log(invoices.total_due());
+
+invoices.pay_invoice("Due North Development");
+invoices.pay_invoice("Slough Digital");
+
+console.log(invoices.total_due());
