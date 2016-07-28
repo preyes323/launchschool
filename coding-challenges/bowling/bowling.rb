@@ -1,5 +1,5 @@
 class Game
-  attr_reader :frames, :current_frame
+  attr_reader :frames
 
   def initialize
     @frames = []
@@ -15,10 +15,10 @@ class Game
       last_frame_error_checks @frames.last
     else
       @current_frame << pins
-      frame_error_checks current_frame
+      frame_error_checks @current_frame
 
-      if frame_end? current_frame
-        @frames << current_frame
+      if frame_end? @current_frame
+        @frames << @current_frame
         @current_frame = []
       end
     end
