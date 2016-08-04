@@ -96,6 +96,19 @@
           }
         }
         return result;
+      },
+      pick: function(prop) {
+        var newObj = {};
+        newObj[prop] = elements[prop];
+        return newObj;
+      },
+      omit: function(prop) {
+        var newObj = {}
+        delete newObj[prop];
+        return newObj;
+      },
+      has: function(prop) {
+        return prop in elements;
       }
     };
 
@@ -117,9 +130,27 @@
     return range;
   };
 
-  _.extend = function() {
+  _.extend = function(destination) {
+    var objExtenders = Array.prototype.slice.call(arguments).slice(1);
 
+    objExtenders.forEach(function(obj) {
+      for (var prop in obj) {
+        if (Object.hasOwnProperty.call(obj, prop)) {
+          destination[prop] = obj[prop];
+        };
+      }
+    });
+
+    return destination;
   };
+
+  _.isElement = function() {};
+  _.isArray = function() {};
+  _.isObject = function() {};
+  _.isFunction = function() {};
+  _.isBoolean = function() {};
+  _.isString = function() {};
+  _.isNumber = function() {};
 
   window._ = _;
 })();
