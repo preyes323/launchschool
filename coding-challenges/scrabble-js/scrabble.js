@@ -29,7 +29,7 @@
   };
 
   scrabble.score = function(word) {
-    return scrabble(word).score();
+    return this(word).score();
   };
 
   window.scrabble = scrabble;
