@@ -16,8 +16,6 @@
             return 0;
           }
 
-          console.log(word);
-
           return word.toUpperCase().replace(/[^A-Z]/g, "").split("").reduce(function(total, char) {
             return total + charScore(char);
           }, 0);
