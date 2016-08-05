@@ -112,6 +112,12 @@
       }
     };
 
+    ["isElement", "isArray"].forEach(function(method) {
+      u[method] = function() {
+        _[method].call(u, elements);
+      };
+    });
+
     return u;
   };
 
@@ -144,8 +150,10 @@
     return destination;
   };
 
-  _.isElement = function() {};
-  _.isArray = function() {};
+  _.isElement = function(obj) {
+    return obj.nodeType === 1;
+  };
+  _.isArray = function()  {};
   _.isObject = function() {};
   _.isFunction = function() {};
   _.isBoolean = function() {};
