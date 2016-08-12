@@ -1,0 +1,58 @@
+@import url("meyer_css_reset.css");
+
+body {
+    background: #5BCCB3;
+    font: normal 16px Helvetica, Arial, sans-serif;
+    text-align: center;
+    color: #16997C;
+    padding: 50px;
+}
+
+main {
+    background: #fff;
+    height: 325px;
+    width: 450px;
+    margin: 0 auto;
+    box-sizing: border-box;
+    padding: 20px;
+}
+
+main > h1 {
+    color: #CC183E;
+    font-size: 2em;
+    padding: 5px;
+    font-weight: 700;
+}
+
+main > p {
+    margin: 15px;
+}
+
+input[type='text'] {
+    height: 50px;
+    width: 80px;
+    box-sizing: border-box;
+    margin: 15px;
+    font-size: 1.5em;
+    text-align: center;
+}
+
+form > fieldset > button {
+    display: block;
+    font-size: 2em;
+    border-radius: 10px;
+    width: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+    margin: 15px auto;
+    background: linear-gradient(to bottom,#CA173D 0%, #7B0E25 100%);
+    color: #fff;
+    border: 0px;
+    box-shadow: 0 0 1px 1px #8F112B;
+}
+
+a {
+    color: #CC183E;
+    font-size: 1.2em;
+    display: block;
+}
