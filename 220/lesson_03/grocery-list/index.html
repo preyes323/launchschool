@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en-US">
+  <head>
+    <title>Grocery List</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" media="all" href="stylesheets/grocery.css">
+    <link rel="stylesheet" media="print" href="stylesheets/print.css">
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+    <script src="javascripts/grocery.js"></script>
+  </head>
+
+  <body>
+    <main>
+      <h2>Add an item</h2>
+
+      <form method="post" action="#">
+        <fieldset>
+          <label for="itemName">Item name</label>
+          <input type="text" id="itemName" name="itemName">
+          <label for="quantity">Quantity</label>
+          <input type="text" id="quantity" name="quantity">
+          <button type="submit">Add</button>
+        </fieldset>
+      </form>
+
+      <h1>Groceries</h1>
+      <ul></ul>
+    </main>
+  </body>
+</html>
