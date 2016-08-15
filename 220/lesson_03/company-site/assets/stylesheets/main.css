@@ -1,0 +1,326 @@
+@import url("meyer_css_reset.css");
+
+/*
+  ==================================================
+
+  Layout: Header
+
+  ==================================================
+*/
+
+body {
+  font: normal 20px "Avenir", Helvetica, Arial, sans-serif;
+  color: #45494d;
+  text-align: center;
+}
+
+header {
+  background: #2f2840 url("../images/bg_body.gif") 50% 0 repeat;
+  height: 530px;
+}
+
+header h1 {
+  box-sizing: border-box;
+  padding-top: 100px;
+}
+
+header a {
+  text-decoration: none;
+  color: #cacaca;
+  text-transform: uppercase;
+}
+
+.active {
+  color: #6db9ff;
+  font-weight: 700;
+}
+
+nav {
+  padding-top: 100px;
+}
+
+header nav li {
+  display: inline-block;
+  font-size: 26px;
+  padding-right: 85px;
+}
+
+header nav li:last-child {
+  padding-right: 0;
+}
+
+/*
+  ==================================================
+
+  Layout: Main
+
+  ==================================================
+*/
+
+main {
+  padding-top: 80px;
+}
+
+.column {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+article {
+  padding-bottom: 50px;
+  margin-bottom: 50px;
+}
+
+article figure  img {
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.article-bottom-border {
+  border-bottom: 1px solid #e7e7e7;
+}
+
+article p {
+  text-align: justify;
+  padding: 0 100px;
+}
+
+h2 {
+  font-size: 36px;
+  font-weight: 700;
+  padding: 45px;
+}
+
+h2:before,
+h2:after {
+  display: inline-block;
+  content: "\2022";
+  margin: 0 25px;
+}
+
+h3 {
+  color: #3e59b2;
+  font-size: 24px;
+  font-weight: 700;
+  padding: 10px 0;
+}
+
+article li {
+  display: inline-block;
+  padding: 0 30px;
+}
+
+article ul {
+  padding: 100px 0;
+}
+
+article a {
+  text-decoration: none;
+}
+
+#team {
+  padding: 0 0 100px 0;
+}
+
+#team p {
+  padding: 0 110px 100px 110px;
+}
+
+#team ul {
+  padding: 0;
+}
+
+#team li img {
+  display: block;
+  magin: 0 0 20px 0;
+}
+/*
+  ==================================================
+
+  Layout: Footer
+
+  ==================================================
+*/
+
+footer {
+  background: #e7e7e7;
+  color: #b6b6b6;
+  padding-top: 90px;
+}
+
+footer li {
+  display: inline-block;
+}
+
+footer a {
+  display: block;
+  width: 46px;
+  height: 46px;
+  background: transparent url("../images/icons_social-media.png") 0 0 no-repeat;
+  padding-right: 125px;
+}
+
+footer a.fb {
+  background-position: 0 -46px;
+}
+
+footer a.email {
+  background-position: 0 -92px;
+}
+
+footer a.instagram {
+  background-position: 0 100%;
+  padding-right: 0;
+}
+
+footer ul {
+  padding: 45px 0 80px 0;
+}
+
+/*
+  ==================================================
+
+  Modal
+
+  ==================================================
+*/
+
+div.modal-overlay {
+    display:none;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 5;
+    position: fixed;;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+}
+
+div.modal {
+    display: none;
+    width: 680px;
+    height: 460px;
+    padding: 20px;
+    box-sizing: border-box;
+    z-index: 10;
+    position: fixed;
+    left: 50%;
+    top: 140px;
+    margin-left: -340px;
+    background: #fff;
+}
+
+div.modal > img {
+    float: right;
+}
+
+div.modal > article {
+    clear: both;
+    dispaly: block;
+    padding: 60px;
+    box-sizing: border-box;
+}
+
+div.modal > article > img, div.modal > article > h3 {
+    float: left;
+}
+
+div.modal > article > h3 {
+    padding: 50px 0 0 25px;
+}
+
+div.modal > article > p {
+    clear: both;
+    font-size: 14px;
+    margin-top: 30px;
+}
+
+
+/*
+  ==================================================
+
+  Media Queries
+
+  ==================================================
+*/
+
+@media (max-width: 875px) {
+  /* #team a { */
+  /*   display: block; */
+  /* } */
+
+  #team li {
+    display: inline-block;
+    box-sizing: border-box;
+    width: 48%;
+    height: auto;
+    padding: 0 0 30px 0;
+  }
+
+  #team li img {
+    margin: 0 auto;
+  }
+}
+
+@media (max-width: 768px) {
+  main {
+    padding-top: 50px;
+  }
+
+  article p,
+  article img {
+    padding: 0 25px;
+  }
+
+  header {
+    height: 370px;
+  }
+
+  header h1 {
+    padding-top: 50px;
+  }
+
+  header h1 img {
+    width: 35%;
+  }
+
+  nav {
+    padding-top: 50px;
+  }
+
+  header nav li {
+    padding-right: 85px;
+  }
+
+  header nav li:last-child {
+    padding-right: 0;
+  }
+}
+
+@media (max-width: 480px) {
+  header {
+    height: 140px;
+  }
+
+  header h1 {
+    float: left;
+    margin: -10px 0 0 -80px;
+  }
+
+  nav {
+    display: block;
+    text-align: right;
+    padding-top: 20px;
+    padding-right: 5px;
+  }
+
+  nav a {
+    font-size: 16px;
+  }
+
+  header nav li {
+    display: block;
+    padding-right: 0;
+  }
+}
