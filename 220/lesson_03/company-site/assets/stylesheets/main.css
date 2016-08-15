@@ -209,6 +209,7 @@ div.modal {
     top: 140px;
     margin-left: -340px;
     background: #fff;
+    text-align: left;
 }
 
 div.modal > img {
@@ -222,18 +223,20 @@ div.modal > article {
     box-sizing: border-box;
 }
 
-div.modal > article > img, div.modal > article > h3 {
-    float: left;
+#team div.modal > article > img, div.modal > article > h3 {
+    display: inline-block;
+    vertical-align: middle;
 }
 
-div.modal > article > h3 {
-    padding: 50px 0 0 25px;
-}
+/* div.modal > article > img { */
+/*     padding: 50px 0 0 25px; */
+/* } */
 
-div.modal > article > p {
+#team div.modal > article > p {
     clear: both;
     font-size: 14px;
     margin-top: 30px;
+    padding: 0;
 }
 
 
