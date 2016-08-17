@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en=US">
+  <head>
+    <meta charset="utf-8">
+    <title>Test Nav with Data Attr</title>
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+    <script src="javascripts/navData.js"></script>
+    <style>
+      article + article {
+      display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <nav>
+      <ul>
+        <li><a href="#" data-block="gold">Gold Sponsors</a></li>
+        <li><a href="#" data-block="silver">Silver Sponsors</a></li>
+        <li><a href="#" data-block="bronze">Bronze Sponsors</a></li>
+      </ul>
+    </nav>
+    <article data-block="gold">
+      <h1>Gold Sponsors</h1>
+    </article>
+    <article data-block="silver">
+      <h1>Silver Sponsors</h1>
+    </article>
+    <article data-block="bronze">
+      <h1>Bronze Sponsors</h1>
+    </article>
+  </body>
+</html>

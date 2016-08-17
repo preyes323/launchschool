@@ -1,0 +1,90 @@
+@import url("meyer_css_reset.css");
+
+html, body {
+    background: #EEE196;
+    font: normal 14px Helvetica, Arial, sans-serif;
+    padding: 5px 0 0 0;
+}
+
+header, main {
+    background: #fff;
+    width: 1000px;
+    margin: 0 auto;
+    box-sizing: border-box;
+    padding: 20px;
+}
+
+/*
+   -------------------------
+
+   Header
+
+   -------------------------
+*/
+
+header {
+    font-size: 0;
+}
+
+input[type='text'], button {
+    box-sizing: border-box;
+    -webkit-apearance: none;
+    vertical-align: middle;
+    height: 40px;
+    font-size: 18px;
+}
+
+input[type='text'] {
+    width: 80%;
+}
+
+button {
+    width: 20%;
+}
+
+/*
+   -------------------------
+
+   Main
+
+   ------------------------
+*/
+
+.row {
+    overflow: auto;
+}
+
+.sidebar, article {
+    float: left;
+}
+
+.sidebar {
+    width: 20%;
+}
+
+article {
+    width: 80%;
+}
+
+article > h1 {
+    font-size: 2em;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+article ul li {
+    width: 100%;
+    display: block;
+    height: 50px;
+    box-sizing: border-box;
+    padding: 20px;
+    border-bottom: 1px solid #ECECEC;
+}
+
+article ul li:last-child {
+    border-bottom: none;
+}
+
+article ul li:hover {
+    background: #99F099;
+}

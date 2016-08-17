@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en-US">
+  <head>
+    <title>Search Filtering</title>
+    <meta charset="utf-8">
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="stylesheets/search.css">
+    <script src="javascripts/search.js"></script>
+  </head>
+  <body>
+    <header>
+      <form method="get" action="#">
+        <fieldset>
+          <input type="text" id="searchTerm" name="searchTerm" placeholder="Enter a game name">
+          <button type="submit">Search</button>
+        </fieldset>
+      </form>
+    </header>
+    <main class="row">
+      <section class="sidebar">
+        <form method="get" action="#">
+          <ul>
+            <li>
+              <label for="filter1">
+                <input type="checkbox" id="filter1" name"filter1" data-category="Nintendo 3DS" checked>
+                Nintendo 3DS
+              </label>
+            </li>
+            <li>
+              <label for="filter2">
+                <input type="checkbox" id="filter2" name="filter2" data-category="Nintendo WiiU" checked>
+                Nintendo WiiU
+              </label>
+            </li>
+            <li>
+              <label for="filter3">
+                <input type="checkbox" id="filter3" name="filter3" data-category="PlayStation 4" checked>
+                PlayStation 4
+              </label>
+            </li>
+            <li>
+              <label for="filter4">
+                <input type="checkbox" id="filter4" name="filter4" data-category="Xbox One" checked>
+                Xbox One
+              </label>
+            </li>
+          </ul>
+        </form>
+      </section>
+      <article>
+        <h1>Games</h1>
+        <ul>
+          <li data-id="1" data-category="Nintendo 3DS">The Legend of Zelda: Majora's Mask 3D</li>
+          <li data-id="2" data-category="Nintendo 3DS">Super Smash Bros.</li>
+          <li data-id="3" data-category="Nintendo WiiU Xbox One PlayStation 4">LEGO Batman 3: Beyond Gotham</li>
+          <li data-id="4" data-category="PlayStation 4 Xbox One">Far Cry 4</li>
+          <li data-id="5" data-category="PlayStation 4 Xbox One">Call of Duty: Advanced Warfare</li>
+        </ul>
+      </article>
+    </main>
+  </body>
+</html>
