@@ -1,0 +1,62 @@
+@import url("meyer_css_reset.css");
+
+html, body {
+    background: #780E24;
+    font: normal 14px Helvetica, Arial, sans-serif;
+    padding: 5px;
+}
+
+main {
+    background: #fff;
+    width: 850px;
+    margin: 0 auto;
+    padding: 25px;
+    box-sizing: border-box;
+}
+
+#canvas {
+    width: 800px;
+    height: 600px;
+    position: relative;
+    margin: 0 auto;
+    background: linear-gradient(to bottom, #FEFEFF 0%, #0167CC 100%);
+    border: 1px solid #ccc;
+}
+
+#canvas > div {
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    background: #dde338;
+}
+
+#canvas .circle {
+    border-radius: 100%;
+}
+
+#canvas .star {
+    background: transparent url("../images/star.png") 0 0 no-repeat;
+    background-size: 100% auto;
+}
+
+ul.controls {
+    margin: 10px 0 10px -10px;
+}
+
+ul.controls li {
+    display: inline-block;
+    padding: 0 10px;
+    border-right: 2px solid #555;
+}
+
+ul.controls li a {
+    display: block;
+}
+
+ul.controls li:last-child {
+    border: none;
+}
+
+label, button {
+    display: block;
+}
