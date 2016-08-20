@@ -1,0 +1,69 @@
+@import url("whitespace-reset.css");
+
+html, body {
+  padding: 25px 0;
+  margin: 0;
+  font: normal 16px Helvetica, Arial, sans-serif;
+  color: #16997c;
+  background: #5bccb3;
+}
+
+main {
+  display: block;
+  max-width: 450px;
+  padding: 20px;
+  margin: 0 auto;
+  background: #ffffff;
+  box-sizing: border-box;
+}
+
+#events_list {
+  padding: 0 0 25px 0;
+}
+
+#events_list li {
+  padding: 15px 0;
+}
+
+#events_list h3 {
+  padding: 0 0 5px 0;
+  font-size: 1.2em;
+  color: #CC183E;
+}
+
+#events_list li + li {
+  border-top: 1px solid #cecece;
+}
+
+form h2 {
+  padding: 0 0 15px 0;
+  font-size: 1.4em;
+}
+
+form dt {
+  padding: 0 0 5px 0;
+  font-size: 14px;
+  font-weight: bold;
+}
+form dd {
+  padding: 0 0 15px 0;
+}
+
+input[type="text"] {
+  width: 250px;
+  height: 30px;
+  padding: 5px;
+  font: normal 14px Helvetica, Arial, sans-serif;
+  color: #333;
+  border: 1px solid #cecece;
+  border-radius: 4px;
+}
+
+#month, #date {
+  width: 50px;
+}
+
+textarea {
+  border: 1px solid #cecece;
+  border-radius: 4px;
+}
