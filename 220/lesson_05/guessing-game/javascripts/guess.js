@@ -8,7 +8,7 @@ $(document).ready(function() {
   }();
 
   var Game = {
-    maxGueses: 6,
+    maxGuesses: 6,
     guesses: 0,
     word: '',
     guessedWord: '',
@@ -26,6 +26,7 @@ $(document).ready(function() {
     guess: function(letterGuessed) {
       var guessedWordArray = this.guessedWord.split('');
       var match;
+      if (this.lettersGuessed.indexOf(letterGuessed) >= 0) return;
       this.lettersGuessed.push(letterGuessed);
       this.word.split('').forEach(function(letter, idx) {
         if (letterGuessed === letter) {
@@ -41,29 +42,34 @@ $(document).ready(function() {
       return this.word === this.guessedWord;
     },
     isGameLost: function() {
-      return this.guesses < this.maxGuesses;
+      return this.guesses >= this.maxGuesses;
     },
     canPlayAgain: function() {
       return !!this.word;
     },
+    init: function() {
+      this.getRandomWord();
+      this.lettersGuessed = [];
+      return this;
+    },
   };
 
   function newGame() {
-    var currentGame = Object.create(Game);
+    var currentGame = Object.create(Game).init();
     var $word = $(".word ul");
     var $guesses = $(".guesses ul");
 
-    currentGame.getRandomWord();
     $word.find("li").remove();
+    $guesses.find("li").remove();
     if (currentGame.canPlayAgain()) {
-      currentGame.guessedWord.split('').forEach(function(char) {
-        $word.append("<li>" + char.toUpperCase() + "</li>");
+      currentGame.guessedWord.split("").forEach(function(letter) {
+        $word.append("<li>" + letter.toUpperCase() + "</li>");
       });
 
       $(document).off("keypress").on("keypress", function(e) {
         if (e.which >= 97 && e.which <= 122) {
           currentGame.guess(String.fromCharCode(e.which));
-          console.log(currentGame);
+          updateDisplay(currentGame.guessedWord, currentGame.lettersGuessed);
         }
 
         if (currentGame.isGameWon()) {
@@ -79,10 +85,22 @@ $(document).ready(function() {
     } else {
       $("figcaption").text("Ran out of words!");
     }
+
+    function updateDisplay(guessedWord, lettersGuessed) {
+      $word.find("li").remove();
+      $guesses.find("li").remove();
+      lettersGuessed.forEach(function(letter) {
+        $guesses.append("<li>" + letter.toUpperCase() + "</li>");
+      });
+      guessedWord.split("").forEach(function(letter) {
+        $word.append("<li>" + letter.toUpperCase() + "</li>");
+      });
+    }
   }
 
   $("a").click(function(e) {
     e.preventDefault();
+    $("figcaption").text("");
     newGame();
   });
 

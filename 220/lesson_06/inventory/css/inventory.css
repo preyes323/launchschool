@@ -1,0 +1,78 @@
+@import url("meyer_css_reset.css");
+
+html, body {
+    background: #CECECE;
+    font: normal 18px Helvetica, Arial, sans-serif;
+}
+
+form {
+    background: #fff;
+    width: 640px;
+    margin: 0 auto;
+    box-sizing: border-box;
+    padding: 20px;
+}
+
+h1, h2 {
+    padding: 10px 0;
+    font-weight: 700;
+}
+
+h1 {
+    font-size: 1.7em;
+}
+
+h2 {
+    font-size: 1.4em;
+}
+
+input[type='text'], input[type='number'] {
+    width: 100%;
+    height: 36px;
+    padding: 3px 5px;
+    margin: 0 0 5px 0;
+    color: #222222;
+    border: 1px solid #aaaaaa;
+    border-radius: 4px;
+    font: normal 14px Helvetica, Arial, sans-serif;
+    box-shadow: inset 0 0 5px rgba(0, 0, 0, .2);
+    box-sizing: border-box;
+}
+
+button {
+    padding: 12px 20px;
+    margin: 0 0 20px 0;
+    font: normal 13px Helvetica, Arial, sans-serif;
+    text-transform: uppercase;
+    color: #f0f0f0;
+    text-shadow: 1px 1px 1px #666666;
+    cursor: pointer;
+    border: none;
+    border-radius: 6px;
+    background: linear-gradient(#02c033, #02992a);
+}
+
+button[type="submit"] {
+    background: linear-gradient(#5b7aed, #4c66c7);
+    display: block;
+}
+
+table {
+    width: 100%;
+    margin: 0 0 25px 0;
+    border-spacing: 0;
+    border-collapse: collapse;
+    font-size: 14px;
+}
+
+input[maxlength="8"] {
+    width: 70px;
+}
+
+input[type='number'] {
+    width: 50px;
+}
+
+input[maxlength="16"] {
+    width: 180px;
+}
