@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en-US">
+  <head>
+    <title>Handlebars Exercises</title>
+    <link rel="stylesheet" href="css/handle-ex.css">
+    <script src="js/jquery.min.js"></script>
+    <script src="js/handlebars-v4.0.5.js"></script>
+    <script src="js/handle-ex.js"></script>
+  </head>
+
+  <body>
+    <script type="text/x-handlebars" id="blogTemplate">
+      <article class="blog">
+        <h1>{{title}}</h1>
+        <h3><time>Posted on {{publishedDate}}</time></h3>
+        <p>{{body}}</p>
+        {{> blogTags}}
+      </article>
+    </script>
+
+    <script type="text/x-handlebars" id="blogTags">
+      <ul>
+        {{#each tags}}
+        <li>{{this}}</li>
+        {{/each}}
+      </ul>
+    </script>
+  </body>
+</html>
