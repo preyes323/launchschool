@@ -1,1 +1,168 @@
 @import url("meyer_css_reset.css");
+
+/*
+  ===========================
+
+  Main, Body, Header
+
+  ===========================
+*/
+
+body, html {
+    background: #181818;
+    font: normal 16px Helvetica, Arial, sans-serif;
+}
+
+main {
+    background: #fff;
+    width: 980px;
+    padding: 20px;
+    margin: 0 auto;
+}
+
+/*
+  ===========================
+
+  Slideshow
+
+  ===========================
+*/
+
+#slideshow h1 {
+    font-size: 2em;
+    font-weight: bold;
+    margin: 0 0 30px 0;
+}
+
+#slides {
+    position: relative;
+    height: 780px;
+    margin: 0 0 45px 0;
+    z-index: 1;
+}
+
+#slides figure {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 780px;
+    z-index: 2;
+}
+
+#slides figure + figure {
+    display: none;
+}
+
+#slides figure img {
+    width: 100%;
+    height: 780px;
+    display: block;
+}
+
+#slides figure figcaption {
+    height: 75px;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    background: #3D3D3D;
+    color: #fff;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+#slides a, #slides a {
+    position: absolute;
+    width: 48px;
+    height: 80px;
+    background: transparent url("../images/icon_pager.png") 0 0 no-repeat;
+    text-indent: -99999px;
+    top: 350px;
+    z-index: 3;
+}
+
+#slides a.prev {
+    left: 30px;
+}
+
+#slides a.next {
+    right: 30px;
+    background-position: 100% 0;
+}
+
+/*
+  ===========================
+
+  Photo Feedback
+
+  ===========================
+*/
+
+#photoFeedback header h2 {
+    font-size: 1.7em;
+    font-weight: bold;
+    margin: 0 0 20px 0;
+}
+
+#photoFeedback .actions {
+    float: right;
+    margin: 10px 0 0 0;
+}
+
+#photoFeedback header {
+    margin: 0 0 30px 0;
+}
+
+#photoFeedback h3 {
+    font-size: 1.5em;
+    font-weight: bold;
+    margin: 0 0 20px 0;
+}
+
+#photoFeedback article figure {
+    height: 50px;
+    width: 50px;
+    float: left;
+}
+
+#photoFeedback article figure img {
+    width: 100%;
+    border-radius: 50%;
+}
+
+/*
+  ===========================
+
+  Buttons
+
+  ===========================
+*/
+
+.button {
+    display: inline-block;
+    border-radius: 10px;
+    text-decoration: none;
+    padding: 10px;
+}
+
+.pink {
+    background: #EC3991;
+    color: #fff;
+}
+
+.blue {
+    background: #3B99FC;
+    color: #fff;
+}
+
+a.pink:visited, a.blue:visited {
+    color: #fff;
+}
+
+input[type='submit'] {
+    appearance: none;
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    font-size: 16px;
+    border: none;
+}

@@ -7,26 +7,83 @@
 
   <body>
     <main>
-      <h1>Amanda Rose's Photos</h1>
-      <section id="gallery">
-        <figure>
-          <img src="http://placehold.it/1280x1024/E8117F/FFFFFF">
-          <figcaption>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</figcaption>
-        </figure>
-        <figure>
-          <img src="http://placehold.it/1280x1024/78DDFA/FFFFFF">
-          <figcaption>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</figcaption>
-        </figure>
-        <figure>
-          <img src="http://placehold.it/1280x1024/DC4D2E/FFFFFF">
-          <figcaption>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</figcaption>
-        </figure>
-        <ul>
-          <li><a href="#" class="prev">prev</a></li>
-          <li><a href="#" class="next">next</a></li>
-        </ul>
+      <section id="slideshow">
+        <h1>Amanda Rose's Photos</h1>
+        <div id="slides">
+          <figure>
+            <img src="http://placehold.it/1280x1024/E8117F/FFFFFF">
+            <figcaption>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</figcaption>
+          </figure>
+          <figure>
+            <img src="http://placehold.it/1280x1024/78DDFA/FFFFFF">
+            <figcaption>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</figcaption>
+          </figure>
+          <figure>
+            <img src="http://placehold.it/1280x1024/DC4D2E/FFFFFF">
+            <figcaption>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</figcaption>
+          </figure>
+          <ul>
+            <li><a href="#" class="prev">prev</a></li>
+            <li><a href="#" class="next">next</a></li>
+          </ul>
+        </div>
       </section>
       <section id="photoFeedback">
+        <header>
+          <div class="actions">
+            <a href="#" class="button blue">&#9825; 5 Likes</a>
+            <a href="#" class="button pink">&#9734; 3 Favorites</a>
+          </div>
+          <h2>City Lights</h2>
+          <p>Taken on <time>3/31/15</time></p>
+        </header>
+        <h3>Comments</h3>
+        <ul>
+          <li>
+            <article>
+              <figure>
+                <img src="http://gravatar.com/avatar/9f6f9c0b100d371267f07a12f73edf9d">
+              </figure>
+              <div class="content">
+                <header>
+                  <h1>Shane Riley</h1>
+                  <p>Posted on <time datetime="2015-3-31">3/31/15</time></p>
+                </header>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+              </div>
+            </article>
+          </li>
+          <li>
+            <article>
+              <figure>
+                <img src="http://gravatar.com/avatar/0af2673451bb2c52eda2a7aa1f2467c9">
+              </figure>
+              <div class="content">
+                <header>
+                  <h1>Constance Zemicky</h1>
+                  <p>Posted on <time datetime="2015-3-31">3/31/15</time></p>
+                </header>
+                <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?</p>
+              </div>
+            </article>
+          </li>
+        </ul>
+      </section>
+      <section id="comment">
+        <form method="post" action="#">
+          <h1>Your Comment</h1>
+          <fieldset>
+            <dl>
+              <dt><label for="name">Your Name</label></dt>
+              <dd><input type="text" id="name" name="name"></dd>
+              <dt><label for="email">Email Address</label></dt>
+              <dd><input type="email" id="email" name="email"></dd>
+              <dt><label for="comment">Comment</label></dt>
+              <dd><textarea id="comment" name="comment"></textarea></dd>
+              <input type="submit" class="button blue" value="Post Comment">
+            </dl>
+          </fieldset>
+        </form>
       </section>
     </main>
     <script src="javascripts/jquery.min.js"></script>
