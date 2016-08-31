@@ -123,11 +123,75 @@ main {
     height: 50px;
     width: 50px;
     float: left;
+    margin: 0 20px 0 0;
 }
 
 #photoFeedback article figure img {
     width: 100%;
     border-radius: 50%;
+}
+
+#photoFeedback article .content {
+    margin: 0 0 0 70px;
+}
+
+.content header h1 {
+    font-size: 1.4em;
+    font-weight: bold;
+}
+
+.content header p {
+    font-size: 0.8em;
+}
+
+.content header {
+    margin: 0 0 20px 0;
+}
+
+#photoFeedback li {
+    margin: 0 0 20px 0;
+    padding: 0 0 20px 0;
+    border-bottom: 1px solid #CECECE;
+}
+
+#photoFeedback li + li {
+    border-bottom: none;
+}
+
+/*
+  ===========================
+
+  Comment
+
+  ===========================
+*/
+
+input[type='text'], input[type='email'], textarea {
+    appearance: none;
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    border-radius: 5px;
+    width: 280px;
+    height: 20px;
+    border: 1px solid #cecece;
+    margin: 0 0 15px 0;
+}
+
+textarea {
+    height: 80px;
+}
+
+#comment form h1 {
+    font-size: 1.4em;
+    font-weight: bold;
+    margin: 0 0 20px 0;
+}
+
+#comment form label {
+    font-weight: bold;
+    font-size: 0.85em;
+    margin: 0 0 10px 0;
+    display: block;
 }
 
 /*
