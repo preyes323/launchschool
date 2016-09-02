@@ -1,4 +1,6 @@
 $(document).ready(function() {
+  Handlebars.partials = Handlebars.templates;
+
   $.ajax({
     url: "/photos",
     type: "GET",
@@ -7,6 +9,7 @@ $(document).ready(function() {
     var photos = json;
     renderPhotos(photos);
     renderPhotoInformation(photos, photos[0].id);
+    getCommentsFor(photos[0].id);
   });
 
   function renderPhotos(photos) {
@@ -14,7 +17,22 @@ $(document).ready(function() {
   }
 
   function renderPhotoInformation(photos, photoId) {
-    var photoInformation = Handlebars.templates.photoInformation(photos[photoId]);
+    var photo = photos.filter(function(photo) {
+      return photo.id === photoId;
+    })[0];
+
+    var photoInformation = Handlebars.templates.photoInformation(photo);
     $("#photoFeedback > header").html(photoInformation);
+  }
+
+  function getCommentsFor(photoId) {
+    $.ajax({
+      url: "/comments",
+      type: "GET",
+      data: "photo_id=" + photoId,
+      dataType: "json",
+    }).done(function(json) {
+      $("#photoFeedback > ul").html(Handlebars.templates.comments({comments: json}));
+    });
   }
 });
