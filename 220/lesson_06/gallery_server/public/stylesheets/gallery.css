@@ -61,7 +61,6 @@ main {
 }
 
 #slides figure figcaption {
-    height: 75px;
     position: absolute;
     left: 0;
     bottom: 0;
