@@ -27,11 +27,15 @@ templates['comments'] = template({"1":function(container,depth0,helpers,partials
 templates['photoInformation'] = template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
     var helper, alias1=depth0 != null ? depth0 : {}, alias2=helpers.helperMissing, alias3="function", alias4=container.escapeExpression;
 
-  return "<div class=\"actions\">\n  <a href=\"#\" class=\"button blue\">&#9825; "
+  return "<div class=\"actions\">\n  <a href=\"/photos/like\" class=\"button blue\" data-id="
+    + alias4(((helper = (helper = helpers.id || (depth0 != null ? depth0.id : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"id","hash":{},"data":data}) : helper)))
+    + " data-property=\"likes\">&#9825; "
     + alias4(((helper = (helper = helpers.likes || (depth0 != null ? depth0.likes : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"likes","hash":{},"data":data}) : helper)))
-    + " Likes</a>\n  <a href=\"#\" class=\"button pink\">&#9734; "
+    + " Likes</a>\n  <a href=\"/photos/favorite\" class=\"button pink\" data-id="
+    + alias4(((helper = (helper = helpers.id || (depth0 != null ? depth0.id : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"id","hash":{},"data":data}) : helper)))
+    + " data-property=\"favorites\">&#9734; "
     + alias4(((helper = (helper = helpers.favorites || (depth0 != null ? depth0.favorites : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"favorites","hash":{},"data":data}) : helper)))
-    + " Favorites</a>\n</div>\n<h2>"
+    + " Favorites</a>\n  </div>\n<h2>"
     + alias4(((helper = (helper = helpers.title || (depth0 != null ? depth0.title : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"title","hash":{},"data":data}) : helper)))
     + "</h2>\n<p>Taken on <time>"
     + alias4(((helper = (helper = helpers.created_at || (depth0 != null ? depth0.created_at : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"created_at","hash":{},"data":data}) : helper)))

@@ -1,6 +1,6 @@
 <div class="actions">
-  <a href="#" class="button blue">&#9825; {{likes}} Likes</a>
-  <a href="#" class="button pink">&#9734; {{favorites}} Favorites</a>
-</div>
+  <a href="/photos/like" class="button blue" data-id={{id}} data-property="likes">&#9825; {{likes}} Likes</a>
+  <a href="/photos/favorite" class="button pink" data-id={{id}} data-property="favorites">&#9734; {{favorites}} Favorites</a>
+  </div>
 <h2>{{title}}</h2>
 <p>Taken on <time>{{created_at}}</time></p>
