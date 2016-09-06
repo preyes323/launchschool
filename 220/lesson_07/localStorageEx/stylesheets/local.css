@@ -1,0 +1,108 @@
+@import url("meyer_css_reset.css");
+
+/*
+   ------------------------
+
+   Body and Container
+
+   ------------------------
+*/
+
+body, html, a:visited {
+    color: #555555;
+    font: normal 16px Helvetica, Arial, sans-serif;
+}
+
+body.blue {
+    background: #4DC3FF;
+}
+
+body.red {
+    background: #BC2D07;
+}
+
+.container {
+    width: 640px;
+    margin: 0 auto;
+    background: #fff;
+    -webkit-box-shadow: 0px 9px 18px 6px rgba(112,111,112,0.7);
+    -moz-box-shadow: 0px 9px 18px 6px rgba(112,111,112,0.7);
+    box-shadow: 0px 9px 18px 6px rgba(112,111,112,0.7);
+    border-radius: 10px;
+}
+
+a {
+    text-decoration: none;
+}
+
+/*
+   ------------------------
+
+   Header
+
+   ------------------------
+*/
+
+header {
+    padding: 20px 20px 0 20px;
+    box-sizing: border-box;
+    margin-top: 20px;
+    border-bottom: 1px solid #eee;
+}
+
+header nav li {
+    display: inline-block;
+    border: 1px solid #cecece;
+    border-bottom: none;
+    border-top-right-radius: 10px;
+    border-top-left-radius: 10px;
+    padding: 10px 10px 0 10px;
+}
+
+header nav li a {
+    display: block;
+}
+
+header nav li.active {
+    background: #4DC3FF;
+    color: #fff;
+    border-color: #4dc3ff;
+}
+
+header nav li.active a {
+    color: #fff;
+}
+
+
+/*
+   ------------------------
+
+   Main
+
+   ------------------------
+*/
+
+main {
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+main > article {
+    display: none;
+}
+
+main > article.active {
+    display: block;
+}
+
+#content form textarea {
+    width: 100%;
+    appearance: none;
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    border: 1px solid #cecece;
+    border-radius: 5px;
+    -webkit-box-shadow: 0 10px 5px 5px rgba(209,209,209,0.5);
+    -moz-box-shadow: 0 10px 5px 5px rgba(209,209,209,0.5);
+    box-shadow: 0 10px 5px 5px rgba(209,209,209,0.5);
+}
