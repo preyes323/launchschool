@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en-US">
+  <head>
+    <title>Shape Stamper</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="stylesheets/stamper.css">
+  </head>
+
+  <body>
+    <main>
+      <canvas width="1000" height="400" id="stampPad"></canvas>
+      <div class="shapeControl">
+        <ul>
+          <li><a href="#" class="button">Circle</a></li>
+          <li><a href="#" class="button">Square</a></li>
+          <li><a href="#" class="button">Triangle</a></li>
+          <li><a href="#" class="button">Clear</a></li>
+          <li>
+            <label for="stampColor">Color:</label>
+            <input type="text" id="stampColor" name="stampColor">
+          </li>
+        </ul>
+      </div>
+    </main>
+    <script src="javascripts/jquery.min.js"></script>
+    <script src="javascripts/stamper.js"></script>
+  </body>
+</html>
