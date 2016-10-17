@@ -1,0 +1,24 @@
+<!doctype html>
+<html>
+  <head>
+    <script>
+      window.onload = function() {
+      var heading = document.createElement('h1');
+      var heading2 = document.createElement('h1');
+      var headingText = document.createTextNode('Big Head!');
+      var par = document.createElement('p');
+      var parText = document.createTextNode('I\'m a paragraph');
+
+      heading.appendChild(headingText);
+      heading2.appendChild(headingText);
+      document.body.appendChild(heading);
+      document.body.appendChild(heading2);
+
+      par.appendChild(parText);
+      document.querySelector('h1').appendChild(par);
+      }
+    </script>
+  </head>
+  <body>
+  </body>
+</html>
