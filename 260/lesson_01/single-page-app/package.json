@@ -14,5 +14,8 @@
     "serve-favicon": "~2.2.0",
     "underscore": "~1.8.0",
     "MD5": "1.2.1"
+  },
+  "devDependencies": {
+    "nodemon": "^1.11.0"
   }
 }
