@@ -10,4 +10,5 @@ body {
     background: url("../images/plus.png") transparent 0 50% no-repeat;
     background-size: contain;
     padding-left: 25px;
+    cursor: pointer;
 }
