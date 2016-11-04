@@ -1,5 +1,10 @@
 <article class="event" data-event-id={{event-id}}>
-  <form class="event-detail" method="post" action="/update/{{event-id}}">
-
-  </form>
+  <header>
+    <h2>{{event-name}} - {{event-date}}</h2>
+  </header>
+  <section>
+    <h2>Notes</h2>
+    <p>{{event-note}}</p>
+    <a href="/event/edit/{{event-id}}" class="edit-event">Edit Event</a>
+  </div>
 </article>
