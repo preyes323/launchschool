@@ -1,17 +1,14 @@
-<section id="new-event">
-  <h1>New Event</h1>
-  <form id="add-event" name="add-event" method="post" action="events/add/{{id}}">
-    <fieldset>
-      <dl>
-        <dt><label for="name">Name</label></dt>
-        <dd><input type="text" id="name" name="name" placeholde="Event Name"></dd>
-        <dt><label for="date">Date</label></dt>
-        <dd><input type="date" id="date" name="date" placeholde="Event Date"></dd>
-        <dt><label for="name">Notes</label></dt>
-        <dd><textarea id="notes" name="notes" rows="10" cols="50"></textarea></dd>
-      </dl>
-    </fieldset>
-    <input type="submit" value="Add" name="submit" class="btn btn-add">
-    <button type="button" name="cancel" class="btn btn-cancel">Cancel</button>
-  </form>
-</section>
+<form id="add-event" name="add-event" method="post" action="events/add/{{id}}">
+  <fieldset>
+    <dl>
+      <dt><label for="name">Name</label></dt>
+      <dd><input type="text" id="name" name="name" placeholde="Event Name"></dd>
+      <dt><label for="date">Date</label></dt>
+      <dd><input type="date" id="date" name="date" placeholde="Event Date"></dd>
+      <dt><label for="name">Notes</label></dt>
+      <dd><textarea id="notes" name="notes" rows="10" cols="50"></textarea></dd>
+    </dl>
+  </fieldset>
+  <input type="submit" value="Add" name="submit" class="btn btn-add">
+  <button type="button" name="cancel" class="btn btn-cancel">Cancel</button>
+</form>

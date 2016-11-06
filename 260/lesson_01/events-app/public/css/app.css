@@ -6,7 +6,7 @@ body {
     color: #666;
 }
 
-#new-event h1 {
+#event-action h1 {
     background: url("../images/plus.png") transparent 0 50% no-repeat;
     background-size: contain;
     padding-left: 25px;
