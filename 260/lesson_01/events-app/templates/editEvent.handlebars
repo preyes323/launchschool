@@ -3,11 +3,11 @@
     <input type="hidden" value="{{event-id}}">
     <dl>
       <dt><label for="name">Name</label></dt>
-      <dd><input type="text" id="name" name="name" placeholde="Event Name"></dd>
+      <dd><input type="text" id="name" name="name" value="{{name}}"></dd>
       <dt><label for="date">Date</label></dt>
-      <dd><input type="date" id="date" name="date" placeholde="Event Date"></dd>
+      <dd><input type="date" id="date" name="date" value="{{formattedDate}}"></dd>
       <dt><label for="name">Notes</label></dt>
-      <dd><textarea id="notes" name="notes" rows="10" cols="50"></textarea></dd>
+      <dd><textarea id="notes" name="notes" rows="10" cols="50">{{notes}}</textarea></dd>
     </dl>
   </fieldset>
   <input type="submit" value="save" name="save" class="btn btn-add">
