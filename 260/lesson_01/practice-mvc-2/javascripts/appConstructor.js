@@ -1,7 +1,8 @@
 const Car = ModelConstructor({
   change: render,
 });
-const  bmw = new Car({
+
+const bmw = new Car({
   make: 'BMW',
   model: '328i',
 });
@@ -13,10 +14,11 @@ function render() {
 
 render();
 
-$('form').on('submit', function(e) {
+$('form').on('submit', (e) => {
   e.preventDefault();
-  var make = $(this).find('[name=make]').val(),
-      model = $(this).find('[name=model]').val();
+  const $target = $(e.currentTarget);
+  const make = $target.find('[name=make]').val();
+  const model = $target.find('[name=model]').val();
 
   if (make !== bmw.attributes.make) {
     bmw.set('make', make);

@@ -6,15 +6,23 @@ function ModelConstructor(opts) {
     this.id = idCount;
     this.attributes = attrs || {};
     this.attributes.id = idCount;
-    this.__events = [];
   }
 
   Model.prototype = {
+    __events: [],
     set(key, val) {
       this.attributes[key] = val;
+      this.triggerChange();
     },
     get(key) {
       return this.attributes[key];
+    },
+    add(event) {
+      this.__events.push(event);
+    },
+    remove(key) {
+      delete this.attributes[key];
+      this.triggerChange();
     },
     triggerChange() {
       this.__events.forEach((event) => event());
@@ -22,6 +30,9 @@ function ModelConstructor(opts) {
   };
 
   Object.assign(Model.prototype, opts);
+  if (opts.change && typeof opts.change === 'function') {
+    Model.prototype.__events.push(opts.change);
+  }
 
   return Model;
 }
