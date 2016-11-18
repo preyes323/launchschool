@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en-US">
+  <head>
+    <title>Collection Part 1 Test</title>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="stylesheets/cars.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <script src="javascripts/handlebars-v3.0.0.js"></script>
+    <script src="javascripts/utilities.js"></script>
+    <script src="javascripts/framework.js"></script>
+  </head>
+  <body>
+    <main>
+      <article></article>
+
+      <form action="" method="post">
+        <h1>Add a Car</h1>
+        <fieldset>
+          <dl>
+            <dt>Make:</dt>
+            <dd><input type="text" name="make" /></dd>
+          </dl>
+          <dl>
+            <dt>Model:</dt>
+            <dd><input type="text" name="model" /></dd>
+          </dl>
+          <input type="submit" />
+          <a href="#">Remove cars</a>
+        </fieldset>
+      </form>
+    </main>
+
+    <script id="cars" type="text/x-handlebars">
+      {{#each cars}}
+      <dl>
+        {{#with attributes}}
+        <dt>Make:</dt>
+        <dd>{{make}}</dd>
+        <dt>Model:</dt>
+        <dd>{{model}}</dd>
+        {{/with}}
+      </dl>
+      {{/each}}
+    </script>
+
+    <script src="javascripts/app.js"></script>
+  </body>
+</html>
