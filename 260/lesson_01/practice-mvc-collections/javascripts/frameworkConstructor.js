@@ -6,6 +6,9 @@ function ModelConstructor(opts) {
     this.id = idCount;
     this.attributes = attrs || {};
     this.attributes.id = idCount;
+    if (opts && opts.change && typeof opts.change === 'function') {
+      this.__events.push(opts.change);
+    }
   }
 
   Model.prototype = {
@@ -17,8 +20,8 @@ function ModelConstructor(opts) {
     get(key) {
       return this.attributes[key];
     },
-    add(event) {
-      this.__events.push(event);
+    addCallback(cb) {
+      this.__events.push(cb);
     },
     remove(key) {
       delete this.attributes[key];
@@ -30,9 +33,33 @@ function ModelConstructor(opts) {
   };
 
   Object.assign(Model.prototype, opts);
-  if (opts.change && typeof opts.change === 'function') {
-    Model.prototype.__events.push(opts.change);
+  return Model;
+}
+
+function CollectionConstructor(opts) {
+  function Collection(model) {
+    this.model = model;
+    this.models = [];
   }
 
-  return Model;
+  Collection.prototype = {
+    reset() {
+      this.models = [];
+    },
+    add(model) {
+      const found = this.models.filter((existingModel) => existingModel.id === model.id)
+      if (found.length) return found[0];
+      const newModel = new this.model(model);
+      this.models.push(newModel);
+      return newModel;
+    },
+    remove(model) {
+      const id = typeof model === 'object' ? model.id : model;
+      if (this.models.every((existingModel) => existingModel.id !== id)) return;
+      this.models = this.models.filter((existingModel) => existingModel.id !== id);
+    },
+  };
+
+  Object.assign(Collection.prototype, opts);
+  return Collection;
 }

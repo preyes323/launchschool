@@ -1,29 +1,43 @@
+const template = Handlebars.compile($('#cars').html());
 function render() {
-  $("#make").text(bmw.get("make"));
-  $("#model").text(bmw.get("model"));
+  $('article').html(template({ cars: inventory.models }));
 }
 
-const Car = ModelConstructor({
-  change: render,
-});
+const Car = new ModelConstructor();
+const Cars = new CollectionConstructor();
+const inventory = new Cars(Car);
 
-const bmw = new Car({
+inventory.add({
   make: 'BMW',
   model: '328i',
 });
+inventory.add({
+  make: 'Mini',
+  model: 'Cooper',
+});
+inventory.add({
+  make: 'Lotus',
+  model: 'Elise',
+});
 
-$('form').on('submit', (e) => {
+$('a').on('click', (e) => {
   e.preventDefault();
-  const $target = $(e.currentTarget);
-  const make = $target.find('[name=make]').val();
-  const model = $target.find('[name=model]').val();
 
-  if (make !== bmw.attributes.make) {
-    bmw.set('make', make);
-  }
-  if (model !== bmw.attributes.model) {
-    bmw.set('model', model);
-  }
+  inventory.reset();
+  render();
+});
+
+$('form').on('submit', function submit(e) {
+  e.preventDefault();
+  const $form = $(this);
+  const properties = {
+    make: $form.find('[name=make]').val(),
+    model: $form.find('[name=model]').val(),
+  };
+
+  inventory.add(properties);
+  render();
+  this.reset();
 });
 
 render();
