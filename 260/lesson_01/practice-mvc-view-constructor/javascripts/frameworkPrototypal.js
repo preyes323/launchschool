@@ -18,9 +18,7 @@ function ModelConstructor(opts) {
       this.triggerChange();
     },
     triggerChange() {
-      this.__events.forEach((cb) => {
-        cb();
-      });
+      this.__events.forEach((cb) => cb());
     },
     init(attrs) {
       idCount++;
@@ -35,7 +33,7 @@ function ModelConstructor(opts) {
   };
 
   Object.assign(Model, opts || {});
-  return Object.create(Model);
+  return Model;
 }
 
 function CollectionConstructor(opts) {
@@ -70,5 +68,30 @@ function CollectionConstructor(opts) {
   };
 
   Object.assign(Collection, opts || {});
-  return Object.create(Collection);
+  return Collection;
+}
+
+function ViewConstructor(opts) {
+  const View = {
+    tagName: 'div',
+    attributes: {},
+    $el: $(`<${this.tagName}/>`, this.attributes),
+    template() {},
+    render() {
+      this.$el.html(this.template(this.model.attributes));
+    },
+    remove() {
+      this.$el.remove();
+    },
+    init(model) {
+      this.model = model;
+      this.model.view = this;
+      this.$el = $(`<${this.tagName}/>`, this.attributes);
+      this.render();
+      return this;
+    },
+  };
+
+  Object.assign(View, opts);
+  return View;
 }

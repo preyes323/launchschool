@@ -5,7 +5,7 @@ const CarView = ViewConstructor({
   template: Handlebars.compile($('#cars').html()),
 });
 const $cars = $('ul');
-const inventory = Cars.init(Car);
+const inventory = Object.create(Cars).init(Car);
 
 inventory.add({
   make: 'BMW',
@@ -25,14 +25,10 @@ inventory.models.forEach(function addView(model) {
   $cars.append(view.$el);
 });
 
-function render() {
-  $('ul').html(template({ cars: inventory.models }));
-}
-
-$('a').on('click', (e) => {
+$('form a').on('click', (e) => {
   e.preventDefault();
   inventory.reset();
-  render();
+  $cars.empty();
 });
 
 $('form').on('submit', function submit(e) {
@@ -43,8 +39,8 @@ $('form').on('submit', function submit(e) {
     model: $form.find('[name=model]').val(),
   };
 
-  inventory.add(properties);
-  render();
+  const model = inventory.add(properties);
+  $cars.append(Object.create(CarView).init(model).$el);
   this.reset();
 });
 
@@ -56,5 +52,3 @@ $cars.on('click', 'a', function removeModel(e) {
   model.view.remove();
   inventory.remove(model);
 });
-
-render();
