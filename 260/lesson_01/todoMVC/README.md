@@ -1,8 +1,10 @@
 ### General Requirements
 
-Build a todo app using the following [HTML and CSS](http://d3905n0khyu9wc.cloudfront.net/todo_app/todo_app.zip) as starting point. The todo app will use the MVC framework that was built earlier in the course.
+Build a todo app using the following [HTML and CSS](http://d3905n0khyu9wc.cloudfront.net/todo_app/todo_app.zip) as starting point*. The todo app will use the MVC framework that was built earlier in the course.
 
 Here's a link to the course page for the [complete requirements document](https://launchschool.com/lessons/fae4fa27/assignments/4953c85b).
+
+<small>*I'll use precompiled Handlebards templates instead of creating during runtime. I won't be using jQuery also.</small>
 
 ### Specific Requirements
 
