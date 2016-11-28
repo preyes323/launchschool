@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en-US">
+  <head>
+    <title>Todo App</title>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="stylesheets/todos.css" />
+    <script src="javascripts/handlebars.runtime-v4.0.5.js"></script>
+    <script src="javascripts/templates.js"></script>
+    <script src="javascripts/framework.js"></script>
+  </head>
+  <body>
+    <main>
+      <h1>Todos</h1>
+
+      <form action="" method="post">
+        <fieldset>
+          <input type="text" id="todo_name" name="todo_name" placeholder="What needs to be done?" autofocus />
+        </fieldset>
+      </form>
+
+      <ul id="todos"></ul>
+
+      <footer>
+        <a id="clear" href="#">Clear completed</a>
+      </footer>
+    </main>
+
+    <script src="javascripts/app.js"></script>
+  </body>
+</html>
