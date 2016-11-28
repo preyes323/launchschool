@@ -14,4 +14,29 @@ Here's a link to the course page for the [complete requirements document](https:
 * Clicking outside of the text input for a currently editing todo saves the edit
 * Clicking clear complete will find all completed todos and remove them
 
+### Requirements Analysis
+
+#### Typing in a todo and submitting the form creates a new todo item
+
+*Input: Text*
+
+Things to consider:
+* Where is text input?
+* Are there valid inputs?
+* Invalid?
+* Input length?
+
+*Output: Todo Item*
+
+Things to consider:
+* Recipient/s of output?
+* Data structure of todo item
+* Format of todo item
+
+#### Clicking the check box for a todo toggles its completed state
+#### Clicking the text for the todo toggles editing for that todo
+#### Clicking outside of the text input for a currently editing todo saves the edit
+#### Clicking clear complete will find all completed todos and remove them
+
+
 
