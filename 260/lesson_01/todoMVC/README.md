@@ -39,6 +39,7 @@ Things to consider:
 * Model: Store the todo item, trigger change event for when new todo is received
 * View/Controller: Render the data for the new todo, modifying any existing list
 
+---
 #### Clicking the check box for a todo toggles its completed state
 
 *Input: Click event*
@@ -58,17 +59,20 @@ Things to consider:
 * Model: Update state
 * View/Controller: Render todo-item based on state after toggling
 
+---
 #### Clicking the text for the todo toggles editing for that todo
 
 Things to consider:
 * How to differentiate from text box click event
 
+---
 #### Clicking outside of the text input for a currently editing todo saves the edit
 
 Things to consider:
 * How to differentiate from text box click event
 * What event to use - blur?
 
+---
 #### Clicking clear complete will find all completed todos and remove them
 
 Things to consider:
