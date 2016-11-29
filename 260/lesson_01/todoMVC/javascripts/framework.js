@@ -84,13 +84,13 @@ function ViewConstructor(opts) {
       const contents = event.split(' ');
       return {
         event: contents[0],
-        selector: `${contents[1]} ${contents[2]}`,
+        selector: contents.slice(1).join(' '),
       };
     },
     bindEvents() {
       Object.keys(this.events).forEach(function bindEvent(event) {
         const eventDetail = this.getDetails(event);
-        if (!eventDetail.selector.includes('undefined')) {
+        if (eventDetail.selector) {
           this.$el.on(`${eventDetail.event}.view`, eventDetail.selector, this.events[event].bind(this));
         } else {
           this.$el.on(`${eventDetail.event}.view`, this.events[event].bind(this));

@@ -77,6 +77,7 @@ Things to consider:
 
 Things to consider:
 * Create change event that removes view once model is removed
+* What happens if there are no completed todos
 
 
 
