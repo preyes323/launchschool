@@ -4,7 +4,7 @@ Build a todo app using the following [HTML and CSS](http://d3905n0khyu9wc.cloudf
 
 Here's a link to the course page for the [complete requirements document](https://launchschool.com/lessons/fae4fa27/assignments/4953c85b).
 
-**I'll use precompiled Handlebars templates instead of creating during runtime. I won't be using jQuery also.*
+**I'll use precompiled Handlebars templates instead of creating during runtime.
 
 ### Specific Requirements
 
