@@ -9,11 +9,11 @@ const TodoView = ViewConstructor({
       const $el = this.$el;
       this.$el.after($editForm);
       this.$el.remove();
-      $editForm.find('input').on('blur', () => {
-        console.log('blurred');
+      $editForm.find('input').on('blur', (e) => {
         const name = $editForm.find('input')[0].value;
         this.model.set('name', name);
         $editForm.after($el);
+        $editForm.find('input').off(e);
         $editForm.remove();
       });
     },
