@@ -60,9 +60,19 @@ Things to consider:
 
 #### Clicking the text for the todo toggles editing for that todo
 
+Things to consider:
+* How to differentiate from text box click event
 
 #### Clicking outside of the text input for a currently editing todo saves the edit
+
+Things to consider:
+* How to differentiate from text box click event
+* What event to use - blur?
+
 #### Clicking clear complete will find all completed todos and remove them
+
+Things to consider:
+* Create change event that removes view once model is removed
 
 
 
