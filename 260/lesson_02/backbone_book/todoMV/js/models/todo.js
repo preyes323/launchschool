@@ -1,4 +1,4 @@
-let app = app || {};
+var app = app || {};
 app.Todo = Backbone.Model.extend({
   defaults: {
     title: '',

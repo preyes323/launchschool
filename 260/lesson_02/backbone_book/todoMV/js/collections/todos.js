@@ -1,4 +1,4 @@
-let app = app || {};
+var app = app || {};
 const TodoList = Backbone.Collection.extend({
   model: app.Todo,
   localStorage: new Backbone.LocalStorage('todos-backbone'),
@@ -16,3 +16,5 @@ const TodoList = Backbone.Collection.extend({
     return todo.get('order');
   },
 });
+
+app.Todos = new TodoList();
