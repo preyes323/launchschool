@@ -6,7 +6,7 @@ const TodoList = Backbone.Collection.extend({
     return this.filter((todo) => todo.get('completed'));
   },
   remaining() {
-    return this.without(...this.completed);
+    return this.without(this, ...this.completed());
   },
   nextOrder() {
     if (!this.length) return 1;

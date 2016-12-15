@@ -1,0 +1,69 @@
+html, body {
+  margin: 0;
+  font: normal 14px Helvetica, Arial, sans-serif;
+  color: #402A22;
+  background: #58788C;
+}
+
+main {
+  width: 600px;
+  padding: 25px;
+  margin: 0 auto;
+  background: #ffffff;
+}
+
+h1 { font-family: Georgia; }
+
+footer h3 {
+  display: inline-block;
+  padding-right: 10px;
+}
+footer ul {
+  display: inline-block;
+  padding: 0;
+}
+
+footer li {
+  display: inline-block;
+}
+footer li + li:before {
+  content: ", ";
+}
+
+fieldset {
+  padding: 0;
+  margin: 0;
+  border: none;
+}
+
+dt { padding: 0 0 5px 0; }
+dd { margin: 0 0 20px 0; }
+label { font-weight: bold; }
+input[type="text"], textarea {
+  width: 100%;
+  height: 28px;
+  padding: 5px;
+  font: normal 13px Helvetica, Arial, sans-serif;
+  border: 1px solid #cecece;
+  border-radius: 6px;
+  background: #ffffff;
+  box-shadow: inset 0 0 8px #ececec;
+  box-sizing: border-box;
+}
+textarea {
+  height: auto;
+  resize: vertical;
+}
+input[type="submit"] {
+  padding: 12px 20px;
+  font: normal 13px Helvetica, Arial, sans-serif;
+  color: #e0e0e0;
+  border: none;
+  border-radius: 6px;
+  background: #402A22;
+  cursor: pointer;
+}
+input[type="submit"]:hover {
+  color: #ffffff;
+  background: #8C6B4F;
+}

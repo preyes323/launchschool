@@ -1,18 +1,18 @@
 var app = app || {};
 app.AppView = Backbone.View.extend({
-  el: '#todoapp',
+  el: '.todoapp',
   statsTemplate: _.template($('#stats-template').html()),
   events: {
-    'keypress #new-todo': 'createOnEnter',
-    'click #clear-completed': 'clearCompleted',
-    'click #toggle-all': 'toggleAllComplete',
+    'keypress .new-todo': 'createOnEnter',
+    'click .clear-completed': 'clearCompleted',
+    'click .toggle-all': 'toggleAllComplete',
   },
 
   initialize() {
-    this.allCheckbox = this.$('#toggle-all')[0];
-    this.$input = this.$('#new-todo');
-    this.$footer = this.$('#footer');
-    this.$main = this.$('#main');
+    this.allCheckbox = this.$('.toggle-all')[0];
+    this.$input = this.$('.new-todo');
+    this.$footer = this.$('.footer');
+    this.$main = this.$('.main');
 
     this.listenTo(app.Todos, 'add', this.addOne);
     this.listenTo(app.Todos, 'reset', this.addAll);
@@ -50,11 +50,11 @@ app.AppView = Backbone.View.extend({
 
   addOne(todo) {
     const view = new app.TodoView({ model: todo});
-    $('#todo-list').append(view.render().el);
+    $('.todo-list').append(view.render().el);
   },
 
   addAll() {
-    this.$('#todo-list').html('');
+    this.$('.todo-list').html('');
     app.Todos.each(this.addOne, this);
   },
 
@@ -75,18 +75,18 @@ app.AppView = Backbone.View.extend({
   },
 
   createOnEnter(event) {
-    if (event.which !=== ENTER_KEY || !this.$input.val().trim()) {
+    if (event.which !== ENTER_KEY || !this.$input.val().trim()) {
       return;
     }
 
     app.Todos.create(this.newAttributes());
     this.$input.val('');
-  }
+  },
 
   clearCompleted() {
     _.invoke(app.Todos.completed(), 'destroy');
     return false;
-  }
+  },
 
   toggleAllComplete() {
     const completed = this.allCheckbox.checked;

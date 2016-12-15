@@ -6,19 +6,19 @@
     <link rel="stylesheet" href="css/index.css">
   </head>
   <body>
-    <section id="todoapp">
-      <header id="header">
+    <section class="todoapp">
+      <header class="header">
         <h1>todos</h1>
-        <input id="new-todo" placeholder="What needs to be done?" autofucos>
+        <input class="new-todo" placeholder="What needs to be done?" autofucos>
       </header>
-      <section id="main">
-        <input id="toggle-all" type="checkbox">
+      <section class="main">
+        <input class="toggle-all" id="toggle-all" type="checkbox">
         <label for="toggle-all">Mark all as complete</label>
-        <ul id="todo-list"></ul>
+        <ul class="todo-list"></ul>
       </section>
-      <footer id="footer"></footer>
+      <footer class="footer"></footer>
     </section>
-    <div id="info">
+    <div class="info">
       <p>Double-click to edit a todo</p>
       <p>Written by <a href="https://github.com/addyosmani">Addy Osmani</a></p>
       <p>Part of <a href="http://todomvc.com">TodoMVC</a></p>
@@ -34,8 +34,8 @@
     </script>
 
     <script type="text/template" id="stats-template">
-      <span id="todo-count"><strong><%= remaining %></strong> <%= remaining === 1 ? 'item' : 'items' %> left</span>
-      <ul id="filters">
+      <span class="todo-count"><strong><%= remaining %></strong> <%= remaining === 1 ? 'item' : 'items' %> left</span>
+      <ul class="filters">
         <li>
           <a class="selected" href="#/">All</a>
         </li>
@@ -47,7 +47,7 @@
         </li>
       </ul>
       <% if (completed) { %>
-      <button id="clear-completed">Clear completed (<%= completed %>)</button>
+      <button class="clear-completed">Clear completed (<%= completed %>)</button>
       <% } %>
     </script>
 
@@ -60,6 +60,6 @@
     <script src="js/views/todo.js"></script>
     <script src="js/views/app.js"></script>
     <script src="js/routers/router.js"></script>
-    <script src="js/app.js">
+    <script src="js/app.js"></script>
   </body>
 </html>

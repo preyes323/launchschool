@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en-US">
+  <head>
+    <title>Backbone Model Example</title>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="stylesheets/page.css" />
+    <script src="javascripts/jquery-3.1.1.min.js"></script>
+    <script src="javascripts/handlebars-v4.0.5.js"></script>
+    <script src="javascripts/moment.js"></script>
+  </head>
+  <body>
+    <main>
+      <article></article>
+
+      <form action="" method="post">
+        <fieldset>
+        </fieldset>
+      </form>
+    </main>
+
+    <script id="product" type="text/x-handlebars">
+      <header>
+        <h1>{{name}}</h1>
+        <p>Last modified <time datetime="{{datetime}}">{{date_formatted}}</time></p>
+      </header>
+      {{description}}
+      <footer>
+        <h3>Categories</h3>
+        <ul>
+          {{#each categories}}
+          <li>{{.}}
+          {{/each}}
+        </ul>
+      </footer>
+    </script>
+
+    <script id="form" type="text/x-handlebars">
+      <dl>
+        <dt><label for="name">Name</label></dt>
+        <dd><input type="text" name="name" value="{{name}}" /></dd>
+        <dt><label for="description">Description</label></dt>
+        <dd><textarea rows="6" cols="80" name="description">{{description}}</textarea></dd>
+      </dl>
+      <input type="submit" value="Update" />
+    </script>
+
+    <script>
+      var product_json = {
+        "name": "Bananas",
+        "date": (new Date()).valueOf(),
+        "description": "A fruit, usually yellow or green, with a soft flesh and a thick rind that is peeled off before consuming.",
+        "categories": ["fruit", "berry", "starch", "potassium"]
+      };
+    </script>
+    <script src="javascripts/app.js"></script>
+  </body>
+</html>
