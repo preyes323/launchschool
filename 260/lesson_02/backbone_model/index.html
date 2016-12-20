@@ -6,6 +6,8 @@
     <link rel="stylesheet" href="stylesheets/page.css" />
     <script src="javascripts/jquery-3.1.1.min.js"></script>
     <script src="javascripts/handlebars-v4.0.5.js"></script>
+    <script src="javascripts/underscore-min.js"></script>
+    <script src="javascripts/backbone-min.js"></script>
     <script src="javascripts/moment.js"></script>
   </head>
   <body>
@@ -37,9 +39,9 @@
     <script id="form" type="text/x-handlebars">
       <dl>
         <dt><label for="name">Name</label></dt>
-        <dd><input type="text" name="name" value="{{name}}" /></dd>
+        <dd><input type="text" name="name" id="name" value="{{name}}" /></dd>
         <dt><label for="description">Description</label></dt>
-        <dd><textarea rows="6" cols="80" name="description">{{description}}</textarea></dd>
+        <dd><textarea rows="6" cols="80" name="description" id="description">{{description}}</textarea></dd>
       </dl>
       <input type="submit" value="Update" />
     </script>
