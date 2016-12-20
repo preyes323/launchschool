@@ -27,11 +27,12 @@ const ItemsCollection = Backbone.Collection.extend({
   initialize() {
     this.fetch();
     if (!this.length) this.seed();
+    this.comparator = 'name';
+    this.sort();
+    this.on('sort', view.renderItems.bind(view));
     return this;
   },
 });
-
-app.Items = new ItemsCollection();
 
 const view = {
   $table: '',
@@ -54,7 +55,7 @@ const view = {
     });
 
     form.reset();
-    this.renderItem(app.Items.create(itemData));
+    app.Items.create(itemData, { wait: true });
     return this;
   },
 
@@ -99,4 +100,5 @@ const view = {
   },
 };
 
+app.Items = new ItemsCollection();
 view.init();
