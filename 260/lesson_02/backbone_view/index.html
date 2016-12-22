@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en-US">
+  <head>
+    <title>Backbone Collection Example</title>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="stylesheets/page.css" />
+    <script src="javascripts/jquery-3.1.1.min.js"></script>
+    <script src="javascripts/underscore-min.js"></script>
+    <script src="javascripts/backbone-min.js"></script>
+    <script src="javascripts/backbone.localStorage.js"></script>
+    <script src="javascripts/handlebars-v4.0.5.js"></script>
+  </head>
+  <body>
+    <main>
+      <table>
+        <thead>
+          <tr>
+            <th data-prop="name">Name</th>
+            <th data-prop="quantity" colspan="2">Quantity</th>
+          </tr>
+        </thead>
+        <tbody>
+        </tbody>
+      </table>
+      <p><a href="#">Delete all</a></p>
+
+      <form action="" method="post">
+        <fieldset>
+          <dl>
+            <dt><label for="name">Name</label></dt>
+            <dd><input type="text" name="name" /></dd>
+            <dt><label for="quantity">Quantity</label></dt>
+            <dd><input type="text" name="quantity" /></dd>
+          </dl>
+          <input type="submit" value="Add Item" />
+        </fieldset>
+      </form>
+    </main>
+
+    <script id="items" type="text/x-handlebars">
+      {{#each items}}
+        {{#with attributes}}
+        {{> item}}
+        {{/with}}
+      {{/each}}
+    </script>
+
+    <script id="item" type="text/x-handlebars">
+      <td>{{name}}</td>
+      <td>{{quantity}}</td>
+      <td><a data-id="{{id}}" href="#">Delete</a></td>
+    </script>
+
+    <script>
+      var items_json = [{
+        name: "Bananas",
+        quantity: 3
+      }, {
+        name: "Apples",
+        quantity: 4
+      }];
+    </script>
+    <script src="javascripts/app.js"></script>
+  </body>
+</html>

@@ -1,6 +1,5 @@
 var app = app || {};
 var ENTER_KEY = 13;
 
-$(() => {
-  new app.AppView();
-});
+debugger;
+new app.AppView();
