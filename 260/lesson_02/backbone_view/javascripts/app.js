@@ -1,11 +1,3 @@
-const templates = {};
-$('[type="text/x-handlebars"]').each((_, template) => {
-  const $template = $(template);
-  templates[$template.attr('id')] = Handlebars.compile($template.html());
-});
-
-Handlebars.registerPartial({ item: templates.item });
-
 const app = {};
 
 app.Item = Backbone.Model.extend();
