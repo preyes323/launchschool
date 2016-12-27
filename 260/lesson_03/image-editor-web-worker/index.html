@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en-US">
+  <head>
+    <title>Image Processor</title>
+    <meta charset="UTF-8" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <script src="javascripts/processor.js"></script>
+  </head>
+  <body>
+    <img src="images/640px-Senden,_Dortmund-Ems-Kanal_--_2014_--_2991.jpg" />
+    <canvas></canvas>
+    <dl>
+      <dt>Brightness</dt>
+      <dd><input type="range" name="brightness" val="0" min="-50" max="50" step="1" /><span>0%</span></dd>
+      <dt>Saturation</dt>
+      <dd><input type="range" name="saturation" val="0" min="-100" max="100" step="1" /><span>0%</span></dd>
+    </dl>
+    <ul id="tools">
+      <li><a data-method="inverter" href="#">Invert</a></li>
+      <li><a data-method="horiz_flipper" href="#">Horizontal Flip</a></li>
+      <li><a data-method="vert_flipper" href="#">Vertical Flip</a></li>
+    </ul>
+  </body>
+</html>
