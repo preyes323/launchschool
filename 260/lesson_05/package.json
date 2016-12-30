@@ -1,0 +1,20 @@
+{
+  "name": "music-album",
+  "version": "1.0.0",
+  "description": "Music album project",
+  "main": "app.js",
+  "scripts": {
+    "test": "jasmine-node spec --autotest --color --watch .",
+    "start": "nodemon app.js"
+  },
+  "author": "Victor Paolo Reyes c/o LS",
+  "license": "ISC",
+  "dependencies": {
+    "node-static": "^0.7.9"
+  },
+  "devDependencies": {
+    "jasmine-node": "^1.14.5",
+    "nodemon": "^1.11.0",
+    "request": "^2.79.0"
+  }
+}
