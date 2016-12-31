@@ -7,6 +7,8 @@
     <script src="javascripts/vendor/all.js"></script>
     <script src="javascripts/models/album.js"></script>
     <script src="javascripts/collections/albums.js"></script>
+    <script src="javascripts/models/track.js"></script>
+    <script src="javascripts/collections/tracks.js"></script>
   </head>
   <body>
     <main>
@@ -21,8 +23,37 @@
         <p>Released: {{date}}</p>
       </a>
     </script>
+    <script id="tracksHeader" type="text/x-handlebars-template">
+      <header>
+        <figure>
+          <img src="{{cover}}" alt="{{title}}">
+        </figure>
+        <h2>{{title}}</h2>
+        <h3>{{artist}}</h3>
+        <p>Release Date: {{date}}</p>
+        <a href="#" class="closeAlbum">Close</a>
+      </header>
+      <section>
+        <table>
+          <thead>
+            <tr>
+              <th>Track Title</th>
+              <th>Length</th>
+            </tr>
+          </thead>
+          <tbody>
+          </tbody>
+        </table>
+      </section>
+    </script>
+    <script id="track" type="text/x-handlebars-template">
+      <td>{{title}}</td>
+      <td>{{length}}</td>
+    </script>
     <script src="javascripts/views/album.js"></script>
     <script src="javascripts/views/albums.js"></script>
+    <script src="javascripts/views/track.js"></script>
+    <script src="javascripts/views/tracks.js"></script>
     <script src="javascripts/app.js"></script>
   </body>
 </html>
