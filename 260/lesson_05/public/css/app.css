@@ -1,0 +1,39 @@
+body {
+    font: 14px normal Arial, Helvetica, sans-serif;
+}
+
+a {
+    text-decoration: none;
+    color: #000;
+}
+
+main {
+    padding: 20px;
+    width: 70%;
+    margin: 0 auto;
+    -webkit-box-shadow: 0px 0px 37px 9px rgba(217,213,217,0.59);
+    -moz-box-shadow: 0px 0px 37px 9px rgba(217,213,217,0.59);
+    box-shadow: 0px 0px 37px 9px rgba(217,213,217,0.59);
+}
+
+h1 {
+    font-size: 1.5em;
+}
+
+h2 {
+    font-size: 1.3em;
+}
+
+h3 {
+    font-size: 1.1emm;
+}
+
+ul {
+    display: block;
+}
+
+li {
+    display: inline-block;
+    width: 33%;
+    text-align: center;
+}

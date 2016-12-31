@@ -1,4 +1,4 @@
-describe('Album collection constructor', function() {
+describe('Album collection', function() {
   it('fetches a collection of three albums', function(done) {
     const albumsLoaded = App.albumsLoaded;
     App.albumsLoaded = function() {
@@ -10,4 +10,16 @@ describe('Album collection constructor', function() {
 
     App.init();
   });
+
+  it('adds tracksUrl to model property', function(done) {
+    const albumsLoaded = App.albumsLoaded;
+    App.albumsLoaded = function() {
+      expect(typeof App.albums.first().get('tracksUrl')).toBe('string');
+      done();
+    };
+
+    App.init();
+  });
+
+
 });

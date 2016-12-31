@@ -3,20 +3,26 @@
   <head>
     <meta charset="utf-8">
     <title>Music Album</title>
+    <link rel="stylesheet" href="css/app.css">
     <script src="javascripts/vendor/all.js"></script>
     <script src="javascripts/models/album.js"></script>
     <script src="javascripts/collections/albums.js"></script>
-    <script src="javascripts/views/album.js"></script>
   </head>
   <body>
-    <section>
-      <ul>
-      </ul>
-    </section>
-
-    <script id="albums" type="text/x-handlebars-template">
-
+    <main>
+      <h1>Albums</h1>
+      <ul id="albums"></ul>
+    </main<>
+    <script id="album" type="text/x-handlebars-template">
+      <a href="{{tracksUrl}}">
+        <img src="{{cover}}">
+        <h2>{{title}}</h2>
+        <h3>{{artist}}</h3>
+        <p>Released: {{date}}</p>
+      </a>
     </script>
+    <script src="javascripts/views/album.js"></script>
+    <script src="javascripts/views/albums.js"></script>
     <script src="javascripts/app.js"></script>
   </body>
 </html>
