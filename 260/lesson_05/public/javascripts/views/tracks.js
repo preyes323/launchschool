@@ -3,7 +3,7 @@ const TracksView = Backbone.View.extend({
   template: Handlebars.compile($('#tracksHeader').html()),
   events: {
     'click .closeAlbum': 'close',
-    'click article': 'close',
+    'click': 'closeAnother',
   },
 
   renderHeader() {
@@ -23,7 +23,8 @@ const TracksView = Backbone.View.extend({
   },
 
   open() {
-    $('body').append(this.$el.fadeIn(this.duration));
+    $('body').append(this.$el);
+    this.$el.fadeIn(this.duration);
   },
 
   render() {
@@ -34,7 +35,7 @@ const TracksView = Backbone.View.extend({
 
   initialize(options) {
     this.album = options.album;
-    this.duration = 2000;
+    this.duration = 500;
     this.collection = new Tracks();
     this.collection.url = this.album.get('tracksUrl');
     this.collection.fetch();
