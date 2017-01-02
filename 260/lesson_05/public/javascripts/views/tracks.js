@@ -2,8 +2,7 @@ const TracksView = Backbone.View.extend({
   tagName: 'article',
   template: Handlebars.compile($('#tracksHeader').html()),
   events: {
-    'click .closeAlbum': 'close',
-    'click': 'closeAnother',
+    'click': 'close',
   },
 
   renderHeader() {
@@ -18,7 +17,16 @@ const TracksView = Backbone.View.extend({
     });
   },
 
-  close() {
+  close(e) {
+    if ($(e.target).hasClass('closeAlbum')) {
+      this.fadeOut();
+      history.back();
+    }
+
+    return false;
+  },
+
+  fadeOut() {
     this.$el.fadeOut(this.duration, this.remove.bind(this));
   },
 
@@ -34,10 +42,11 @@ const TracksView = Backbone.View.extend({
   },
 
   initialize(options) {
-    this.album = options.album;
+    this.$el.addClass('closeAlbum');
+    this.album = App.albums.findWhere({ title: options.album });
     this.duration = 500;
     this.collection = new Tracks();
-    this.collection.url = this.album.get('tracksUrl');
-    this.collection.fetch();
+    this.collection.url = `${this.album.get('tracksUrl')}.json`;
+    this.collection.fetch({ success: this.render.bind(this) });
   },
 });

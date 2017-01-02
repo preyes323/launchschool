@@ -1,4 +1,5 @@
 const App = {
+  tracks: {},
   albumsLoaded() {
     App.view.render();
   },
@@ -15,5 +16,11 @@ const App = {
     this.fetchAlbums();
   },
 };
+
+App.AblumsRouter = new Workspace();
+Backbone.history.start({
+  pushState: true,
+  silent: true,
+});
 
 App.init();
