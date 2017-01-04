@@ -1,0 +1,13 @@
+doctype html
+html
+  head
+    title= title
+    link(rel='stylesheet', href='/stylesheets/style.css')
+  body
+    header
+      nav
+        ul
+          each link in links
+            li
+              a(href=`${link.href}` class=`${link.active ? 'active' : ''}`)= link.title
+    block content
