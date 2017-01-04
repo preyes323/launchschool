@@ -13,29 +13,69 @@
   <script src="../javascripts/vendor/all.js"></script>
   <script src="../javascripts/models/album.js"></script>
   <script src="../javascripts/collections/albums.js"></script>
+  <script src="../javascripts/models/track.js"></script>
+  <script src="../javascripts/collections/tracks.js"></script>
 
 
   <!-- include source files here... -->
 
   <!-- include spec files here... -->
-  <script src="spec/AlbumSpec.js"></script>
-  <script src="spec/AlbumsViewSpec.js"></script>
 
+  <style>
+    #albums {
+    display: none;
+    }
+
+  </style>
 </head>
 
 <body>
   <ul id="albums">
   </ul>
   <script id="album" type="text/x-handlebars-template">
-      <a href="#">
-        <img src="{{cover}}">
-        <h2>{{title}}</h2>
-        <h3>{{artist}}</h3>
-        <p>Released: {{date}}</p>
-      </a>
-    </script>
-    <script src="../javascripts/views/album.js"></script>
-    <script src="../javascripts/views/albums.js"></script>
-    <script src="../javascripts/app.js"></script>
+  <a href="#">
+  <img src="{{cover}}">
+  <h2>{{title}}</h2>
+  <h3>{{artist}}</h3>
+  <p>Released: {{date}}</p>
+  </a>
+  </script>
+  <script id="tracksHeader" type="text/x-handlebars-template">
+    <header>
+      <figure>
+        <img src="{{cover}}" alt="{{title}}">
+      </figure>
+      <a href="#" class="closeAlbum">Close [x]</a>
+      <h2>{{title}}</h2>
+      <h3>{{artist}}</h3>
+      <p>Release Date: {{date}}</p>
+    </header>
+    <section>
+      <table>
+        <thead>
+          <tr>
+            <th>Track Title</th>
+            <th>Length</th>
+          </tr>
+        </thead>
+        <tbody>
+        </tbody>
+      </table>
+    </section>
+  </script>
+  <script id="track" type="text/x-handlebars-template">
+    <td>{{title}}</td>
+    <td>{{length}}</td>
+  </script>
+  <script src="../javascripts/views/album.js"></script>
+  <script src="../javascripts/views/albums.js"></script>
+  <script src="../javascripts/views/track.js"></script>
+  <script src="../javascripts/views/tracks.js"></script>
+  <script src="../javascripts/routers/router.js"></script>
+  <script src="spec/AlbumSpec.js"></script>
+  <script src="spec/AlbumsViewSpec.js"></script>
+  <script src="spec/TracksSpec.js"></script>
+  <script src="spec/TracksViewSpec.js"></script>
+  <script src="../javascripts/app.js"></script>
 </body>
 </html>
