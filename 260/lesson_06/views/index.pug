@@ -1,5 +1,26 @@
 extends layout
 
 block content
-  h1= title
-  p Welcome to #{title}
+  ul#products
+    each product in products
+      li
+        img(src=`images/${product.cover}`)
+        h2= product.title
+        dl
+          dt Console
+          dd
+            case product.console
+              when 'SNES'
+                span.logo.snes(title=`${product.console}`)= product.console
+              when 'PlayStation 2'
+                span.logo.ps2(title=`${product.console}`)= product.console
+              when 'GameCube'
+                span.logo.gc(title=`${product.console}`)= product.console
+          dt Year
+          dd product.release_year
+          dt Genre
+          dd product.genre
+          dt UPC
+          dd product.upc
+        dl
+        a(href="#") Add to cart

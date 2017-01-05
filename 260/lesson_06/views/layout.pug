@@ -1,13 +1,22 @@
 doctype html
 html
   head
-    title= title
-    link(rel='stylesheet', href='/stylesheets/style.css')
+    title Web Store
+    link(rel='stylesheet' href='/stylesheets/application.css')
+    link(href="http://fonts.googleapis.com/css?family=Fjalla+One" rel="stylesheet" type="text/css")
   body
-    header
-      nav
-        ul
-          each link in links
-            li
-              a(href=`${link.href}` class=`${link.active ? 'active' : ''}`)= link.title
-    block content
+    main
+      h1 Products
+      #cart
+        h3: a(href="#") Cart<span>4</span>
+        #items
+          ul
+            li ActRaiser x 1<span>$50.00</span>
+            li Metroid Prime x 2<span>$21.00</span>
+            li Silent Hill 3 x 1<span>$25.00</span>
+            li <strong>Total</strong><span>$96.00</span>
+          a(href="#") Checkout
+
+      block content
+
+    script(ype="text/javascript" src="javascripts/cart.js")
