@@ -1,22 +1,28 @@
+include _mixins.pug
+include _cart_mock.pug
+include _functions.pug
+
 doctype html
 html
   head
     title Web Store
-    link(rel='stylesheet' href='/stylesheets/application.css')
+    +stylesheet_link_tag('application')
     link(href="http://fonts.googleapis.com/css?family=Fjalla+One" rel="stylesheet" type="text/css")
   body
     main
       h1 Products
       #cart
-        h3: a(href="#") Cart<span>4</span>
+        h3.
+          #[a(href="#") Cart#[span 4]]
         #items
           ul
-            li ActRaiser x 1<span>$50.00</span>
-            li Metroid Prime x 2<span>$21.00</span>
-            li Silent Hill 3 x 1<span>$25.00</span>
-            li <strong>Total</strong><span>$96.00</span>
+            each cartItem in cart
+              li.
+                #{cartItem.title} x #{cartItem.quantity}#[span #{format(cartItem.price)}]
+            li.
+              #[strong Total]#[span $#{format(total(cart))}]
           a(href="#") Checkout
 
       block content
 
-    script(ype="text/javascript" src="javascripts/cart.js")
+    +script_include_tag('cart')

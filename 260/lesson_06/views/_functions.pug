@@ -1,0 +1,10 @@
+-
+  function total(cart) {
+    return cart.reduce((runningTotal, currentItem) => {
+      return runningTotal + currentItem.price * currentItem.quantity;
+    }, 0);
+  }
+
+  function format(price) {
+    return price.toFixed(2);
+  }

@@ -1,0 +1,5 @@
+mixin stylesheet_link_tag(src)
+  link(href=`stylesheets/${src}.css` rel='stylesheet')
+
+mixin script_include_tag(src)
+  script(src=`javascripts/${src}.js` type='text/javascript')
