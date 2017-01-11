@@ -18,7 +18,7 @@ html
           ul
             each cartItem in cart
               li.
-                #{cartItem.title} x #{cartItem.quantity}#[span #{format(cartItem.price)}]
+                #{cartItem.title} x #{cartItem.quantity}#[span #q{format(cartItem.price)}]
             li.
               #[strong Total]#[span $#{format(total(cart))}]
           a(href="#") Checkout

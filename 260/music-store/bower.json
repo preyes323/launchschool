@@ -1,0 +1,23 @@
+{
+  "name": "bower-spa",
+  "homepage": "https://github.com/preyes323/templates-dot-files",
+  "authors": [
+    "Victor Paolo Reyes <vpaoloreyes@gmail.com>"
+  ],
+  "description": "common libraries for use with a SPA",
+  "main": "",
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "^3.1.1",
+    "backbone": "^1.3.3",
+    "handlebars": "^4.0.5"
+  }
+}
