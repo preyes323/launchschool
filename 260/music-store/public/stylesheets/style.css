@@ -1,8 +1,43 @@
 @import 'meyer_css_reset.css';
+html,
 body {
   padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  font: 8px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
-a {
-  color: #00b7ff;
+h1 {
+  font-size: 1.5em;
+}
+main {
+  box-shadow: 0px 0px 23px 0px rgba(0,0,0,0.5);
+  padding: 15px;
+  border-radius: 5px;
+}
+a.btn {
+  display: inline-block;
+  padding: 5px;
+  border-radius: 10px;
+  background: #555;
+  color: #fff;
+  text-decoration: none;
+}
+a.add {
+  background: #ff6347;
+}
+a.add:hover {
+  background: #ff5537;
+}
+#albums h2 {
+  font-size: 1.2em;
+}
+#albums h3 {
+  font-size: 1.1em;
+  color: #ccc;
+}
+#albums li {
+  display: inline-block;
+  width: 23.5%;
+  margin: 0 2% 2% 0;
+}
+#albums li:nth-of-type(4n) {
+  margin-right: 0;
 }
