@@ -1,7 +1,9 @@
+include _mixins.pug
+
 doctype html
 html
   head
     title= title
-    link(rel='stylesheet', href='/stylesheets/style.css')
+    +stylesheet_link_tag('style')
   body
     block content

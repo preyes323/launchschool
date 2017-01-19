@@ -1,0 +1,50 @@
+[
+  {
+    "title": "La La Land (Original Motion Picture Soundtrack)",
+    "artist": "Various Artists",
+    "date": "Dec 09, 2016",
+    "cover": "http://www.apple.com/autopush/us/itunes/charts/albums/images/2017/1/bf01039c63e29275adebc29d86d705d310a683ca95093b6319f54fddf783d230_2x.jpg",
+    "id": 1,
+    "price": 9.99
+  },
+  {
+    "title": "I See You",
+    "artist": "The xx",
+    "date": "Jan 13, 2017",
+    "cover": "http://www.apple.com/autopush/us/itunes/charts/albums/images/2017/1/b9f23b663eba2f66e6d8186a91a2d7dc843b945447e442f108efb240f55ac1ff_2x.jpg",
+    "id": 2,
+    "price": 9.99
+  },
+  {
+    "title": "Trolls (Original Motion Picture Soundtrack)",
+    "artist": "Various Artists",
+    "date": "Sep 23, 2016",
+    "cover": "http://www.apple.com/autopush/us/itunes/charts/albums/images/2017/1/265f7ce9ab03a55c8ecd39156a9adc861705c8c028faa0255a727fedb5c3920f_2x.jpg",
+    "id": 3,
+    "price": 6.99
+  },
+  {
+    "title": "NOW That's What I Call a Workout 2017",
+    "artist": "Various Artists",
+    "date": "Dec 16, 2016",
+    "cover": "http://www.apple.com/autopush/us/itunes/charts/albums/images/2017/1/e0a2c794e66e28dd713b821d9a8f931bb1b27a3a699365f0eca8f17162479fe8_2x.jpg",
+    "id": 4,
+    "price": 7.99
+  },
+  {
+    "title": "Sing (Original Motion Picture Soundtrack Deluxe)",
+    "artist": "Various Artists",
+    "date": "Dec 09, 2016",
+    "cover": "http://www.apple.com/autopush/us/itunes/charts/albums/images/2017/1/2e40514aba881de518e14b377a0d48bc489562e0850a45ce984a01accf6411eb_2x.jpg",
+    "id": 5,
+    "price": 11.99
+  },
+  {
+    "title": "24K Magic",
+    "artist": "Bruno Mars",
+    "date": "Nov 18, 2016",
+    "cover": "http://www.apple.com/autopush/us/itunes/charts/albums/images/2017/1/3f9964afa63ef94085625455e84226121ad0ac6c4a1dbc7076f74ac7858628f7_2x.jpg",
+    "id": 6,
+    "price": 9.99
+  }
+]

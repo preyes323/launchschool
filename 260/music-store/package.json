@@ -16,7 +16,7 @@
     "serve-favicon": "~2.3.0",
     "stylus": "0.54.5"
   },
-    "devDependencies": {
+  "devDependencies": {
     "jasmine-node": "^1.14.5",
     "nodemon": "^1.11.0",
     "request": "^2.79.0",

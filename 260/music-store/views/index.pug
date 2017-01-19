@@ -2,4 +2,12 @@ extends layout
 
 block content
   h1= title
-  p Welcome to #{title}
+  ul
+    each album in albums
+      li(data-id=`${album.id}`)
+        img(src=`${album.cover}`)
+        h2 #{album.title}
+        h3 #{album.artist}
+        p Released: #{album.date}
+        p $#{album.price}
+        a(href='#') Add to Cart
