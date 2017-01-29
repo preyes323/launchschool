@@ -20,10 +20,10 @@ a.btn {
   color: #fff;
   text-decoration: none;
 }
-a.add {
+a.btn-add {
   background: #ff6347;
 }
-a.add:hover {
+a.btn-add:hover {
   background: #ff5537;
 }
 #albums h2 {
@@ -34,6 +34,7 @@ a.add:hover {
   color: #ccc;
 }
 #albums li {
+  vertical-align: top;
   display: inline-block;
   width: 23.5%;
   margin: 0 2% 2% 0;

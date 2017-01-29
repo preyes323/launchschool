@@ -3,12 +3,18 @@ const fs = require('fs');
 const path = require('path');
 
 const router = express.Router();
+const albumsFilePath = path.resolve(path.dirname(__dirname), 'data/albums.json');
 
-const albums = JSON.parse(fs.readFileSync(path.resolve(path.dirname(__dirname), 'data/albums.json'), 'utf8'));
+function getAlbums() {
+  return JSON.parse(fs.readFileSync(albumsFilePath, 'utf8'));
+}
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Music Store', albums });
+  res.render('index', {
+    title: 'Music Store',
+    albums: getAlbums(),
+  });
 });
 
 module.exports = router;
