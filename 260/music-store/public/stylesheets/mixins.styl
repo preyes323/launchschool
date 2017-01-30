@@ -1,0 +1,37 @@
+colors = {
+  btn: {
+    default: #555,
+    text: #fff,
+    add: #FF6347,
+    add-hover: #FF5537,
+  },
+  sub-header: #ccc,
+  shadow: rgba(0,0,0,0.5)
+}
+
+appearance()
+  appearance: none
+  -moz-appearance: none
+  -webkit-appearance: none
+
+button()
+  position: relative
+  display: inline-block
+  padding: 5px
+  border-radius: 10px
+  border: none
+  background: colors.btn.default
+  color: colors.btn.text
+  text-decoration: none
+  outline: none
+  appearance()
+
+button-add()
+  background: colors.btn.add
+  box-shadow: 2px 2px 0 2px darken(colors.btn.add, 10)
+  transition: box-shadow 200ms ease-in, top 200ms ease-in, left 200ms ease-in
+  &:active
+    top: 2px
+    left: 2px
+    box-shadow: 1px 1px 0 1px darken(colors.btn.add, 10)
+
