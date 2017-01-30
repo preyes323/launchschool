@@ -5,15 +5,15 @@ const path = require('path');
 const router = express.Router();
 const albumsFilePath = path.resolve(path.dirname(__dirname), 'data/albums.json');
 
-function getAlbums() {
+router.getAlbums = function() {
   return JSON.parse(fs.readFileSync(albumsFilePath, 'utf8'));
-}
+};
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
   res.render('index', {
     title: 'Music Store',
-    albums: getAlbums(),
+    albums: router.getAlbums(),
   });
 });
 
