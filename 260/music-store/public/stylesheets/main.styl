@@ -32,3 +32,35 @@ a, input[type='submit']
     margin: 0 2% 2% 0
     &:nth-of-type(4n)
       margin-right: 0
+
+#add-album
+  width: 500px
+  margin: 0 auto
+  h1
+    margin 0 0 10px 0
+  dt
+    float: left
+    clear: left
+    width: 100px
+    text-align: right
+    font-weight: bold
+    padding-top: 6px
+  dt:after
+    content: ":"
+  dd
+    margin: 0 0 0 110px;
+    padding: 0 0 0.5em 0;
+  .btn
+    text-align: center
+    display: block;
+    width: 25%
+    margin: 0 auto
+  input[type="text"], input[type="url"], input[type="date"]
+    width: 100%
+    box-sizing: border-box
+    height: 30px;
+    border-radius: 6px
+    padding: 5px
+    outline: none
+    border: 1px solid colors.border
+    appearance()

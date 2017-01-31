@@ -14,7 +14,8 @@
     "morgan": "~1.7.0",
     "pug": "~2.0.0-beta6",
     "serve-favicon": "~2.3.0",
-    "stylus": "0.54.5"
+    "stylus": "0.54.5",
+    "underscore": "^1.8.3"
   },
   "devDependencies": {
     "cheerio": "^0.22.0",

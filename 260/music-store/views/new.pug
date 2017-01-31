@@ -1,17 +1,18 @@
 extends layout
 
 block content
-  form(id='add-album' method='post' action='/albums/new')
+  form(id='add-album' method='post' action='/albums')
+    h1 Add Album
     fieldset
       dl
-        dt: label(for='title') Title:
-        dd: input(type='text' id='title' name='title')
-        dt: label(for='artist') Artist:
-        dd: input(type='text' id='artist' name='artist')
-        dt: label(for='date') Release Date:
-        dd: input(type='text' id='date' name='date')
-        dt: label(for='cover') Cover URL:
-        dd: input(type='text' id='cover' name='cover')
-        dt: label(for='price') Price:
-        dd: input(type='text' id='price' name='price')
+        dt: label(for='title') Title
+        dd: input(type='text' id='title' name='title' required)
+        dt: label(for='artist') Artist
+        dd: input(type='text' id='artist' name='artist' required)
+        dt: label(for='date') Release Date
+        dd: input(type='date' id='date' name='date' required)
+        dt: label(for='cover') Cover URL
+        dd: input(type='url' id='cover' name='cover')
+        dt: label(for='price') Price
+        dd: input(type='text' id='price' name='price' required)
       input(type='submit' value='Add' class='btn btn-add')

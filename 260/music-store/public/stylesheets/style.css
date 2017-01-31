@@ -60,3 +60,45 @@ input[type='submit'].btn-add:active {
 #albums li:nth-of-type(4n) {
   margin-right: 0;
 }
+#add-album {
+  width: 500px;
+  margin: 0 auto;
+}
+#add-album h1 {
+  margin: 0 0 10px 0;
+}
+#add-album dt {
+  float: left;
+  clear: left;
+  width: 100px;
+  text-align: right;
+  font-weight: bold;
+  padding-top: 6px;
+}
+#add-album dt:after {
+  content: ":";
+}
+#add-album dd {
+  margin: 0 0 0 110px;
+  padding: 0 0 0.5em 0;
+}
+#add-album .btn {
+  text-align: center;
+  display: block;
+  width: 25%;
+  margin: 0 auto;
+}
+#add-album input[type="text"],
+#add-album input[type="url"],
+#add-album input[type="date"] {
+  width: 100%;
+  box-sizing: border-box;
+  height: 30px;
+  border-radius: 6px;
+  padding: 5px;
+  outline: none;
+  border: 1px solid #ccc;
+  appearance: none;
+  -moz-appearance: none;
+  -webkit-appearance: none;
+}
