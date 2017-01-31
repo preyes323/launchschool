@@ -17,4 +17,8 @@ router.get('/', function(req, res, next) {
   });
 });
 
+router.get('/albums/new', function(req, res, next) {
+  res.render('new');
+});
+
 module.exports = router;

@@ -1,7 +1,7 @@
 @import 'meyer_css_reset.css';
 html,
 body {
-  font: 8px "Lucida Grande", Helvetica, Arial, sans-serif;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 body {
   padding: 50px;
@@ -14,7 +14,8 @@ main {
   padding: 15px;
   border-radius: 5px;
 }
-a.btn {
+a.btn,
+input[type='submit'].btn {
   position: relative;
   display: inline-block;
   padding: 5px;
@@ -28,15 +29,20 @@ a.btn {
   -moz-appearance: none;
   -webkit-appearance: none;
 }
-a.btn-add {
+a.btn-add,
+input[type='submit'].btn-add {
   background: #ff6347;
   box-shadow: 2px 2px 0 2px #ff3814;
   transition: box-shadow 200ms ease-in, top 200ms ease-in, left 200ms ease-in;
 }
-a.btn-add:active {
+a.btn-add:active,
+input[type='submit'].btn-add:active {
   top: 2px;
   left: 2px;
   box-shadow: 1px 1px 0 1px #ff3814;
+}
+#albums {
+  font-size: 0.7em;
 }
 #albums h2 {
   font-size: 1.2em;
