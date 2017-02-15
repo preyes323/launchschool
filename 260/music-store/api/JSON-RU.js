@@ -1,4 +1,5 @@
 const fs = require('fs');
+const _ = require('underscore');
 
 module.exports = {
   JSONFilePath: '',
@@ -8,13 +9,32 @@ module.exports = {
     return this.tempStore;
   },
 
-  put(input) {
+  getLastId() {
+    return this.tempStore.lastId;
+  },
+
+  get(id) {
+    return  _(this.tempStore.data).findWhere({ id });
+  },
+
+  put(data) {
+    const foundData = this.get(data.id);
+    if (!foundData) return false;
+    Object.assign(foundData, data);
+  },
+
+  set(input) {
     const newData = Object.assign({}, input);
-    this.tempStore.lastId += 1
+    this.tempStore.lastId += 1;
     newData.id = this.tempStore.lastId;
     this.tempStore.data.push(newData);
 
     return this.tempStore;
+  },
+
+  delete(id) {
+    const idx = _(this.tempStore.data).findIndex({ id });
+    return _.first(this.tempStore.data.splice(idx, 1));
   },
 
   record() {
