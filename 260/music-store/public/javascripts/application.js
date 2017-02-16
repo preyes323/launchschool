@@ -1,3 +1,21 @@
-const App = {};
+const App = {
+  $el: $('#albums'),
+  renderAlbums() {
+    App.albums.each(this.renderAlbum);
+  },
 
-App.albums = new AlbumsCollection();
+  renderAlbum(album) {
+    new AlbumView({
+      model: album,
+    });
+  },
+
+  init() {
+    this.renderAlbums();
+  },
+};
+
+Handlebars.partials = Handlebars.templates;
+Handlebars.registerHelper('formatDate', function(price) {
+  return parseInt(price).toFixed(2);
+});

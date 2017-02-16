@@ -1,1 +1,3 @@
-const AlbumsCollection = Backbone.Collection.extend();
+const AlbumsCollection = Backbone.Collection.extend({
+  model: AlbumModel,
+});

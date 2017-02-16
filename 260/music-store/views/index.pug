@@ -4,14 +4,9 @@ block content
   main
     h1= title
     ul(id='albums')
-      each album in albums
-        li(data-id=`${album.id}`)
-          img(src=`${album.cover}`)
-          h2 #{album.title}
-          h3 #{album.artist}
-          p Released: #{album.date}
-          p $#{album.price}
-          a(href='#' class='btn btn-add') Add to Cart
 
 append scripts
   script(src='/javascripts/application.js' type='text/javascript')
+  script(type='text/javascript').
+    App.albums = new AlbumsCollection(!{JSON.stringify(albums)});
+    App.init();
