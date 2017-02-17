@@ -1,5 +1,5 @@
 const App = {
-  $el: $('#albums'),
+  $el: $('main'),
   renderAlbums() {
     App.albums.each(this.renderAlbum);
   },

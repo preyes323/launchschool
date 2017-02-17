@@ -10,6 +10,6 @@ const AlbumView = Backbone.View.extend({
     const id = this.model.get('id');
     this.$el.attr('data-id', id);
     this.$el.html(this.template(this.model.attributes));
-    this.$el.appendTo(App.$el);
+    this.$el.appendTo(App.$el.find('#albums'));
   },
 });
