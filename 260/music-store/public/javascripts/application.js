@@ -1,17 +1,7 @@
 const App = {
-  $el: $('main'),
-  renderAlbums() {
-    App.albums.each(this.renderAlbum);
-  },
-
-  renderAlbum(album) {
-    new AlbumView({
-      model: album,
-    });
-  },
-
   init() {
-    this.renderAlbums();
+    this.appView = new AppView({ collection: this.albums });
+    this.appView.render();
   },
 };
 

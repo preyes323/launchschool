@@ -14,6 +14,25 @@ main {
   padding: 15px;
   border-radius: 5px;
 }
+main ul {
+  font-size: 0.7em;
+}
+main ul h2 {
+  font-size: 1.2em;
+}
+main ul h3 {
+  font-size: 1.1em;
+  color: #ccc;
+}
+main ul li {
+  vertical-align: top;
+  display: inline-block;
+  width: 23.5%;
+  margin: 0 2% 2% 0;
+}
+main ul li:nth-of-type(4n) {
+  margin-right: 0;
+}
 a.btn,
 input[type='submit'].btn {
   position: relative;
@@ -40,25 +59,6 @@ input[type='submit'].btn-add:active {
   top: 2px;
   left: 2px;
   box-shadow: 1px 1px 0 1px #ff3814;
-}
-#albums {
-  font-size: 0.7em;
-}
-#albums h2 {
-  font-size: 1.2em;
-}
-#albums h3 {
-  font-size: 1.1em;
-  color: #ccc;
-}
-#albums li {
-  vertical-align: top;
-  display: inline-block;
-  width: 23.5%;
-  margin: 0 2% 2% 0;
-}
-#albums li:nth-of-type(4n) {
-  margin-right: 0;
 }
 #add-album {
   width: 500px;
