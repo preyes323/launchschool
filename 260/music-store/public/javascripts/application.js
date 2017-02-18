@@ -15,8 +15,6 @@ const App = {
   },
 };
 
-
-TestCode
 Handlebars.partials = Handlebars.templates;
 Handlebars.registerHelper('formatDate', function(price) {
   return parseInt(price).toFixed(2);
