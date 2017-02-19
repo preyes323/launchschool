@@ -1,12 +1,5 @@
 extends layout
 
-block content
-  main
-    h1= title
-    ul()
+append content
 
 append scripts
-  script(src='/javascripts/application.js' type='text/javascript')
-  script(type='text/javascript').
-    App.albums = new AlbumsCollection(!{JSON.stringify(albums)});
-    App.init();

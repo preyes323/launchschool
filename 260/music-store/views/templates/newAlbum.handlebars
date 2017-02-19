@@ -1,0 +1,20 @@
+<form class='add-album' method='post' action='/new-album'>
+  <h1>Add Album</h1>
+  <fieldset>
+    <dl>
+      <dt><label for='title'>Title</label></dt>
+      <dd><input type='text' id='title' name='title' required></dd>
+      <dt><label for='artist'>Artist</label></dt>
+      <dd><input type='text' id='artist' name='artist' required></dd>
+      <dt><label for='date'>Release Date</label></dt>
+      <dd><input type='date' id='date' name='date' required></dd>
+      <dt><label for='cover'>Cover URL</label></dt>
+      <dd><input type='url' id='cover' name='cover'></dd>
+      <dt><label for='price'>Price</label></dt>
+      <dd><input type='text' id='price' name='price' required></
+    </dl>
+  </fieldset>
+  <fieldset>
+    <input type='submit' value='Add' class='btn btn-add'>
+  </fieldset>
+</form>

@@ -9,6 +9,17 @@ body {
 h1 {
   font-size: 1.5em;
 }
+header {
+  padding: 7px;
+}
+header a {
+  margin: 10px;
+}
+header h1,
+header a {
+  display: inline-block;
+  vertical-align: middle;
+}
 main {
   box-shadow: 0px 0px 23px 0px rgba(0,0,0,0.5);
   padding: 15px;
@@ -32,6 +43,10 @@ main ul li {
 }
 main ul li:nth-of-type(4n) {
   margin-right: 0;
+}
+a,
+input[type='submit'] {
+  cursor: pointer;
 }
 a.btn,
 input[type='submit'].btn {
@@ -60,14 +75,26 @@ input[type='submit'].btn-add:active {
   left: 2px;
   box-shadow: 1px 1px 0 1px #ff3814;
 }
-#add-album {
+a.btn-new,
+input[type='submit'].btn-new {
+  background: #54a23f;
+  box-shadow: 2px 2px 0 2px #417d31;
+  transition: box-shadow 200ms ease-in, top 200ms ease-in, left 200ms ease-in;
+}
+a.btn-new:active,
+input[type='submit'].btn-new:active {
+  top: 2px;
+  left: 2px;
+  box-shadow: 1px 1px 0 1px #417d31;
+}
+.add-album {
   width: 500px;
   margin: 0 auto;
 }
-#add-album h1 {
+.add-album h1 {
   margin: 0 0 10px 0;
 }
-#add-album dt {
+.add-album dt {
   float: left;
   clear: left;
   width: 100px;
@@ -75,22 +102,25 @@ input[type='submit'].btn-add:active {
   font-weight: bold;
   padding-top: 6px;
 }
-#add-album dt:after {
+.add-album dt:after {
   content: ":";
 }
-#add-album dd {
+.add-album dd {
   margin: 0 0 0 110px;
   padding: 0 0 0.5em 0;
 }
-#add-album .btn {
+.add-album fieldset {
+  width: 100%;
+}
+.add-album fieldset .btn {
   text-align: center;
   display: block;
   width: 25%;
   margin: 0 auto;
 }
-#add-album input[type="text"],
-#add-album input[type="url"],
-#add-album input[type="date"] {
+.add-album input[type="text"],
+.add-album input[type="url"],
+.add-album input[type="date"] {
   width: 100%;
   box-sizing: border-box;
   height: 30px;

@@ -1,5 +1,6 @@
-const AppView = Backbone.View.extend({
+const AlbumsView = Backbone.View.extend({
   el: 'main',
+
   render() {
     this.collection.each(this.renderAlbum.bind(this));
   },

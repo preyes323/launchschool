@@ -7,6 +7,14 @@ body
 h1
   font-size: 1.5em;
 
+header
+  padding: 7px
+  a
+    margin: 10px
+  h1, a
+    display: inline-block
+    vertical-align: middle;
+
 main
   box-shadow: 0px 0px 23px 0px colors.shadow
   padding: 15px
@@ -27,12 +35,15 @@ main
         margin-right: 0
 
 a, input[type='submit']
+  cursor: pointer
   &.btn
     button()
   &.btn-add
     button-add()
+  &.btn-new
+    button-new()
 
-#add-album
+.add-album
   width: 500px
   margin: 0 auto
   h1
@@ -49,11 +60,13 @@ a, input[type='submit']
   dd
     margin: 0 0 0 110px;
     padding: 0 0 0.5em 0;
-  .btn
-    text-align: center
-    display: block;
-    width: 25%
-    margin: 0 auto
+  fieldset
+    width: 100%;
+    .btn
+      text-align: center
+      display: block;
+      width: 25%
+      margin: 0 auto
   input[type="text"], input[type="url"], input[type="date"]
     width: 100%
     box-sizing: border-box

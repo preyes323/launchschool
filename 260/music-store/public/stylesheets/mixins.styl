@@ -4,6 +4,7 @@ colors = {
     text: #fff,
     add: #FF6347,
     add-hover: #FF5537,
+    new: #54A23F,
   },
   sub-header: #ccc,
   shadow: rgba(0,0,0,0.5),
@@ -36,3 +37,11 @@ button-add()
     left: 2px
     box-shadow: 1px 1px 0 1px darken(colors.btn.add, 10)
 
+button-new()
+  background: colors.btn.new
+  box-shadow: 2px 2px 0 2px darken(colors.btn.new, 10)
+  transition: box-shadow 200ms ease-in, top 200ms ease-in, left 200ms ease-in
+  &:active
+    top: 2px
+    left: 2px
+    box-shadow: 1px 1px 0 1px darken(colors.btn.new, 10)
