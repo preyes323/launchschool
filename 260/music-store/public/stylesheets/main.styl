@@ -19,7 +19,8 @@ main
   box-shadow: 0px 0px 23px 0px colors.shadow
   padding: 15px
   border-radius: 5px
-  ul
+  ul.albums
+    clear: both
     font-size: 0.7em
     h2
       font-size: 1.2em
@@ -33,6 +34,73 @@ main
       margin: 0 2% 2% 0
       &:nth-of-type(4n)
         margin-right: 0
+
+
+.cart
+  position: relative
+  float: right;
+  width: 50%;
+  text-align: right
+  input
+    display: none
+    &:checked + .items
+      display: block
+  label
+    cursor: pointer
+    display: inline-block
+    clear: both
+  .items
+    position: absolute
+    background: colors.cart.bg
+    color: colors.cart.text
+    box-shadow: 0px 0px 3px 1px colors.cart.shadow
+    border-radius: 5px
+    top: 100%
+    right: 0
+    z-index: 1
+    display: none
+    padding: 5px
+    overflow: hidden
+    p
+      padding: 5px
+      font-weight: 700
+      border-top: 1px solid #ccc
+    ul
+      padding: 5px 0
+    li
+      padding: 5px
+      text-align: left
+    a
+      position: relative
+      float: left
+      width: 12px
+      height: 12px
+      margin: 3px 5px 0 0
+      overflow: hidden
+      text-indent: 9999px
+      transform: rotate(45deg)
+      &:before,
+      &:after
+        position: absolute
+        content: ''
+        background: colors.delete
+      &:before
+        top: 0
+        bottom: 0
+        left: 50%
+        margin-left: -1px
+        width: 2px
+      &:after
+        left: 0
+        right: 0
+        top: 50%
+        height: 2px
+        margin-top: -1px
+    small
+      float: right
+      margin-left: 10px
+
+
 
 a, input[type='submit']
   cursor: pointer

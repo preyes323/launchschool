@@ -10,6 +10,6 @@ const AlbumsView = Backbone.View.extend({
       model: album,
     });
 
-    this.$('ul').append(albumView.el);
+    this.$('ul.albums').append(albumView.el);
   },
 });

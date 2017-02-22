@@ -25,24 +25,101 @@ main {
   padding: 15px;
   border-radius: 5px;
 }
-main ul {
+main ul.albums {
+  clear: both;
   font-size: 0.7em;
 }
-main ul h2 {
+main ul.albums h2 {
   font-size: 1.2em;
 }
-main ul h3 {
+main ul.albums h3 {
   font-size: 1.1em;
   color: #ccc;
 }
-main ul li {
+main ul.albums li {
   vertical-align: top;
   display: inline-block;
   width: 23.5%;
   margin: 0 2% 2% 0;
 }
-main ul li:nth-of-type(4n) {
+main ul.albums li:nth-of-type(4n) {
   margin-right: 0;
+}
+.cart {
+  position: relative;
+  float: right;
+  width: 50%;
+  text-align: right;
+}
+.cart input {
+  display: none;
+}
+.cart input:checked + .items {
+  display: block;
+}
+.cart label {
+  cursor: pointer;
+  display: inline-block;
+  clear: both;
+}
+.cart .items {
+  position: absolute;
+  background: rgba(148,192,229,0.9);
+  color: #fff;
+  box-shadow: 0px 0px 3px 1px rgba(204,204,204,0.51);
+  border-radius: 5px;
+  top: 100%;
+  right: 0;
+  z-index: 1;
+  display: none;
+  padding: 5px;
+  overflow: hidden;
+}
+.cart .items p {
+  padding: 5px;
+  font-weight: 700;
+  border-top: 1px solid #ccc;
+}
+.cart .items ul {
+  padding: 5px 0;
+}
+.cart .items li {
+  padding: 5px;
+  text-align: left;
+}
+.cart .items a {
+  position: relative;
+  float: left;
+  width: 12px;
+  height: 12px;
+  margin: 3px 5px 0 0;
+  overflow: hidden;
+  text-indent: 9999px;
+  transform: rotate(45deg);
+}
+.cart .items a:before,
+.cart .items a:after {
+  position: absolute;
+  content: '';
+  background: #b00b00;
+}
+.cart .items a:before {
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  margin-left: -1px;
+  width: 2px;
+}
+.cart .items a:after {
+  left: 0;
+  right: 0;
+  top: 50%;
+  height: 2px;
+  margin-top: -1px;
+}
+.cart .items small {
+  float: right;
+  margin-left: 10px;
 }
 a,
 input[type='submit'] {
