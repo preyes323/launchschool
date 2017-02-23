@@ -1,12 +1,13 @@
-const AlbumView = Backbone.View.extend({
+const CartItemView = Backbone.View.extend({
   tagName: 'li',
-  template: Handlebars.templates.album,
+  template: Handlebars.templates.cartItem,
   events: {
-    'click .btn-add': 'addToCart',
+    'click a': 'removeItem',
   },
 
   initialize() {
     this.model.view = this;
+    this.listenTo(this.model, 'destroy', this.remove);
     this.render();
   },
 
@@ -14,10 +15,11 @@ const AlbumView = Backbone.View.extend({
     const id = this.model.get('id');
     this.$el.attr('data-id', id);
     this.$el.html(this.template(this.model.attributes));
+    return this.el;
   },
 
-  addToCart(e) {
+  removeItem(e) {
     e.preventDefault();
-    App.cart.addItem(this.model);
+    this.model.destroy();
   },
 });

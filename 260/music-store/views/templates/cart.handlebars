@@ -1,0 +1,12 @@
+<label for="cart-toggle">
+  {{pluralize cartQuantity}}
+</label>
+<input id="cart-toggle" type="checkbox">
+<div class="items">
+  <ul></ul>
+  <p>
+    {{#if cartTotal}}
+      ${{formatPrice cartTotal}}
+    {{/if}}
+  </p>
+</div>

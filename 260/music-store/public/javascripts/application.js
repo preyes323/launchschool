@@ -1,8 +1,18 @@
 const App = {
   setupTemplates() {
     Handlebars.partials = Handlebars.templates;
-    Handlebars.registerHelper('formatDate', function(price) {
-      return parseInt(price).toFixed(2);
+    Handlebars.registerHelper('formatPrice', function(price) {
+      return Number(price).toFixed(2);
+    });
+    Handlebars.registerHelper('pluralize', function(quantity) {
+      let msg;
+      if (quantity > 1) {
+        msg = `${quantity} items`;
+      } else {
+        msg = `${quantity} item`;
+      }
+
+      return msg;
     });
   },
 
@@ -20,6 +30,7 @@ const App = {
   init() {
     this.setupTemplates();
     this.router = new Router;
+    this.cart = new CartItems;
     this.setupRouter();
   },
 };
