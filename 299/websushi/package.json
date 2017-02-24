@@ -1,0 +1,30 @@
+{
+  "name": "websushi",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "nodemon ./bin/www",
+    "test": "jasmine-node spec --autotest --color --watch ."
+  },
+  "dependencies": {
+    "body-parser": "~1.15.2",
+    "cookie-parser": "~1.4.3",
+    "debug": "~2.2.0",
+    "express": "~4.14.0",
+    "morgan": "~1.7.0",
+    "pug": "~2.0.0-beta6",
+    "serve-favicon": "~2.3.0",
+    "stylus": "0.54.5",
+    "underscore": "^1.8.3"
+  },
+  "devDependencies": {
+    "cheerio": "^0.22.0",
+    "grunt": "^1.0.1",
+    "grunt-bower-concat": "^1.0.0",
+    "grunt-contrib-clean": "^1.0.0",
+    "grunt-contrib-uglify": "^2.0.0",
+    "jasmine-node": "^1.14.5",
+    "nodemon": "^1.11.0",
+    "request": "^2.79.0"
+  }
+}
