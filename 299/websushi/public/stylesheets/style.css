@@ -12,7 +12,53 @@ footer {
   margin: 0 auto;
 }
 header {
-  padding: 20px 0;
+  padding: 50px 0 40px 0;
+  vertical-align: middle;
+}
+header a.cart-info {
+  position: relative;
+  float: right;
+  text-transform: uppercase;
+  color: #999;
+  background: #000;
+  font-size: 0.8em;
+  height: 28px;
+  line-height: 28px;
+  padding-left: 50px;
+}
+header a.cart-info span {
+  background: linear-gradient(to bottom, #a90040 0%, #d60041 100%);
+  position: relative;
+  display: inline-block;
+  color: #fff;
+  padding: 0 30px;
+}
+header a.cart-info span:before,
+header a.cart-info span:after {
+  position: absolute;
+  content: '';
+  display: block;
+}
+header a.cart-info span:before {
+  width: 0;
+  height: 0;
+  top: 0;
+  left: 0;
+  border-top: 14px solid #000;
+  border-right: 14px solid transparent;
+  border-bottom: 14px solid transparent;
+  border-left: 14px solid #000;
+}
+h1.logo {
+  display: inline-block;
+  width: 140px;
+  height: 32px;
+  background: url("/images/logo.png") 0 0 no-repeat;
+}
+h1 a {
+  display: block;
+  width: inherit;
+  height: inherit;
 }
 main {
   padding: 15px 0;
