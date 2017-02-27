@@ -33,6 +33,9 @@ header a.cart-info span {
   color: #fff;
   padding: 0 30px;
 }
+header a.cart-info span:hover {
+  background: linear-gradient(to bottom, #8f0036 0%, #bd0039 100%);
+}
 header a.cart-info span:before,
 header a.cart-info span:after {
   position: absolute;
