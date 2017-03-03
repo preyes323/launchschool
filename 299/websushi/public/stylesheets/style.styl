@@ -72,3 +72,49 @@ a
   cursor: pointer
   text-decoration: none
   color: colors.link
+
+.menu
+  &:after
+    content: ''
+    display: block
+    clear: both
+    font-size: 0
+  li
+    float: left
+    width: 20%
+    text-align: center
+    margin-top: 15px
+  figcaption
+    background: colors.menu.bg
+    padding: 20px 0
+    box-shadow: inset -3px 0px 1px 0px rgba(204,204,204,1)
+    h3
+      color: colors.menu.name
+      padding: 5px
+      font-size: 1.5em
+    p
+      color: colors.menu.price
+      padding: 5px
+      font-size: 1.2em
+  button
+    background: colors.menu.bg
+    text-transform: uppercase
+    display: block
+    width: 100%
+    color: colors.menu.btn-text
+    text-decoration: none
+    outline: none
+    border: none
+    padding: 10px 0
+    border-top: 1px dotted colors.menu.btn-border
+    box-shadow: inset -3px 0px 1px 0px rgba(204,204,204,1)
+    transition: background 200ms ease-in, color 200ms ease-in, box-shadow 200ms ease-in
+    appearance()
+    &:before
+      content: '+ '
+      font-weight: bold
+      font-size: 1.2em
+    &:hover
+      background: colors.menu.btn-text
+      color: colors.menu.bg
+      box-shadow: none

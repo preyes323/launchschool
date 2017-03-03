@@ -76,3 +76,57 @@ a {
   text-decoration: none;
   color: #d60528;
 }
+.menu:after {
+  content: '';
+  display: block;
+  clear: both;
+  font-size: 0;
+}
+.menu li {
+  float: left;
+  width: 20%;
+  text-align: center;
+  margin-top: 15px;
+}
+.menu figcaption {
+  background: #fff;
+  padding: 20px 0;
+  box-shadow: inset -3px 0px 1px 0px #ccc;
+}
+.menu figcaption h3 {
+  color: #ab7829;
+  padding: 5px;
+  font-size: 1.5em;
+}
+.menu figcaption p {
+  color: #9ea3bd;
+  padding: 5px;
+  font-size: 1.2em;
+}
+.menu button {
+  background: #fff;
+  text-transform: uppercase;
+  display: block;
+  width: 100%;
+  color: #d60528;
+  text-decoration: none;
+  outline: none;
+  border: none;
+  padding: 10px 0;
+  border-top: 1px dotted #000;
+  box-shadow: inset -3px 0px 1px 0px #ccc;
+  transition: background 200ms ease-in, color 200ms ease-in, box-shadow 200ms ease-in;
+  appearance: none;
+  -moz-appearance: none;
+  -webkit-appearance: none;
+}
+.menu button:before {
+  content: '+ ';
+  font-weight: bold;
+  font-size: 1.2em;
+}
+.menu button:hover {
+  background: #d60528;
+  color: #fff;
+  box-shadow: none;
+}

@@ -1,0 +1,21 @@
+[
+  {"name": "Sashimi salad", "price": 12},
+  {"name": "Chirashi sushi", "price": 21},
+  {"name": "Seaweed salad", "price": 17},
+  {"name": "Edamame", "price": 4},
+  {"name": "Miso soup", "price": 4},
+  {"name": "Maguro", "price": 12.5},
+  {"name": "Shake", "price": 10},
+  {"name": "Shiromi", "price": 9.5},
+  {"name": "Tekka maki", "price": 6},
+  {"name": "Hosomaki Mix", "price": 17},
+  {"name": "California rolls", "price": 7.75},
+  {"name": "Seattle rolls", "price": 8},
+  {"name": "Spicy Tuna rolls", "price": 6},
+  {"name": "Ebi rolls", "price": 8},
+  {"name": "Chicken Teriyaki", "price": 12},
+  {"name": "Salmon Teriyaki", "price": 13.5},
+  {"name": "Gohan", "price": 3},
+  {"name": "Tori Katsu", "price": 11},
+  {"name": "Yaki Udon", "price": 11.5}
+]
