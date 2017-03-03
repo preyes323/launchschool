@@ -1,9 +1,12 @@
+include _mixins.pug
+
 doctype html
 html
   head
     title= title
-    link(rel='stylesheet', href='/stylesheets/style.css')
+    +stylesheet_link_tag('style')
     link(rel='stylesheet', href='https://fonts.googleapis.com/css?family=Droid+Sans:400,700')
+    +javascript_include_tag('vendor/all')
   body
     block header
       header
@@ -16,3 +19,5 @@ html
     footer
       p.
         Replicated version of #[a(href="http://demos.telerik.com/kendo-ui/websushi/") http://demos.telerik.com/kendo-ui/websushi/] for practice developing SPA
+
+    +javascript_include_tag('app')
