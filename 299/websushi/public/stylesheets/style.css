@@ -88,6 +88,29 @@ a {
   text-align: center;
   margin-top: 15px;
 }
+.menu a {
+  position: relative;
+  display: block;
+}
+.menu a:hover figure:after {
+  display: block;
+}
+.menu a:hover figcaption h3 {
+  color: #000;
+}
+.menu figure {
+  position: relative;
+}
+.menu figure:after {
+  position: absolute;
+  display: none;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 200px;
+  content: '';
+  background: rgba(0,0,0,0.65) url("/images/arrow-right.png") no-repeat 50% 50%;
+}
 .menu figcaption {
   background: #fff;
   padding: 20px 0;

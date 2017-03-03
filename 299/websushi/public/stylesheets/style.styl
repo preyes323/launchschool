@@ -84,6 +84,25 @@ a
     width: 20%
     text-align: center
     margin-top: 15px
+  a
+    position: relative
+    display: block
+    &:hover
+      figure:after
+        display: block
+      figcaption h3
+        color: colors.menu.btn-border
+  figure
+    position: relative
+    &:after
+      position: absolute
+      display: none
+      top: 0
+      left: 0
+      right: 0
+      height: 200px
+      content: ''
+      background: colors.menu.overlay url('/images/arrow-right.png') no-repeat 50% 50%
   figcaption
     background: colors.menu.bg
     padding: 20px 0
