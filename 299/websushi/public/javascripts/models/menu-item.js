@@ -1,2 +1,2 @@
-const MenuItem = Backbone.model.extend({
+const MenuItem = Backbone.Model.extend({
 });

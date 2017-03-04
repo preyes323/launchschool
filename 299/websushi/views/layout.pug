@@ -7,6 +7,7 @@ html
     +stylesheet_link_tag('style')
     link(rel='stylesheet', href='https://fonts.googleapis.com/css?family=Droid+Sans:400,700')
     +javascript_include_tag('vendor/all')
+    +javascript_include_tag('templatesCompiled')
   body
     block header
       header
@@ -20,4 +21,7 @@ html
       p.
         Replicated version of #[a(href="http://demos.telerik.com/kendo-ui/websushi/") http://demos.telerik.com/kendo-ui/websushi/] for practice developing SPA
 
+    +javascript_include_tag('models/menu-item')
+    +javascript_include_tag('collections/menu-items')
+    +javascript_include_tag('views/menu-item', 'views/menu-items')
     +javascript_include_tag('app')

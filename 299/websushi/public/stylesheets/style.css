@@ -101,6 +101,9 @@ a {
 .menu figure {
   position: relative;
 }
+.menu figure img {
+  display: block;
+}
 .menu figure:after {
   position: absolute;
   display: none;
