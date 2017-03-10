@@ -1,0 +1,27 @@
+extends base
+
+block content
+  if error
+    p ERROR: #{error}
+
+  h1 Create an Account
+  form(method="post")
+    input(type="hidden" name="_csrf" value=csrfToken)
+
+    span First Name:
+    input(type="text" name="firstName" required=true)
+    br
+
+    span Last Name:
+    input(type="text" name="lastName" required)
+    br
+
+    span Email:
+    input(type="email" name="email" required)
+    br
+
+    span Password:
+    input(type="password" name="password" required)
+    br
+
+    input(type="submit")
