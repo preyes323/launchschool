@@ -5,4 +5,4 @@ CREATE TABLE expenses (
   created_on DATE DEFAULT CURRENT_TIMESTAMP
 );
 
-ALTER TABLE expenses ADD CONSTRAINT positive_amount_only CHECK (amount >= 0.0);
+ALTER TABLE expenses ADD CONSTRAINT positive_amount_only CHECK (amount >= 0.01);
