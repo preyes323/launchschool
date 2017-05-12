@@ -1,11 +1,14 @@
 require_relative '../../../app/api'
 require 'rack/test'
+require 'pry'
 
 module ExpenseTracker
   RSpec.describe API do
     include Rack::Test::Methods
     let(:ledger) { instance_double('ExpenseTracker::Ledger') }
     let(:app) { API.new(ledger: ledger) }
+
+    binding.pry
 
     describe 'POST /expenses' do
       context 'when the expense is successfully recorded' do
