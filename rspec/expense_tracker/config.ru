@@ -1,2 +1,2 @@
 require_relative 'app/api'
-run ExpenseTracker::API.newx
+run ExpenseTracker::API.new
