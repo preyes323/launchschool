@@ -2,7 +2,8 @@ require "sinatra"
 require "sinatra/reloader"
 require "sinatra/content_for"
 require "tilt/erubis"
-require_relative 'lib/session_persistence'
+require_relative 'lib/database_persistence'
+
 require 'pry'
 
 configure do
@@ -69,7 +70,7 @@ def error_for_todo(name)
 end
 
 before do
-  @storage = SessionPersistence.new(session)
+  @storage = DatabasePersistence.new
 end
 
 get "/" do
@@ -96,7 +97,7 @@ post "/lists" do
     session[:error] = error
     erb :new_list, layout: :layout
   else
-    @storage.add_list name: list_name, todos: []
+    @storage.add_list list_name
     session[:success] = "The list has been created."
     redirect "/lists"
   end
@@ -155,7 +156,7 @@ post "/lists/:list_id/todos" do
     session[:error] = error
     erb :list, layout: :layout
   else
-    @storage.add_todo @list_id, name: text, completed: false
+    @storage.add_todo @list_id, text
     session[:success] = "The todo was added."
     redirect "/lists/#{@list_id}"
   end
@@ -167,7 +168,7 @@ post "/lists/:list_id/todos/:id/destroy" do
   @list = load_list(@list_id)
 
   todo_id = params[:id].to_i
-  @storage.delete_todo @list_id, todo_id
+  @storage.delete_todo todo_id
   if env["HTTP_X_REQUESTED_WITH"] == "XMLHttpRequest"
     status 204
   else
@@ -183,7 +184,7 @@ post "/lists/:list_id/todos/:id" do
 
   todo_id = params[:id].to_i
   is_completed = params[:completed] == "true"
-  @storage.update_todo @list_id, todo_id, is_completed
+  @storage.update_todo todo_id, is_completed
 
   session[:success] = "The todo has been updated."
   redirect "/lists/#{@list_id}"
